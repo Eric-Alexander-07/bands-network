@@ -8,10 +8,12 @@ export const band = {
 
   nav: [
     { label: "Über uns", href: "/about" },
-    { label: "Leistungen", href: "/leistungen" },
-    { label: "Medien", href: "/media" },
-    { label: "Repertoire", href: "/repertoire" },
+    { label: "Services", href: "/services" },
+    { label: "Media & News", href: "/media" },
+    { label: "Galerie", href: "/galerie" },
+    { label: "Shop", href: "/shop" },
     { label: "Referenzen", href: "/referenzen" },
+    { label: "Kontakt", href: "/kontakt" },
   ],
 
   facts: [

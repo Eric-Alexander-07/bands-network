@@ -7,7 +7,7 @@ export default function ServicesPage() {
       <section className="page-hero">
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
-          <h1>Leistungen</h1>
+          <h1>Services</h1>
           <p>
             Vom Hochzeitsauftritt bis zum Firmen-Event — {band.name} bringt die
             passende Musik für jeden Anlass.

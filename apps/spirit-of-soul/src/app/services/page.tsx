@@ -1,5 +1,5 @@
 import ServicesPage from "@/components/ServicesPage";
 
-export default function Leistungen() {
+export default function Services() {
   return <ServicesPage />;
 }
