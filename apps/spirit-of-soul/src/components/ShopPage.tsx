@@ -6,20 +6,23 @@ export default function ShopPage() {
     <>
       <section className="page-hero">
         <div className="container">
-          <span className="eyebrow">Merch & mehr</span>
+          <span className="eyebrow">Merch &amp; mehr</span>
           <h1>Shop</h1>
-          <p>T-Shirts, CDs und exklusive {band.name}-Merchandise-Artikel.</p>
+          <p>
+            T-Shirts, CDs und exklusive {band.name}-Merchandise-Artikel.
+          </p>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
           <div className="shop-coming-soon">
-            <p className="eyebrow">Bald verfügbar</p>
+            <span className="eyebrow">Bald verfügbar</span>
             <h2>Der Shop öffnet in Kürze</h2>
             <p>
-              Wir arbeiten gerade an unserem Online-Shop. Schreib uns, wenn du
-              Merchandise bestellen möchtest.
+              Wir arbeiten gerade an unserem Online-Shop. Schreib uns, wenn
+              du Merchandise oder CDs bestellen möchtest — wir helfen dir
+              direkt weiter.
             </p>
             <Link href="/kontakt" className="btn btn-primary">
               Kontakt aufnehmen

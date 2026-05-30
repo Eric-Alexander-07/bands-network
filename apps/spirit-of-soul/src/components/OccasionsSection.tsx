@@ -12,9 +12,9 @@ export default function OccasionsSection() {
             <span className="eyebrow">Wir spielen bei</span>
             <h2 className="section-title">Jedem Anlass</h2>
             <p className="occasions-desc">
-              Ob Hochzeit, Firmen-Event oder Open-Air — {band.name} passt sich
-              jedem Rahmen an und sorgt für den richtigen Sound zur richtigen
-              Zeit.
+              Ob Hochzeit, Firmen-Event, Stadtfest oder exklusive Feier —{" "}
+              {band.name} passt sich jedem Rahmen an und sorgt für den richtigen
+              Sound zur richtigen Zeit.
             </p>
             <div className="occasions-chips">
               {band.occasions.map((occasion, i) => (
@@ -24,8 +24,8 @@ export default function OccasionsSection() {
                 </span>
               ))}
             </div>
-            <Link href="/leistungen" className="btn btn-primary">
-              Mehr erfahren
+            <Link href="/services" className="btn btn-primary">
+              Unsere Services
             </Link>
           </div>
         </div>

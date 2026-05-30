@@ -5,12 +5,15 @@ export default function BookingPage() {
     <>
       <section className="page-hero">
         <div className="container">
-          <span className="eyebrow">Kontakt</span>
-          <h1>Buchung</h1>
-          <p>Jetzt euer Datum anfragen und ein persönliches Angebot erhalten.</p>
+          <span className="eyebrow">Buchungsanfrage</span>
+          <h1>Buchen</h1>
+          <p>
+            Jetzt euer Datum anfragen und ein maßgeschneidertes Angebot
+            erhalten. Wir melden uns innerhalb von 24 Stunden.
+          </p>
         </div>
       </section>
-      <section className="section">
+      <section className="section booking-page-section">
         <div className="container">
           <BookingForm />
         </div>

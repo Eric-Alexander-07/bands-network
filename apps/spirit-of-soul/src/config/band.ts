@@ -1,12 +1,14 @@
 export const band = {
   name: "Spirit of Soul",
-  claim: "Soul & R&B der alten Schule – zeitlos, warm, unvergleichlich",
-  genre: "Soul / R&B",
-  location: "München",
+  claim: "The Finest Of Black Music",
+  tagline: "Entertainment der Extraklasse",
+  genre: "Soul / R&B / Funk",
+  location: "Frankfurt am Main",
   email: "booking@spirit-of-soul.de",
-  accentColor: "#c2410c",
+  accentColor: "#c8a56a",
 
   nav: [
+    { label: "Home", href: "/" },
     { label: "Über uns", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Media & News", href: "/media" },
@@ -17,9 +19,9 @@ export const band = {
   ],
 
   facts: [
-    { value: "15+", label: "Jahre auf der Bühne" },
+    { value: "25", label: "Jahre auf der Bühne" },
     { value: "500+", label: "Live-Auftritte" },
-    { value: "8", label: "Bandmitglieder" },
+    { value: "12", label: "Musiker (max.)" },
     { value: "200+", label: "Songs im Repertoire" },
   ],
 
@@ -58,6 +60,22 @@ export const band = {
     { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Firmenevent 2024" },
   ],
 
+  formations: {
+    small: [
+      { name: "Duo", lineup: "1 Sänger + 1 Gitarrist (mit Halbplaybacks)" },
+      { name: "Trio", lineup: "1 Sänger / Sängerin, Gitarre, Keyboard" },
+      { name: "Quartett", lineup: "3 Sänger, Gitarre (mit Halbplaybacks)" },
+      { name: "Quintett", lineup: "3 Sänger, Gitarre, Saxophon (mit Halbplaybacks)" },
+    ],
+    full: [
+      { name: "Sextett", lineup: "1 Sänger, 1 Sängerin, 4 Begleitmusiker" },
+      { name: "7er Besetzung", lineup: "3 Sänger, 4 Begleitmusiker" },
+      { name: "8er Besetzung", lineup: "3 Sänger, 5 Begleitmusiker inkl. Saxophon" },
+      { name: "9er Besetzung", lineup: "3 Sänger, 1 Sängerin, 5 Begleitmusiker inkl. Saxophon" },
+      { name: "12er Besetzung", lineup: "3 Sänger, 1 Sängerin, 8 Begleitmusiker inkl. Saxophon, Percussion und Bläser Sektion" },
+    ],
+  },
+
   clients: [
     "Bayerischer Hof",
     "BMW Welt",
@@ -75,7 +93,7 @@ export const band = {
   },
 
   about: {
-    bio: "Spirit of Soul ist Münchens führende Soul- und R&B-Band. Seit über 15 Jahren verzaubern wir unser Publikum mit authentischem Sound, der von Otis Redding über Aretha Franklin bis zu modernen R&B-Hits reicht. Unsere acht Musiker bringen jeden Saal zum Kochen.",
+    bio: "Spirit of Soul steht seit 25 Jahren für authentischen Soul, R&B und Funk auf höchstem Niveau. Mit internationalen Sängerinnen und Sängern sowie erfahrenen Musikern liefern wir Entertainment der Extraklasse — von der intimen Dinner-Besetzung bis zur 12-köpfigen Full-Band. Gegründet unter dem Motto »The Finest Of Black Music«, begeistern wir Gäste bei Hochzeiten, Firmenevents, Stadtfesten und exklusiven Feiern.",
     members: [
       { name: "Lisa Morgenstern", role: "Lead Vocals" },
       { name: "Marco Ferreira", role: "Keyboards / Musical Director" },

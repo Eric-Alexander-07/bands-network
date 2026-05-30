@@ -9,8 +9,8 @@ export default function ServicesPage() {
           <span className="eyebrow">Was wir anbieten</span>
           <h1>Services</h1>
           <p>
-            Vom Hochzeitsauftritt bis zum Firmen-Event — {band.name} bringt die
-            passende Musik für jeden Anlass.
+            Vom intimen Dinner bis zur 12-köpfigen Full-Band — {band.name}{" "}
+            bringt die passende Musik für jeden Anlass.
           </p>
         </div>
       </section>
@@ -38,19 +38,19 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section booking-cta">
+      <section className="booking-cta">
         <div className="container booking-cta-inner">
           <span className="eyebrow">Individuelles Angebot</span>
           <h2>Interesse?</h2>
           <p>
-            Nicht das Richtige dabei? Wir erstellen gerne ein maßgeschneidertes
-            Angebot für euer Event.
+            Nicht das Richtige dabei? Wir erstellen gerne ein
+            maßgeschneidertes Angebot für Ihre Veranstaltung.
           </p>
           <div className="booking-cta-actions">
-            <Link href="/booking" className="btn btn-primary">
+            <Link href="/booking" className="btn btn-gold">
               Anfrage senden
             </Link>
-            <a href={`mailto:${band.email}`} className="btn btn-ghost">
+            <a href={`mailto:${band.email}`} className="btn btn-outline-light">
               {band.email}
             </a>
           </div>

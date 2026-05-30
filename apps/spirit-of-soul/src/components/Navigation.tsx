@@ -5,54 +5,29 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { band } from "@/config/band";
 
-function GlassFilter() {
-  return (
-    <svg style={{ display: "none" }} aria-hidden="true">
-      <defs>
-        <filter
-          id="nav-glass"
-          x="0%"
-          y="0%"
-          width="100%"
-          height="100%"
-          filterUnits="objectBoundingBox"
-          colorInterpolationFilters="sRGB"
-        >
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.9 0.9"
-            numOctaves="4"
-            seed="5"
-            result="noise"
-          />
-          <feColorMatrix
-            type="saturate"
-            values="0"
-            in="noise"
-            result="grayNoise"
-          />
-          <feBlend in="SourceGraphic" in2="grayNoise" mode="luminosity" result="blended" />
-          <feComposite in="blended" operator="in" in2="SourceGraphic" />
-        </filter>
-      </defs>
-    </svg>
-  );
-}
-
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 48);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   return (
     <>
-      <GlassFilter />
       <nav className={`nav${scrolled ? " scrolled" : ""}`}>
         <div className="nav-glass-bg" />
         <div className="container nav-inner">
@@ -71,11 +46,46 @@ export default function Navigation() {
               </li>
             ))}
           </ul>
-          <Link href="/booking" className="nav-cta">
-            Buchen
-          </Link>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
+            <Link href="/booking" className="nav-cta">
+              Buchen
+            </Link>
+            <button
+              className="nav-toggle"
+              onClick={() => setMobileOpen((o) => !o)}
+              aria-label={mobileOpen ? "Menü schließen" : "Menü öffnen"}
+            >
+              {mobileOpen ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                  <line x1="3" y1="3" x2="17" y2="17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="17" y1="3" x2="3" y2="17" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              ) : (
+                <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true">
+                  <line x1="0" y1="1" x2="22" y2="1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="0" y1="8" x2="22" y2="8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="0" y1="15" x2="22" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
+
+      <div className={`nav-mobile${mobileOpen ? " open" : ""}`}>
+        {band.nav.map((item) => (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={pathname === item.href ? "active" : ""}
+          >
+            {item.label}
+          </Link>
+        ))}
+        <Link href="/booking" className="btn btn-gold nav-mobile-cta">
+          Jetzt buchen
+        </Link>
+      </div>
     </>
   );
 }

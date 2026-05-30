@@ -6,12 +6,14 @@ export default function AboutSection() {
     <section className="section">
       <div className="container">
         <div className="about-grid">
-          <div className="about-image-placeholder" />
+          <div className="about-image-wrap">
+            <div className="about-image-placeholder" />
+          </div>
           <div className="about-text">
             <span className="eyebrow">Über die Band</span>
             <h2>{band.name}</h2>
             <p>{band.about.bio}</p>
-            <Link href="/about" className="btn btn-ghost">
+            <Link href="/about" className="btn btn-outline">
               Mehr erfahren
             </Link>
             <div className="facts-grid">

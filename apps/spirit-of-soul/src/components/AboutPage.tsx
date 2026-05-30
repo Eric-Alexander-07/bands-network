@@ -1,10 +1,11 @@
+import Link from "next/link";
 import { band } from "@/config/band";
 
 const platforms = [
-  { key: "instagram" as const, label: "Instagram", handle: "@" },
-  { key: "facebook" as const, label: "Facebook", handle: "facebook.com/" },
-  { key: "youtube" as const, label: "YouTube", handle: "youtube.com/" },
-  { key: "spotify" as const, label: "Spotify", handle: "open.spotify.com/" },
+  { key: "instagram" as const, label: "Instagram" },
+  { key: "facebook" as const, label: "Facebook" },
+  { key: "youtube" as const, label: "YouTube" },
+  { key: "spotify" as const, label: "Spotify" },
 ];
 
 export default function AboutPage() {
@@ -17,28 +18,57 @@ export default function AboutPage() {
           <div className="about-hero-layout">
             <div className="about-hero-text">
               <span className="eyebrow">Unsere Geschichte</span>
-              <h1>Über {band.name}</h1>
+              <h1>Über uns</h1>
               <p>{band.about.bio}</p>
             </div>
-            <div className="about-hero-image about-image-placeholder" />
+            <div className="about-hero-image" />
           </div>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <span className="eyebrow">Das Team</span>
-          <h2 className="section-title">Bandmitglieder</h2>
-          <div className="members-grid">
-            {band.about.members.map((member, i) => (
-              <div key={i} className="member-card">
-                <div className="member-photo-placeholder" />
-                <div className="member-info">
-                  <p className="member-name">{member.name}</p>
-                  <p className="member-role">{member.role}</p>
-                </div>
-              </div>
-            ))}
+          <span className="eyebrow">Flexibel buchbar</span>
+          <h2 className="section-title">Besetzung</h2>
+          <p className="formations-intro">
+            {band.name} ist für verschiedene Events in verschiedenen
+            Besetzungen buchbar — von der eleganten kleinen Formation bis
+            zur 12-köpfigen Full-Band mit Bläser Sektion.
+          </p>
+          <div className="formations-grid">
+            <div className="formations-col">
+              <h3 className="formations-col-title">Kleine Besetzungen</h3>
+              <p className="formations-col-sub">
+                Für private Events und kleinere Veranstaltungen (mit Halbplaybacks)
+              </p>
+              <ul className="formations-list">
+                {band.formations.small.map((f, i) => (
+                  <li key={i} className="formation-item">
+                    <span className="formation-name">{f.name}</span>
+                    <span className="formation-lineup">{f.lineup}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="formations-col">
+              <h3 className="formations-col-title">Komplette Liveband</h3>
+              <p className="formations-col-sub">
+                Größere Besetzungen mit kompletter Live-Begleitung
+              </p>
+              <ul className="formations-list">
+                {band.formations.full.map((f, i) => (
+                  <li key={i} className="formation-item">
+                    <span className="formation-name">{f.name}</span>
+                    <span className="formation-lineup">{f.lineup}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="formations-cta">
+            <Link href="/booking" className="btn btn-primary">
+              Besetzung anfragen
+            </Link>
           </div>
         </div>
       </section>
@@ -51,7 +81,6 @@ export default function AboutPage() {
             Bleibt auf dem Laufenden — neue Termine, Fotos und
             Behind-the-Scenes direkt in eurem Feed.
           </p>
-
           <div className="about-social-platforms">
             {platforms.map((p) => (
               <a
@@ -66,10 +95,9 @@ export default function AboutPage() {
               </a>
             ))}
           </div>
-
           <div className="about-facebook-embed">
             <div className="about-facebook-label">
-              <span className="eyebrow">Facebook-Seite</span>
+              <span className="eyebrow">Facebook</span>
             </div>
             <div className="about-facebook-frame">
               <iframe

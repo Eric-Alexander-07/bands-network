@@ -3,19 +3,19 @@ import { band } from "@/config/band";
 
 export default function BookingCTA() {
   return (
-    <section className="section booking-cta">
+    <section className="booking-cta">
       <div className="container booking-cta-inner">
         <span className="eyebrow">Jetzt anfragen</span>
-        <h2>{band.name}</h2>
+        <h2>Unvergessliche Musik<br />für Ihr Event</h2>
         <p>
-          Macht euer Event unvergesslich. Jetzt Verfügbarkeit und Konditionen
-          anfragen.
+          Von der Dinner-Besetzung bis zur 12-köpfigen Full-Band — wir
+          erstellen ein maßgeschneidertes Angebot für Ihre Veranstaltung.
         </p>
         <div className="booking-cta-actions">
-          <Link href="/booking" className="btn btn-primary">
+          <Link href="/booking" className="btn btn-gold">
             Buchung anfragen
           </Link>
-          <a href={`mailto:${band.email}`} className="btn btn-ghost">
+          <a href={`mailto:${band.email}`} className="btn btn-outline-light">
             {band.email}
           </a>
         </div>

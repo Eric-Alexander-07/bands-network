@@ -7,8 +7,8 @@ export default function VideoSection() {
         <span className="eyebrow">Live &amp; Studio</span>
         <h2 className="section-title">Videos</h2>
         <div className="video-grid">
-          {band.videos.map((video) => (
-            <div key={video.id} className="video-item">
+          {band.videos.map((video, i) => (
+            <div key={`${video.id}-${i}`} className="video-item">
               <iframe
                 src={`https://www.youtube-nocookie.com/embed/${video.id}`}
                 title={video.title}

@@ -25,7 +25,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer-col">
-            <h4>Social</h4>
+            <h4>Folgt uns</h4>
             <div className="footer-socials">
               {Object.entries(band.socials).map(([key, url]) => (
                 <a
@@ -42,9 +42,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          <span>
-            © {new Date().getFullYear()} {band.name}. Alle Rechte vorbehalten.
-          </span>
+          <span>© {new Date().getFullYear()} {band.name} · Vivid Music Productions</span>
           <span>{band.email}</span>
         </div>
       </div>

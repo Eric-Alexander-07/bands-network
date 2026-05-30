@@ -7,7 +7,10 @@ export default function KontaktPage() {
         <div className="container">
           <span className="eyebrow">Schreib uns</span>
           <h1>Kontakt</h1>
-          <p>Fragen, Anfragen oder einfach Hallo sagen — wir freuen uns von euch zu hören.</p>
+          <p>
+            Fragen, allgemeine Anfragen oder einfach Hallo sagen — wir freuen
+            uns von euch zu hören.
+          </p>
         </div>
       </section>
 
@@ -18,13 +21,17 @@ export default function KontaktPage() {
               <h2>Kontaktdaten</h2>
               <p>
                 <strong>E-Mail</strong>
-                <br />
                 <a href={`mailto:${band.email}`}>{band.email}</a>
               </p>
               <p>
                 <strong>Standort</strong>
-                <br />
                 {band.location}
+              </p>
+              <p>
+                <strong>Buchungsanfragen</strong>
+                Nutze bitte das{" "}
+                <a href="/booking">Buchungsformular</a> für konkrete
+                Event-Anfragen mit Datum und Details.
               </p>
               <div className="contact-socials">
                 {Object.entries(band.socials).map(([key, url]) => (
@@ -44,19 +51,42 @@ export default function KontaktPage() {
             <form className="contact-form">
               <div className="form-group">
                 <label htmlFor="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="Dein Name" required />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Dein Name"
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="email">E-Mail</label>
-                <input type="email" id="email" name="email" placeholder="deine@email.de" required />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="deine@email.de"
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="subject">Betreff</label>
-                <input type="text" id="subject" name="subject" placeholder="Worum geht es?" />
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  placeholder="Worum geht es?"
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="message">Nachricht</label>
-                <textarea id="message" name="message" rows={6} placeholder="Deine Nachricht..." required />
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={6}
+                  placeholder="Deine Nachricht..."
+                  required
+                />
               </div>
               <button type="submit" className="btn btn-primary">
                 Nachricht senden

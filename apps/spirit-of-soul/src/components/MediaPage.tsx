@@ -8,8 +8,8 @@ export default function MediaPage() {
       <section className="page-hero">
         <div className="container">
           <span className="eyebrow">Fotos &amp; Videos</span>
-          <h1>Medien</h1>
-          <p>Live-Momente, Studio-Sessions und mehr von {band.name}.</p>
+          <h1>Media &amp; News</h1>
+          <p>Live-Momente, Studio-Sessions und Neuigkeiten von {band.name}.</p>
         </div>
       </section>
 
@@ -18,8 +18,8 @@ export default function MediaPage() {
           <span className="eyebrow">Videos</span>
           <h2 className="section-title">Ansehen</h2>
           <div className="video-grid">
-            {band.videos.map((video) => (
-              <div key={video.id} className="video-item">
+            {band.videos.map((video, i) => (
+              <div key={`${video.id}-${i}`} className="video-item">
                 <iframe
                   src={`https://www.youtube-nocookie.com/embed/${video.id}`}
                   title={video.title}
