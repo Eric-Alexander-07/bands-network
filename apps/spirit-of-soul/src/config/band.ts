@@ -64,9 +64,13 @@ export const band = {
   ],
 
   videos: [
-    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Live Performance" },
-    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Hochzeits-Set Highlights" },
-    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Firmenevent 2024" },
+    {
+      id: "ndpeOeVYXiw",
+      title: "Spirit of Soul – 20 Years Live Medley (2020)",
+      description: "Medley der CD »20 Years Live« — Cover- und eigene Songs. Spirit of Soul feiert 2020 das 20-jährige Jubiläum im Frankfurter Südbahnhof. Spirit of Soul spielt europaweit auf großen Firmenevents, Galas, High-Class-Events und Stadtfesten.",
+    },
+    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Live Performance", description: "" },
+    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Firmenevent Highlights", description: "" },
   ],
 
   formations: {
@@ -96,7 +100,7 @@ export const band = {
 
   socials: {
     instagram: "https://instagram.com/spiritofsoul",
-    facebook: "https://facebook.com/spiritofsoul",
+    facebook: "https://www.facebook.com/spiritofsoulband/",
     youtube: "https://youtube.com/@spiritofsoul",
     spotify: "https://open.spotify.com/artist/spiritofsoul",
   },
@@ -181,25 +185,13 @@ export const band = {
     packages: [
       {
         name: "Konventionelle Show",
-        description: "Standard Licht & Sound — professionell auf Ihre Location abgestimmt. Unsere Techniker betreuen auf Wunsch auch Rahmenprogramme, Reden und Präsentationen bei Firmenfeiern.",
-        features: [
-          "Professionelle Tonanlage & Bühnenmonitoring",
-          "Standard-Bühnenbeleuchtung",
-          "Betreuung von Reden & Präsentationen",
-          "Erfahrene Live-Techniker vor Ort",
-          "Technischer Rider auf Anfrage",
-        ],
+        description: "Beschreibung folgt.",
+        features: ["Details auf Anfrage"],
       },
       {
         name: "Multimedia-Show",
-        description: "Multimediashow mit integrierter Videoprojektion auf LED-Leinwänden für maximale visuelle Wirkung. Symbiose aus Sound & Licht, abgestimmt auf die Größe Ihrer Location.",
-        features: [
-          "LED-Leinwände & Videoprojektion",
-          "Professionelle Lichtshow (Moving Heads, Hazer)",
-          "Individuell gestaltete visuelle Inhalte",
-          "Full-Service Technik-Crew",
-          "Planung & Koordination inklusive",
-        ],
+        description: "Beschreibung folgt.",
+        features: ["Details auf Anfrage"],
       },
     ],
     note: "Gerne erstellen wir Ihnen ein Paket-Angebot über Band, Bühne, Tonanlage & Licht inkl. technischer Betreuung. Hierzu benötigen wir genauere Daten der Location sowie ggf. Bilder von vorangegangenen Veranstaltungen.",

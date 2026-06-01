@@ -2,73 +2,147 @@ import { band } from "@/config/band";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
-function formatDateDay(dateStr: string)   { const [,, d] = dateStr.split("-").map(Number); return String(d).padStart(2,"0"); }
-function formatDateMonth(dateStr: string) { const [, m]  = dateStr.split("-").map(Number); return MONTHS_SHORT[m - 1]; }
+function fmtDay(d: string)   { const [,, day] = d.split("-").map(Number); return String(day).padStart(2, "0"); }
+function fmtMonth(d: string) { const [, m]    = d.split("-").map(Number); return MONTHS_SHORT[m - 1]; }
+function fmtYear(d: string)  { const [year]   = d.split("-").map(Number); return year; }
 
-const PHOTO_COUNT = 9;
+const PLATFORMS = [
+  { key: "instagram" as const, label: "Instagram", handle: "@bobbystoecker" },
+  { key: "facebook"  as const, label: "Facebook",  handle: "Spirit of Soul" },
+  { key: "youtube"   as const, label: "YouTube",   handle: "@spiritofsoul" },
+];
 
 export default function MediaPage() {
+  const [mainVideo, ...restVideos] = band.videos;
+
   return (
     <>
       <section className="page-hero">
         <img src="/images/gallery/live-guitarist.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
-          <span className="eyebrow">Termine, Fotos &amp; Videos</span>
+          <span className="eyebrow">Termine, News &amp; Videos</span>
           <h1>Media &amp; News</h1>
-          <p>Aktuelle Spieltermine, Live-Momente und Neuigkeiten von {band.name}.</p>
+          <p>Aktuelle Spieltermine, Videos und Social Media von {band.name}.</p>
         </div>
       </section>
 
+      {/* Videos + Spieltermine */}
       <section className="section">
         <div className="container">
-          <span className="eyebrow" data-animate="fade-up">Kommende Events</span>
-          <h2 className="section-title" data-animate="fade-up" data-delay="100">Spieltermine</h2>
-          <div className="dates-list" data-animate="stagger">
-            {band.dates.map((d, i) => (
-              <div key={i} className="date-row">
-                <div className="date-col-date">
-                  <span className="date-day">{formatDateDay(d.date)}</span>
-                  <span className="date-month">{formatDateMonth(d.date)}</span>
-                </div>
-                <div className="date-col-info">
-                  <p className="date-event">{d.event}</p>
-                  <p className="date-venue">{d.venue} · {d.location}</p>
-                </div>
-                <span className="date-type">{d.type}</span>
-                <a href="/booking" className="date-ticket btn btn-outline">Anfragen</a>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+          <div className="media-main-layout">
 
-      <section className="section video-section">
-        <div className="container">
-          <span className="eyebrow">Videos</span>
-          <h2 className="section-title">Ansehen</h2>
-          <div className="video-grid" data-animate="stagger">
-            {band.videos.map((video, i) => (
-              <div key={`${video.id}-${i}`} className="video-item">
+            {/* Videos — links */}
+            <div className="media-videos-col">
+              <span className="eyebrow" data-animate="fade-up">Videos</span>
+              <h2 className="section-title" data-animate="fade-up" data-delay="100">Auf der Bühne</h2>
+
+              {/* Featured video */}
+              <div data-animate="fade-up" data-delay="200">
+                <div className="media-video-featured">
+                  <iframe
+                    src={`https://www.youtube-nocookie.com/embed/${mainVideo.id}`}
+                    title={mainVideo.title}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen loading="lazy"
+                  />
+                </div>
+                <div className="media-video-meta">
+                  <p className="media-video-title">{mainVideo.title}</p>
+                  {mainVideo.description && (
+                    <p className="media-video-desc">{mainVideo.description}</p>
+                  )}
+                </div>
+              </div>
+
+              {/* Secondary videos */}
+              {restVideos.length > 0 && (
+                <div className="media-videos-secondary" data-animate="stagger">
+                  {restVideos.map((video, i) => (
+                    <div key={`${video.id}-${i}`} className="media-video-secondary">
+                      <iframe
+                        src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                        title={video.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Spieltermine — rechts */}
+            <div className="media-dates-col">
+              <span className="eyebrow" data-animate="fade-up">Kommende Events</span>
+              <h2 className="section-title" data-animate="fade-up" data-delay="100">Termine</h2>
+              <div className="media-dates-list" data-animate="stagger">
+                {band.dates.map((d, i) => (
+                  <div key={i} className="media-date-item">
+                    <div className="media-date-badge">
+                      <span className="media-date-day">{fmtDay(d.date)}</span>
+                      <span className="media-date-month">{fmtMonth(d.date)}</span>
+                      <span className="media-date-year">{fmtYear(d.date)}</span>
+                    </div>
+                    <div className="media-date-info">
+                      <p className="media-date-event">{d.event}</p>
+                      <p className="media-date-venue">{d.location}</p>
+                      <span className="media-date-type">{d.type}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="media-dates-fb">
                 <iframe
-                  src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-                  title={video.title}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen loading="lazy"
+                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent("https://www.facebook.com/spiritofsoulband/")}&tabs=timeline&width=300&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
+                  width="300"
+                  height="500"
+                  style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
+                  scrolling="no"
+                  allowFullScreen
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  title="Spirit of Soul Facebook"
                 />
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      {/* Social Media */}
+      <section className="section media-social-section">
         <div className="container">
-          <span className="eyebrow">Fotos</span>
-          <h2 className="section-title">Galerie</h2>
-          <div className="media-grid" data-animate="stagger">
-            {Array.from({ length: PHOTO_COUNT }).map((_, i) => (
-              <div key={i} className="media-photo-placeholder" />
-            ))}
+          <div className="media-social-inner">
+            {/* Bild links */}
+            <div className="media-social-img-col" data-animate="fade-right">
+              <img
+                src="/images/gallery/live-vocalist-gold.webp"
+                alt="Spirit of Soul Live"
+                className="media-social-img"
+              />
+            </div>
+
+            {/* Inhalt rechts */}
+            <div className="media-social-content">
+              <div data-animate="fade-up">
+                <span className="eyebrow">Folgt uns</span>
+                <h2 className="section-title">News auf Instagram &amp; Facebook</h2>
+                <p className="media-social-desc">
+                  Bleibt up to date — neue Auftritte, Fotos, Behind-the-Scenes
+                  und direkte Einblicke in unser Bandleben.
+                </p>
+              </div>
+              <div className="media-social-platforms" data-animate="stagger">
+                {PLATFORMS.map((p) => (
+                  <a key={p.key} href={band.socials[p.key]} className="media-platform-link"
+                     target="_blank" rel="noopener noreferrer">
+                    <span className="media-platform-label">{p.label}</span>
+                    <span className="media-platform-handle">{p.handle}</span>
+                    <span className="media-platform-arrow">↗</span>
+                  </a>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
