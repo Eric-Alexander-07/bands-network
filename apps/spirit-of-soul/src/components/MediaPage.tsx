@@ -1,4 +1,5 @@
 import { band } from "@/config/band";
+import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
@@ -13,7 +14,7 @@ const PLATFORMS = [
 ];
 
 export default function MediaPage() {
-  const [mainVideo, ...restVideos] = band.videos;
+  const [mainVideo, ...playlistVideos] = band.videos;
 
   return (
     <>
@@ -36,7 +37,7 @@ export default function MediaPage() {
               <span className="eyebrow" data-animate="fade-up">Videos</span>
               <h2 className="section-title" data-animate="fade-up" data-delay="100">Auf der Bühne</h2>
 
-              {/* Featured video */}
+              {/* Featured — fest, immer sichtbar */}
               <div data-animate="fade-up" data-delay="200">
                 <div className="media-video-featured">
                   <iframe
@@ -54,19 +55,10 @@ export default function MediaPage() {
                 </div>
               </div>
 
-              {/* Secondary videos */}
-              {restVideos.length > 0 && (
-                <div className="media-videos-secondary" data-animate="stagger">
-                  {restVideos.map((video, i) => (
-                    <div key={`${video.id}-${i}`} className="media-video-secondary">
-                      <iframe
-                        src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-                        title={video.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen loading="lazy"
-                      />
-                    </div>
-                  ))}
+              {/* Weitere Videos — Playlist Player */}
+              {playlistVideos.length > 0 && (
+                <div data-animate="fade-up" data-delay="300">
+                  <VideoPlaylistPlayer videos={playlistVideos} />
                 </div>
               )}
             </div>

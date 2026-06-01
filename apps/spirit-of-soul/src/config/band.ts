@@ -66,11 +66,24 @@ export const band = {
   videos: [
     {
       id: "ndpeOeVYXiw",
-      title: "Spirit of Soul – 20 Years Live Medley (2020)",
-      description: "Medley der CD »20 Years Live« — Cover- und eigene Songs. Spirit of Soul feiert 2020 das 20-jährige Jubiläum im Frankfurter Südbahnhof. Spirit of Soul spielt europaweit auf großen Firmenevents, Galas, High-Class-Events und Stadtfesten.",
+      title: "20 Years Live — Medley (2020)",
+      description: "Spirit of Soul feiert 2020 das 20-jährige Jubiläum im Frankfurter Südbahnhof. Medley der CD »20 Years Live« — Cover- und eigene Songs in toller Audio-Qualität.",
     },
-    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Live Performance", description: "" },
-    { id: "dQw4w9WgXcQ", title: "Spirit of Soul – Firmenevent Highlights", description: "" },
+    {
+      id: "8X4Pe2HNEjY",
+      title: "The Finest Of Black Music",
+      description: "",
+    },
+    {
+      id: "MRjRdrT3IYc",
+      title: "Live Show",
+      description: "",
+    },
+    {
+      id: "2afQhcUkdIc",
+      title: "Uptown Funk — Live",
+      description: "",
+    },
   ],
 
   formations: {
