@@ -71,7 +71,7 @@ export default function PhotoCarousel({ photos, autoplay = true }: PhotoCarousel
     if (touchStartX.current === null) return;
     const delta = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(delta) < 40) return; // ignore small movements
-    delta > 0 ? handleNext() : handlePrev();
+    if (delta > 0) { handleNext(); } else { handlePrev(); }
     touchStartX.current = null;
   }
 

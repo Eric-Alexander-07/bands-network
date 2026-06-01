@@ -5,7 +5,7 @@ import ConcentricRings from "@/components/ConcentricRings";
 export default function AboutSection() {
   return (
     <section className="section section-has-rings">
-      <ConcentricRings id="about-s" className="rings-left" />
+      <ConcentricRings className="rings-left" />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="about-grid">
           <div className="about-image-wrap" data-animate="fade-right">

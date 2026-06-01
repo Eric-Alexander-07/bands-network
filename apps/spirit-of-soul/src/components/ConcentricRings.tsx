@@ -1,9 +1,8 @@
 interface Props {
-  id: string;
   className?: string;
 }
 
-export default function ConcentricRings({ id: _id, className = "" }: Props) {
+export default function ConcentricRings({ className = "" }: Props) {
   return (
     <svg
       className={`concentric-rings-svg ${className}`}

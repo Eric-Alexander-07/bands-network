@@ -1,6 +1,5 @@
 import { band } from "@/config/band";
 
-const MONTHS_LONG  = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
 function formatDateDay(dateStr: string)   { const [,, d] = dateStr.split("-").map(Number); return String(d).padStart(2,"0"); }

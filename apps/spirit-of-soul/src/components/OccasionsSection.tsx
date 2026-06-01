@@ -6,7 +6,7 @@ import ConcentricRings from "@/components/ConcentricRings";
 export default function OccasionsSection() {
   return (
     <section className="section occasions-section section-has-rings">
-      <ConcentricRings id="occasions-s" className="rings-left" />
+      <ConcentricRings className="rings-left" />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="occasions-layout">
           <div data-animate="fade-right">

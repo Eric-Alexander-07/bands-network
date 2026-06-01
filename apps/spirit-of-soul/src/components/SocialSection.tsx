@@ -20,7 +20,7 @@ const PLATFORMS = [
 export default function SocialSection() {
   return (
     <section className="section social-media-section section-has-rings">
-      <ConcentricRings id="social-s" className="rings-right" />
+      <ConcentricRings className="rings-right" />
       <div className="container">
         <div className="social-media-layout">
 
