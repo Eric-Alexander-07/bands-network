@@ -102,7 +102,12 @@ export const band = {
   },
 
   about: {
-    bio: "Spirit of Soul steht seit 25 Jahren für authentischen Soul, R&B und Funk auf höchstem Niveau. Mit internationalen Sängerinnen und Sängern sowie erfahrenen Musikern liefern wir Entertainment der Extraklasse — von der intimen Dinner-Besetzung bis zur 12-köpfigen Full-Band. Gegründet unter dem Motto »The Finest Of Black Music«, begeistern wir Gäste bei Hochzeiten, Firmenevents, Stadtfesten und exklusiven Feiern.",
+    bio: "Spirit of Soul ist ein Zusammenschluss aus erfahrenen Profimusikern und -sängern, die sich entschlossen haben, den Geist des Soul auf der Bühne neu zu erwecken und zu zelebrieren. Die Band bietet eine Auswahl an individuellen Showpaketen und Bandkonstellationen für jede Veranstaltung. Die Vielseitigkeit und Flexibilität lässt sich auf den jeweiligen Event anpassen — egal ob Clubs, Firmenfeiern, Produktpräsentationen oder Privatveranstaltungen. Spirit of Soul garantiert ein Entertainment der Extraklasse, das Ihren Gästen noch lange in Erinnerung bleiben wird.",
+    shows: [
+      "Reguläre Partyvariante mit gemischtem Repertoire aus Klassikern und Modernem",
+      "Dinner-, Hintergrund- bzw. Lounge-Musik in kleiner Besetzung",
+      "Individuelle Tribute-Blöcke: Kool & The Gang, Stevie Wonder, The Temptations, Tina Turner — in originalen Outfits",
+    ],
     members: [
       { name: "Lisa Morgenstern", role: "Lead Vocals" },
       { name: "Marco Ferreira", role: "Keyboards / Musical Director" },
@@ -172,22 +177,22 @@ export const band = {
   ],
 
   technik: {
-    intro: "Planen Sie in Absprache mit uns die optimale optische und akustische Präsentation für Ihre Veranstaltung — von der intimen Dinner-Kulisse bis zur großen Multimediashow mit LED-Leinwänden.",
+    intro: "Planen Sie in Absprache mit uns auch die optische und akustische Präsentation von Spirit of Soul. Vertrauen Sie auf ein Team aus Künstlern und Technikern, das schon jahrelang zusammenarbeitet. Unsere Techniker sind Firmenevent- sowie Gala-erfahren und kennen die Einsätze eines jeden Sängers und Instrumentalisten — eine Tatsache, die Ihre Veranstaltung hörbar zu einem akustischen Leckerbissen werden lässt.",
     packages: [
       {
-        name: "Standard-Setup",
-        description: "Professionelles Sound- und Lichtsystem, abgestimmt auf Venue-Größe und Raumakustik. Unsere erfahrenen Techniker kennen die individuellen Anforderungen jedes Auftritts.",
+        name: "Konventionelle Show",
+        description: "Standard Licht & Sound — professionell auf Ihre Location abgestimmt. Unsere Techniker betreuen auf Wunsch auch Rahmenprogramme, Reden und Präsentationen bei Firmenfeiern.",
         features: [
-          "Professionelles PA-System",
-          "Stage-Monitoring für alle Musiker",
-          "Professionelle Bühnenbeleuchtung",
+          "Professionelle Tonanlage & Bühnenmonitoring",
+          "Standard-Bühnenbeleuchtung",
+          "Betreuung von Reden & Präsentationen",
           "Erfahrene Live-Techniker vor Ort",
           "Technischer Rider auf Anfrage",
         ],
       },
       {
         name: "Multimedia-Show",
-        description: "Erweiterte Show-Produktion mit integrierter Videoprojektion auf LED-Leinwänden für maximale visuelle Wirkung bei Gala-Events, Firmenveranstaltungen und Festivals.",
+        description: "Multimediashow mit integrierter Videoprojektion auf LED-Leinwänden für maximale visuelle Wirkung. Symbiose aus Sound & Licht, abgestimmt auf die Größe Ihrer Location.",
         features: [
           "LED-Leinwände & Videoprojektion",
           "Professionelle Lichtshow (Moving Heads, Hazer)",
@@ -197,39 +202,24 @@ export const band = {
         ],
       },
     ],
-    note: "Wir stimmen Technik und Show stets auf die Symbiose aus Sound, Licht und Venue-Atmosphäre ab. Für ein präzises Angebot benötigen wir Fotos der Location sowie Details zum geplanten Event.",
+    note: "Gerne erstellen wir Ihnen ein Paket-Angebot über Band, Bühne, Tonanlage & Licht inkl. technischer Betreuung. Hierzu benötigen wir genauere Daten der Location sowie ggf. Bilder von vorangegangenen Veranstaltungen.",
   },
 
   services: [
     {
-      title: "Hochzeits-Paket",
-      description: "Das komplette Musik-Programm für euren großen Tag – von der Trauzeremonie bis zum letzten Tanz.",
-      features: ["Standesamtliche & kirchliche Trauung", "Sektempfang & Dinner-Musik", "Abend-Show bis Mitternacht"],
+      title: "Paket 1",
+      description: "Beschreibung folgt.",
+      features: ["Details auf Anfrage"],
     },
     {
-      title: "Firmenevent",
-      description: "Maßgeschneiderte Entertainment-Pakete für Gala-Abende, Jubiläen und Unternehmensevents.",
-      features: ["Professionelle Bühnen- und Lichttechnik", "Individuelle Setlist nach Wunsch", "Moderation auf Anfrage"],
+      title: "Paket 2",
+      description: "Beschreibung folgt.",
+      features: ["Details auf Anfrage"],
     },
     {
-      title: "Festival & Open-Air",
-      description: "Packende Live-Shows für Stadtfeste, Open-Air-Events und große Bühnen.",
-      features: ["Full-Band mit Bläsersatz", "60–90 Minuten Show-Set", "Technischer Rider auf Anfrage"],
-    },
-    {
-      title: "Private Feiern",
-      description: "Geburtstage, Jubiläen, Gartenpartys – wir passen uns eurem Rahmen an.",
-      features: ["Flexible Besetzungsgröße (4–8 Musiker)", "Akustik-Set verfügbar", "DJ-Anschluss nach dem Auftritt"],
-    },
-    {
-      title: "Dinner-Musik",
-      description: "Elegante Hintergrundmusik für Gala-Dinners, Empfänge und exklusive Veranstaltungen.",
-      features: ["Leise, stimmungsvolle Besetzung", "Jazz & Soul Arrangements", "Kein Techniker vor Ort nötig"],
-    },
-    {
-      title: "Workshop & Coaching",
-      description: "Gesangs- und Musik-Workshops für Chöre, Ensembles und Einzelpersonen.",
-      features: ["Soul- und Gospel-Workshops", "Stimmcoaching mit Lisa Morgenstern", "Auf Anfrage buchbar"],
+      title: "Paket 3",
+      description: "Beschreibung folgt.",
+      features: ["Details auf Anfrage"],
     },
   ],
 };

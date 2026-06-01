@@ -17,8 +17,39 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Leistungen */}
+      {/* Die Band */}
       <section className="section">
+        <div className="container">
+          <div className="services-band-intro">
+            <div className="services-band-text" data-animate="fade-right">
+              <span className="eyebrow">Die Band</span>
+              <h2 className="section-title">{band.name}</h2>
+              <p>{band.about.bio}</p>
+              <p style={{ marginTop: "16px", color: "var(--text-muted)", fontSize: "0.9375rem", lineHeight: "1.8" }}>
+                Die Stärke von Spirit of Soul liegt in der Musikalität und Spontanität der
+                einzelnen Bandmitglieder sowie dem erstklassigen Entertainment der Frontleute.
+                Die Programmreihenfolge kann kurzfristig auf der Bühne entschieden werden —
+                so ist die Band in der Lage, spontan das richtige Programm für Ihr Event
+                maßzuschneidern und das Publikum ab dem ersten Ton zum Mitmachen zu bewegen.
+              </p>
+            </div>
+            <div className="services-band-shows" data-animate="fade-left">
+              <span className="eyebrow">Show-Varianten</span>
+              <ul className="services-show-list">
+                {band.about.shows.map((show, i) => (
+                  <li key={i} className="services-show-item">
+                    <span className="services-show-num">{String(i + 1).padStart(2, "0")}</span>
+                    <span>{show}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Leistungen */}
+      <section className="section" style={{ paddingTop: 0 }}>
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Leistungen</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Unsere Pakete</h2>
@@ -42,7 +73,7 @@ export default function ServicesPage() {
       {/* Technik */}
       <section className="section technik-section">
         <div className="container">
-          <span className="eyebrow" data-animate="fade-up">Sound &amp; Licht</span>
+          <span className="eyebrow" data-animate="fade-up">Ton · Licht · Bühne</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Technik</h2>
           <p className="technik-intro" data-animate="fade-up" data-delay="200">
             {band.technik.intro}
@@ -73,8 +104,8 @@ export default function ServicesPage() {
           <span className="eyebrow">Individuelles Angebot</span>
           <h2>Interesse?</h2>
           <p>
-            Nicht das Richtige dabei? Wir erstellen gerne ein
-            maßgeschneidertes Angebot für Ihre Veranstaltung.
+            Wir erstellen gerne ein maßgeschneidertes Angebot
+            für Ihre Veranstaltung — inkl. Band, Bühne und Technik.
           </p>
           <div className="booking-cta-actions">
             <Link href="/booking" className="btn btn-gold">Anfrage senden</Link>
