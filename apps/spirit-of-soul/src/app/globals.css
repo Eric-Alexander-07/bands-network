@@ -1324,7 +1324,7 @@ h3, h4 {
 .about-social-card-label { font-family: var(--font-ui); font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); }
 .about-social-card-arrow { font-size: 1.25rem; color: var(--text-muted); transition: color 0.15s, transform 0.15s; }
 .about-social-card:hover .about-social-card-arrow { color: var(--gold); transform: translate(2px,-2px); }
-.about-facebook-embed { }
+
 .about-facebook-label { margin-bottom: 16px; }
 .about-facebook-frame { border: 1px solid var(--border); overflow: hidden; max-width: 500px; }
 .about-facebook-frame iframe { display: block; width: 100%; }

@@ -31,7 +31,7 @@ function ShopProduct({
         <span className="shop-product-tag">{tag}</span>
         <h3 className="shop-product-name">{name}</h3>
         {subtitle && <p className="shop-product-subtitle">{subtitle}</p>}
-        <p className="shop-product-desc">{desc}</p>
+        <div className="shop-product-desc">{desc}</div>
         <div className="shop-product-price">
           <span className="shop-price-amount">{price}</span>
           <span className="shop-price-note">zzgl. Versand</span>
