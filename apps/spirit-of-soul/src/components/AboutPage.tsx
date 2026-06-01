@@ -1,41 +1,29 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 
-const platforms = [
-  { key: "instagram" as const, label: "Instagram" },
-  { key: "facebook" as const, label: "Facebook" },
-  { key: "youtube" as const, label: "YouTube" },
-  { key: "spotify" as const, label: "Spotify" },
-];
-
 export default function AboutPage() {
-  const facebookEmbedUrl = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(band.socials.facebook)}&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true`;
 
   return (
     <>
-      <section className="page-hero about-hero">
+      <section className="page-hero">
+        <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
-          <div className="about-hero-layout">
-            <div className="about-hero-text">
-              <span className="eyebrow">Unsere Geschichte</span>
-              <h1>Über uns</h1>
-              <p>{band.about.bio}</p>
-            </div>
-            <div className="about-hero-image" />
-          </div>
+          <span className="eyebrow">Unsere Geschichte</span>
+          <h1>Über uns</h1>
+          <p>{band.about.bio}</p>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <span className="eyebrow">Flexibel buchbar</span>
-          <h2 className="section-title">Besetzung</h2>
-          <p className="formations-intro">
+          <span className="eyebrow" data-animate="fade-up">Flexibel buchbar</span>
+          <h2 className="section-title" data-animate="fade-up" data-delay="100">Besetzung</h2>
+          <p className="formations-intro" data-animate="fade-up" data-delay="200">
             {band.name} ist für verschiedene Events in verschiedenen
             Besetzungen buchbar — von der eleganten kleinen Formation bis
             zur 12-köpfigen Full-Band mit Bläser Sektion.
           </p>
-          <div className="formations-grid">
+          <div className="formations-grid" data-animate="stagger">
             <div className="formations-col">
               <h3 className="formations-col-title">Kleine Besetzungen</h3>
               <p className="formations-col-sub">
@@ -65,7 +53,7 @@ export default function AboutPage() {
               </ul>
             </div>
           </div>
-          <div className="formations-cta">
+          <div className="formations-cta" data-animate="fade-up">
             <Link href="/booking" className="btn btn-primary">
               Besetzung anfragen
             </Link>
@@ -73,46 +61,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section about-social-section">
-        <div className="container">
-          <span className="eyebrow">Folgt uns</span>
-          <h2 className="section-title">Social Media</h2>
-          <p className="about-social-intro">
-            Bleibt auf dem Laufenden — neue Termine, Fotos und
-            Behind-the-Scenes direkt in eurem Feed.
-          </p>
-          <div className="about-social-platforms">
-            {platforms.map((p) => (
-              <a
-                key={p.key}
-                href={band.socials[p.key]}
-                className="about-social-card"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="about-social-card-label">{p.label}</span>
-                <span className="about-social-card-arrow">↗</span>
-              </a>
-            ))}
-          </div>
-          <div className="about-facebook-embed">
-            <div className="about-facebook-label">
-              <span className="eyebrow">Facebook</span>
-            </div>
-            <div className="about-facebook-frame">
-              <iframe
-                src={facebookEmbedUrl}
-                width="500"
-                height="600"
-                style={{ border: "none", overflow: "hidden" }}
-                allowFullScreen
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                title="Facebook Seite"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

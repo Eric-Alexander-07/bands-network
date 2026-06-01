@@ -5,12 +5,11 @@ export default function ShopPage() {
   return (
     <>
       <section className="page-hero">
+        <img src="/images/hero.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Merch &amp; mehr</span>
           <h1>Shop</h1>
-          <p>
-            T-Shirts, CDs und exklusive {band.name}-Merchandise-Artikel.
-          </p>
+          <p>T-Shirts, CDs und exklusive {band.name}-Merchandise-Artikel.</p>
         </div>
       </section>
 
@@ -24,9 +23,7 @@ export default function ShopPage() {
               du Merchandise oder CDs bestellen möchtest — wir helfen dir
               direkt weiter.
             </p>
-            <Link href="/kontakt" className="btn btn-primary">
-              Kontakt aufnehmen
-            </Link>
+            <Link href="/kontakt" className="btn btn-primary">Kontakt aufnehmen</Link>
           </div>
         </div>
       </section>

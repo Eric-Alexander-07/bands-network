@@ -1,6 +1,6 @@
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-import VideoSection from "@/components/VideoSection";
+import SocialSection from "@/components/SocialSection";
 import OccasionsSection from "@/components/OccasionsSection";
 import GallerySection from "@/components/GallerySection";
 import ClientsStrip from "@/components/ClientsStrip";
@@ -11,7 +11,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <AboutSection />
-      <VideoSection />
+      <SocialSection />
       <OccasionsSection />
       <GallerySection />
       <ClientsStrip />

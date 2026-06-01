@@ -7,17 +7,21 @@ export default function GallerySection() {
       <div className="container">
         <div className="gallery-layout">
           <div className="gallery-text">
-            <span className="eyebrow">Impressionen</span>
-            <h2 className="section-title">Galerie &amp; Medien</h2>
-            <p className="gallery-desc">
+            <span className="eyebrow" data-animate="fade-up">Impressionen</span>
+            <h2 className="section-title" data-animate="fade-up" data-delay="100">
+              Galerie &amp; Medien
+            </h2>
+            <p className="gallery-desc" data-animate="fade-up" data-delay="200">
               Eindrücke von Auftritten, Studio-Sessions und Events — Fotos und
               Videos aus dem Live-Alltag von {band.name}.
             </p>
-            <Link href="/galerie" className="btn btn-light">
-              Zur Galerie
-            </Link>
+            <div data-animate="fade-up" data-delay="300">
+              <Link href="/galerie" className="btn btn-light">
+                Zur Galerie
+              </Link>
+            </div>
           </div>
-          <div className="gallery-preview">
+          <div className="gallery-preview" data-animate="fade-left">
             <div className="gallery-preview-photo">
               <span className="gallery-photo-placeholder">Foto</span>
             </div>

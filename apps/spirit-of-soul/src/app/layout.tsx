@@ -5,6 +5,7 @@ import "./globals.css";
 import { band } from "@/config/band";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import ScrollAnimations from "@/components/ScrollAnimations";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="de" className={`${inter.variable} ${playfair.variable}`}>
       <body>
         <Navigation />
+        <ScrollAnimations />
         <main>{children}</main>
         <Footer />
       </body>

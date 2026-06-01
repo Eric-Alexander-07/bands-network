@@ -1,7 +1,30 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
 
+const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+
+function formatGigDate(dateStr: string) {
+  const [, month, day] = dateStr.split("-").map(Number);
+  return `${day}. ${MONTHS_SHORT[month - 1]}`;
+}
+
 export default function HeroSection() {
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const nextDates = band.dates.slice(0, 3);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!parallaxRef.current) return;
+      const y = Math.min(window.scrollY * 0.22, 100);
+      parallaxRef.current.style.transform = `translateY(${y}px)`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <section className="hero">
       <div className="hero-split">
@@ -15,7 +38,9 @@ export default function HeroSection() {
               <span className="hero-title-line hero-title-italic">of Soul</span>
             </h1>
             <p className="hero-claim">{band.claim}</p>
-            <p className="hero-sub">{band.tagline} — 25 Jahre Live-Erfahrung auf internationalen Bühnen.</p>
+            <p className="hero-sub">
+              {band.tagline} — 25 Jahre Live-Erfahrung auf internationalen Bühnen.
+            </p>
             <div className="hero-actions">
               <Link href="/booking" className="btn btn-light">
                 Jetzt buchen
@@ -24,21 +49,36 @@ export default function HeroSection() {
                 Über uns
               </Link>
             </div>
+
+            {nextDates.length > 0 && (
+              <div className="hero-dates">
+                <span className="hero-dates-label">Nächste Auftritte</span>
+                <ul className="hero-date-list">
+                  {nextDates.map((d, i) => (
+                    <li key={i} className="hero-date-item">
+                      <span className="hero-date-day">{formatGigDate(d.date)}</span>
+                      <span className="hero-date-sep" />
+                      <span className="hero-date-event">{d.event}</span>
+                      <span className="hero-date-loc">{d.location}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/media" className="hero-dates-more">
+                  Alle Termine ansehen →
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div className="hero-right">
-          <div className="hero-right-placeholder">
-            <span>Band Photo</span>
+          <div ref={parallaxRef} className="hero-right-inner">
+            <img
+              src="/images/hero.webp"
+              alt="Spirit of Soul — Live Performance"
+              className="hero-right-img"
+            />
           </div>
         </div>
-      </div>
-      <div className="hero-bottom-bar">
-        {band.facts.map((fact, i) => (
-          <div key={i} className="hero-stat">
-            <span className="hero-stat-value">{fact.value}</span>
-            <span className="hero-stat-label">{fact.label}</span>
-          </div>
-        ))}
       </div>
     </section>
   );

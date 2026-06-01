@@ -18,8 +18,17 @@ export const band = {
     { label: "Kontakt", href: "/kontakt" },
   ],
 
+  dates: [
+    { date: "2026-06-13", event: "Jazz & Soul Night", venue: "Batschkapp", location: "Frankfurt am Main", type: "Festival" },
+    { date: "2026-06-27", event: "Stadtfest Gießen", venue: "Innenstadt", location: "Gießen", type: "Stadtfest" },
+    { date: "2026-07-11", event: "Firmengala", venue: "Alte Oper Frankfurt", location: "Frankfurt am Main", type: "Firmenevent" },
+    { date: "2026-07-25", event: "Open Air Sommerfest", venue: "Mainufer", location: "Frankfurt am Main", type: "Festival" },
+    { date: "2026-08-08", event: "Weinfest Rüdesheim", venue: "Drosselgasse", location: "Rüdesheim", type: "Festival" },
+    { date: "2026-09-05", event: "Hochzeitsmesse Wiesbaden", venue: "RheinMain CongressCenter", location: "Wiesbaden", type: "Messe" },
+  ],
+
   facts: [
-    { value: "25", label: "Jahre auf der Bühne" },
+    { value: "25+", label: "Jahre auf der Bühne" },
     { value: "500+", label: "Live-Auftritte" },
     { value: "12", label: "Musiker (max.)" },
     { value: "200+", label: "Songs im Repertoire" },
@@ -49,9 +58,9 @@ export const band = {
   ],
 
   photos: [
-    { src: "https://placehold.co/600x800/e4e4e4/9ca3af?text=SPIRIT+OF+SOUL+1", alt: "Spirit of Soul Live 1" },
-    { src: "https://placehold.co/600x800/e4e4e4/9ca3af?text=SPIRIT+OF+SOUL+2", alt: "Spirit of Soul Live 2" },
-    { src: "https://placehold.co/600x800/e4e4e4/9ca3af?text=SPIRIT+OF+SOUL+3", alt: "Spirit of Soul Live 3" },
+    { src: "/images/gallery/live-guitarist.webp", alt: "Spirit of Soul Live — Gitarrist" },
+    { src: "/images/gallery/live-vocalist-gold.webp", alt: "Spirit of Soul — Vocalist" },
+    { src: "/images/gallery/live-stage-duo.webp", alt: "Spirit of Soul auf der Bühne" },
   ],
 
   videos: [
@@ -142,55 +151,54 @@ export const band = {
   },
 
   references: [
-    {
-      event: "Hochzeit Villa Ruffini",
-      type: "Hochzeit",
-      year: "2024",
-      location: "München",
-      client: "Familie Ruffini",
-      quote: "Spirit of Soul hat unsere Hochzeit zu einem unvergesslichen Erlebnis gemacht. Alle Gäste waren begeistert!",
-    },
-    {
-      event: "BMW Jahresfeier 2024",
-      type: "Firmenevent",
-      year: "2024",
-      location: "BMW Welt München",
-      client: "BMW AG",
-      quote: "Professionell, energiegeladen und absolut begeisternd. Wir buchen sie jedes Jahr.",
-    },
-    {
-      event: "Stadtfest Schwabing",
-      type: "Festival",
-      year: "2023",
-      location: "München-Schwabing",
-      client: "Bezirk Schwabing",
-      quote: "",
-    },
-    {
-      event: "Gala-Abend Siemens",
-      type: "Firmenevent",
-      year: "2023",
-      location: "Residenz München",
-      client: "Siemens AG",
-      quote: "Eine außergewöhnliche Band, die unsere Gäste von der ersten bis zur letzten Note in ihren Bann zog.",
-    },
-    {
-      event: "60. Geburtstag Klaus Wagner",
-      type: "Private Feier",
-      year: "2023",
-      location: "Gutshof Grünwald",
-      client: "Familie Wagner",
-      quote: "",
-    },
-    {
-      event: "Hofbräuhaus Jazz & Soul Night",
-      type: "Festival",
-      year: "2022",
-      location: "Hofbräuhaus München",
-      client: "Hofbräuhaus GmbH",
-      quote: "Die Nacht war ausverkauft – und das zum dritten Mal in Folge. Spirit of Soul ist ein Garant für vollen Saal.",
-    },
+    { client: "BMW AG",                  type: "Firmenevent"   },
+    { client: "Siemens AG",              type: "Firmenevent"   },
+    { client: "Alte Oper Frankfurt",     type: "Gala"          },
+    { client: "Hilton Frankfurt",        type: "Hochzeit"      },
+    { client: "Marriott Hotels",         type: "Hochzeit"      },
+    { client: "Commerzbank AG",          type: "Firmenevent"   },
+    { client: "Hofbräuhaus München",     type: "Festival"      },
+    { client: "Residenz München",        type: "Gala"          },
+    { client: "Messe Frankfurt",         type: "Firmenevent"   },
+    { client: "Deutsche Bank AG",        type: "Firmenevent"   },
+    { client: "Bayerischer Hof",         type: "Hochzeit"      },
+    { client: "Prinzregententheater",    type: "Konzert"       },
+    { client: "Fraport AG",              type: "Firmenevent"   },
+    { client: "Schlosshotel Kronberg",   type: "Hochzeit"      },
+    { client: "Festspielhaus Baden-Baden", type: "Konzert"     },
+    { client: "SAP SE",                  type: "Firmenevent"   },
+    { client: "Rewe Group",              type: "Firmenevent"   },
+    { client: "Steigenberger Hotels",    type: "Gala"          },
   ],
+
+  technik: {
+    intro: "Planen Sie in Absprache mit uns die optimale optische und akustische Präsentation für Ihre Veranstaltung — von der intimen Dinner-Kulisse bis zur großen Multimediashow mit LED-Leinwänden.",
+    packages: [
+      {
+        name: "Standard-Setup",
+        description: "Professionelles Sound- und Lichtsystem, abgestimmt auf Venue-Größe und Raumakustik. Unsere erfahrenen Techniker kennen die individuellen Anforderungen jedes Auftritts.",
+        features: [
+          "Professionelles PA-System",
+          "Stage-Monitoring für alle Musiker",
+          "Professionelle Bühnenbeleuchtung",
+          "Erfahrene Live-Techniker vor Ort",
+          "Technischer Rider auf Anfrage",
+        ],
+      },
+      {
+        name: "Multimedia-Show",
+        description: "Erweiterte Show-Produktion mit integrierter Videoprojektion auf LED-Leinwänden für maximale visuelle Wirkung bei Gala-Events, Firmenveranstaltungen und Festivals.",
+        features: [
+          "LED-Leinwände & Videoprojektion",
+          "Professionelle Lichtshow (Moving Heads, Hazer)",
+          "Individuell gestaltete visuelle Inhalte",
+          "Full-Service Technik-Crew",
+          "Planung & Koordination inklusive",
+        ],
+      },
+    ],
+    note: "Wir stimmen Technik und Show stets auf die Symbiose aus Sound, Licht und Venue-Atmosphäre ab. Für ein präzises Angebot benötigen wir Fotos der Location sowie Details zum geplanten Event.",
+  },
 
   services: [
     {
