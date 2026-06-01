@@ -742,6 +742,12 @@ h3, h4 {
   z-index: 0;
 }
 
+/* CSS mask so rings fade naturally into ANY background */
+.concentric-rings-svg {
+  mask-image: radial-gradient(ellipse 55% 55% at center, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 55% 55% at center, black 20%, transparent 100%);
+}
+
 /* Left-column placement (behind image/carousel) */
 .rings-left {
   top: 50%;
@@ -759,6 +765,16 @@ h3, h4 {
   width: 720px;
   height: auto;
 }
+
+/* Right-column placement (behind photo grid) */
+.rings-right {
+  top: 50%;
+  left: 74%;
+  transform: translate(-50%, -50%);
+  width: 680px;
+  height: auto;
+}
+
 
 .about-image-wrap {
   position: relative;
@@ -1422,9 +1438,9 @@ h3, h4 {
 }
 
 /* ─── References 3D Marquee ─────────────────────────────────── */
-@keyframes mqScroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+@keyframes mqScrollUp {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-33.333%); }
 }
 
 .refs-section { overflow: hidden; }
@@ -1439,69 +1455,72 @@ h3, h4 {
 
 .refs-scene {
   position: relative;
-  overflow: hidden;
-  padding: 0;
-  /* Full viewport width, break out of container */
+  /* Full viewport width */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   width: 100vw;
+  overflow: hidden;
 }
 
-/* Side fade masks */
+/* Top/bottom fade */
 .refs-scene::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    to right,
+    to bottom,
     var(--bg) 0%,
-    transparent 9%,
-    transparent 91%,
+    transparent 12%,
+    transparent 88%,
     var(--bg) 100%
   );
   z-index: 2;
   pointer-events: none;
 }
 
-/* 3D tilt container — steeper angle, more dramatic */
+/* Left/right fade */
+.refs-scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    var(--bg) 0%,
+    transparent 6%,
+    transparent 94%,
+    var(--bg) 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Steep 3D table perspective */
 .refs-scene-inner {
-  transform: perspective(420px) rotateX(28deg) rotateY(-4deg);
-  transform-origin: center 100%;
+  transform: perspective(800px) rotateX(20deg) rotateY(-10deg);
+  transform-origin: center center;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  height: 480px;
+  padding: 0 48px;
+}
+
+/* One vertical column */
+.refs-col {
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+}
+
+.refs-col-track {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 24px 40px 56px;
-  mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 18%,
-    black 78%,
-    transparent 100%
-  );
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    transparent 0%,
-    black 18%,
-    black 78%,
-    transparent 100%
-  );
+  gap: 10px;
+  animation: mqScrollUp var(--col-dur, 30s) linear infinite;
 }
 
-.mq-row {
-  overflow: hidden;
-  width: 100%;
-}
-
-.mq-track {
-  display: flex;
-  gap: 12px;
-  width: max-content;
-  animation: mqScroll var(--mq-dur, 40s) linear infinite;
-}
-
-.mq-track:hover { animation-play-state: paused; }
-
-.mq-reverse { animation-direction: reverse; }
+.refs-col-track:hover { animation-play-state: paused; }
+.refs-col-reverse { animation-direction: reverse; }
 
 /* Reference chips */
 .ref-chip {
@@ -1595,7 +1614,7 @@ h3, h4 {
   border-color: var(--gold);
   box-shadow: 0 0 0 3px var(--gold-light);
 }
-.form-input::placeholder, .form-textarea::placeholder { color: var(--bg-elevated); }
+.form-input::placeholder, .form-textarea::placeholder { color: #aaa8a4; }
 .form-textarea { resize: vertical; min-height: 140px; }
 .form-select {
   cursor: pointer;
@@ -1629,9 +1648,323 @@ h3, h4 {
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
 
 /* ─── Shop Page ─────────────────────────────────────────────── */
-.shop-coming-soon { text-align: center; padding: 80px 0; max-width: 480px; margin: 0 auto; }
-.shop-coming-soon h2 { font-size: clamp(2rem,4vw,3rem); margin-bottom: 20px; }
-.shop-coming-soon p { color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin-bottom: 36px; }
+.shop-info-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.shop-info-box {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+.shop-info-box p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.shop-info-box strong { color: var(--text); font-weight: 700; }
+.shop-info-box a:not(.btn) { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
+
+.shop-products {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 56px;
+}
+
+.shop-product {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 0;
+  background: var(--bg);
+  transition: background 0.15s;
+}
+.shop-product:hover { background: var(--bg-card); }
+
+.shop-product-images {
+  padding: 48px 40px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-card);
+}
+
+.shop-product-images--pair {
+  gap: 12px;
+  flex-direction: column;
+}
+
+.shop-product-main-img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.shop-product-thumb {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  border: 1px solid var(--border);
+}
+
+.shop-product-info {
+  padding: 48px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.shop-product-tag {
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.shop-product-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.shop-product-subtitle {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-top: -8px;
+}
+
+.shop-product-desc {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  max-width: 460px;
+}
+
+.shop-inline-link {
+  color: var(--gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.shop-sizes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.shop-size-badge {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.shop-variants {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.shop-variants li {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding-left: 16px;
+  position: relative;
+}
+.shop-variants li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.shop-product-price {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 4px;
+}
+.shop-price-amount {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.shop-price-note {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* CD product — horizontal */
+.shop-product--cd {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  border: 1px solid var(--border);
+  margin-top: 40px;
+}
+.shop-product--cd .shop-product-images {
+  border-right: 1px solid var(--border);
+  border-bottom: none;
+  padding: 48px;
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shop-product--cd .shop-product-info {
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* T-Shirt grid */
+.shop-shirts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  margin-top: 40px;
+}
+.shop-shirt-card {
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  padding: 36px;
+  gap: 20px;
+  transition: background 0.15s;
+}
+.shop-shirt-card:hover { background: var(--bg-card); }
+
+.shop-shirt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shop-shirt-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: -0.01em;
+}
+
+.shop-shirt-sub {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin-top: -6px;
+}
+
+/* Image viewer */
+.shop-img-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.shop-img-main {
+  aspect-ratio: 1;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.shop-img-active {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 20px;
+  display: block;
+  animation: shopImgFade 0.2s ease;
+}
+@keyframes shopImgFade {
+  from { opacity: 0.4; transform: scale(0.97); }
+  to   { opacity: 1;   transform: scale(1); }
+}
+.shop-img-thumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.shop-img-thumb {
+  border: 1px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  transition: border-color 0.15s;
+  overflow: hidden;
+}
+.shop-img-thumb:hover { border-color: var(--text); }
+.shop-img-thumb.active { border-color: var(--gold); }
+.shop-img-thumb-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--bg-elevated);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.shop-img-thumb-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 8px;
+}
+.shop-img-thumb span {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 7px 0;
+  display: block;
+}
+.shop-img-thumb.active span { color: var(--gold); }
+
+@media (max-width: 900px) {
+  .shop-product--cd { grid-template-columns: 1fr; }
+  .shop-product--cd .shop-product-images { border-right: none; border-bottom: 1px solid var(--border); }
+  .shop-shirts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .shop-shirt-card { padding: 24px 20px; }
+}
 
 /* ─── Contact Page ──────────────────────────────────────────── */
 .contact-grid {

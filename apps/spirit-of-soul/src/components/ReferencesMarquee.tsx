@@ -4,21 +4,21 @@ import { band } from "@/config/band";
 
 type RefItem = { client: string; type: string };
 
-function MarqueeRow({
+function MarqueeCol({
   items,
   reverse = false,
-  duration = 40,
+  duration = 28,
 }: {
   items: RefItem[];
   reverse?: boolean;
   duration?: number;
 }) {
-  const doubled = [...items, ...items];
+  const doubled = [...items, ...items, ...items];
   return (
-    <div className="mq-row">
+    <div className="refs-col">
       <div
-        className={`mq-track${reverse ? " mq-reverse" : ""}`}
-        style={{ "--mq-dur": `${duration}s` } as React.CSSProperties}
+        className={`refs-col-track${reverse ? " refs-col-reverse" : ""}`}
+        style={{ "--col-dur": `${duration}s` } as React.CSSProperties}
       >
         {doubled.map((item, i) => (
           <div key={i} className="ref-chip">
@@ -32,18 +32,20 @@ function MarqueeRow({
 }
 
 export default function ReferencesMarquee() {
-  const refs = band.references;
-  const third = Math.ceil(refs.length / 3);
-  const row1 = refs.slice(0, third);
-  const row2 = refs.slice(third, third * 2);
-  const row3 = refs.slice(third * 2);
+  const refs = band.references as RefItem[];
+  const q = Math.ceil(refs.length / 4);
+  const col1 = refs.slice(0,q);
+  const col2 = refs.slice(q,        q * 2);
+  const col3 = refs.slice(q * 2,    q * 3);
+  const col4 = refs.slice(q * 3);
 
   return (
     <div className="refs-scene">
       <div className="refs-scene-inner">
-        <MarqueeRow items={row1} duration={42} />
-        <MarqueeRow items={row2} reverse duration={48} />
-        <MarqueeRow items={row3} duration={38} />
+        <MarqueeCol items={col1} duration={30} />
+        <MarqueeCol items={col2} reverse duration={26} />
+        <MarqueeCol items={col3} duration={32} />
+        <MarqueeCol items={col4} reverse duration={28} />
       </div>
     </div>
   );

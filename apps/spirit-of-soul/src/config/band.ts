@@ -15,7 +15,7 @@ export const band = {
     { label: "Galerie", href: "/galerie" },
     { label: "Shop", href: "/shop" },
     { label: "Referenzen", href: "/referenzen" },
-    { label: "Kontakt", href: "/kontakt" },
+    { label: "Kontakt", href: "/booking" },
   ],
 
   dates: [
