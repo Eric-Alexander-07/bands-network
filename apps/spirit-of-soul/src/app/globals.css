@@ -23,17 +23,47 @@
 }
 
 /* ─── Reset ────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* Remove iOS tap highlight flash on all elements */
+  -webkit-tap-highlight-color: transparent;
+}
+html {
+  scroll-behavior: smooth;
+  /* Prevent text size adjusting on orientation change (iOS Safari) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-ui);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
+  /* Prevent content shifting on iOS when scrollbar appears */
+  overflow-x: hidden;
 }
 a { color: inherit; text-decoration: none; }
-img { display: block; max-width: 100%; }
+img {
+  display: block;
+  max-width: 100%;
+  /* Prevent images from being dragged on Safari */
+  -webkit-user-drag: none;
+}
+button {
+  /* Safari default button appearance reset */
+  -webkit-appearance: none;
+  appearance: none;
+}
+input, textarea, select {
+  /* Prevent iOS zoom on focus (needs font-size ≥ 16px to actually work) */
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+}
 
 /* ─── Typography ───────────────────────────────────────────── */
 h1, h2 {
@@ -317,7 +347,8 @@ h3, h4 {
 
 /* ─── Hero ─────────────────────────────────────────────────── */
 .hero {
-  height: 100svh;
+  height: 100vh;        /* fallback for older Safari */
+  height: 100svh;       /* modern — respects browser chrome on iOS */
   min-height: 640px;
   display: flex;
   flex-direction: column;
@@ -1487,6 +1518,7 @@ h3, h4 {
 .media-dates-col {
   display: flex;
   flex-direction: column;
+  position: -webkit-sticky;
   position: sticky;
   top: calc(var(--nav-height) + 24px);
 }
@@ -2547,6 +2579,7 @@ h3, h4 {
 .shop-img-scroller {
   display: flex;
   overflow-x: auto;
+  -webkit-scroll-snap-type: x mandatory;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -2927,6 +2960,107 @@ h3, h4 {
 }
 .social-post-placeholder:hover { opacity: 0.75; }
 .social-post-label { font-family: var(--font-ui); font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(25,23,20,0.18); pointer-events: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   CROSS-BROWSER COMPATIBILITY (Safari, iOS, Firefox, Edge)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Safari: 3D transforms perspective ─────────────────────── */
+.photo-carousel-track {
+  -webkit-perspective: 1200px;
+  perspective: 1200px;
+}
+/* Refs marquee 3D — webkit prefix must come before standard */
+.refs-scene-inner {
+  -webkit-transform: perspective(420px) rotateX(28deg) rotateY(-4deg);
+  transform: perspective(420px) rotateX(28deg) rotateY(-4deg);
+}
+/* Force GPU compositing on animated elements */
+.nav-glass-bg,
+.hero-right-inner,
+.glb-img,
+.about-img,
+.hero-right-img {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* ─── iOS Safari: Touch scrolling momentum ───────────────────── */
+.glb-thumbs,
+.nav-mobile,
+.mq-row,
+.refs-col {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─── Safari: Image rendering ────────────────────────────────── */
+img {
+  -webkit-backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast; /* sharper on retina */
+}
+
+/* ─── iOS Safari: Safe area insets (notch phones) ────────────── */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .footer {
+    padding-bottom: calc(32px + env(safe-area-inset-bottom));
+  }
+  .nav {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* ─── Safari: Form inputs ─────────────────────────────────────── */
+/* Prevent iOS from styling date/select inputs with native chrome */
+input[type="date"],
+input[type="tel"],
+input[type="email"],
+input[type="text"],
+select,
+textarea {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  /* Force consistent font rendering */
+  font-family: var(--font-ui);
+}
+/* Safari date input: hide native calendar icon style difference */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.5;
+  cursor: pointer;
+}
+/* Safari select arrow */
+select::-ms-expand { display: none; }
+
+/* ─── Firefox: Scrollbar styling ─────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+/* ─── Edge/IE: Backdrop-filter fallback ─────────────────────── */
+@supports not (backdrop-filter: blur(1px)) {
+  .nav-glass-bg {
+    background: rgba(246,244,240,0.95) !important;
+  }
+}
+
+/* ─── All browsers: Smooth font on dark bg ───────────────────── */
+.nav, .hero-left, .page-hero, .video-section,
+.gallery-section, .booking-cta, .footer, .nav-mobile,
+.vpp-player, .glb-overlay {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Safari: Clip-path / overflow fix ───────────────────────── */
+.hero, .hero-left, .hero-right, .gallery-editorial-item,
+.social-photo-item, .vpp-player, .glb-overlay {
+  -webkit-transform: translateZ(0); /* prevent Safari overflow:hidden bug */
+  transform: translateZ(0);
+}
 
 /* ═══════════════════════════════════════════════════════════════
    RESPONSIVE — Mobile Overhaul
