@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { band } from "@/config/band";
+import ConcentricRings from "@/components/ConcentricRings";
 import ReferencesMarquee from "@/components/ReferencesMarquee";
 
 export default function ReferencesPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero section-has-rings">
+        <ConcentricRings className="rings-hero" />
         <img src="/images/gallery/live-festival-singer.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Unsere Kunden</span>

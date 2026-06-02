@@ -1,4 +1,5 @@
 import GalleryGrid from "@/components/GalleryGrid";
+import ConcentricRings from "@/components/ConcentricRings";
 
 const galleryImages = [
   { src: "/images/about.webp",                        alt: "Spirit of Soul — Full Band" },
@@ -13,7 +14,8 @@ const galleryImages = [
 export default function GalleriePage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero section-has-rings">
+        <ConcentricRings className="rings-hero" />
         <img src="/images/gallery/live-stage-duo.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Fotos</span>

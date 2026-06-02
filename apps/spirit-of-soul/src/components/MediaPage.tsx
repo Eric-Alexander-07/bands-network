@@ -1,4 +1,5 @@
 import { band } from "@/config/band";
+import ConcentricRings from "@/components/ConcentricRings";
 import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 import LightboxImage from "@/components/LightboxImage";
 
@@ -19,7 +20,8 @@ export default function MediaPage() {
 
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero section-has-rings">
+        <ConcentricRings className="rings-hero" />
         <img src="/images/gallery/live-guitarist.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>

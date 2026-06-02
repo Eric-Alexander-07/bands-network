@@ -53,6 +53,7 @@ export default function BookingForm() {
                 name="name"
                 type="text"
                 className="form-input"
+                placeholder="Vor- und Nachname"
                 required
               />
             </div>
@@ -65,6 +66,7 @@ export default function BookingForm() {
                 name="email"
                 type="email"
                 className="form-input"
+                placeholder="ihre@email.de"
                 required
               />
             </div>
@@ -79,6 +81,7 @@ export default function BookingForm() {
                 name="phone"
                 type="tel"
                 className="form-input"
+                placeholder="+49 ..."
               />
             </div>
             <div className="form-group">
@@ -119,7 +122,7 @@ export default function BookingForm() {
             />
           </div>
           <div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-gold" style={{ padding: "14px 40px", fontSize: "12px" }}>
               Anfrage senden
             </button>
           </div>

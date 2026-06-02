@@ -1,9 +1,11 @@
 import { band } from "@/config/band";
+import ConcentricRings from "@/components/ConcentricRings";
 
 export default function KontaktPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero section-has-rings">
+        <ConcentricRings className="rings-hero" />
         <img src="/images/gallery/live-vocalist-hat.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Schreib uns</span>

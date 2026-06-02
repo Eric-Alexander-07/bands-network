@@ -814,6 +814,16 @@ h3, h4 {
   height: auto;
 }
 
+/* Hero placement — right side, subtle on dark bg */
+.rings-hero {
+  top: 50%;
+  left: 78%;
+  transform: translate(-50%, -50%);
+  width: 540px;
+  height: auto;
+  opacity: 0.38;
+}
+
 
 .about-image-wrap {
   position: relative;
@@ -1225,6 +1235,11 @@ h3, h4 {
 .page-hero .container {
   position: relative;
   z-index: 2;
+  width: 100%;
+}
+/* About page: limit text width to match image column below */
+.page-hero .page-hero-text-narrow {
+  max-width: 50%;
 }
 .page-hero .eyebrow { color: var(--gold); align-self: flex-start; }
 .page-hero .eyebrow::before, .page-hero .eyebrow::after { background: var(--gold); }
@@ -1672,14 +1687,14 @@ h3, h4 {
 /* New inner layout: image left, content right */
 .media-social-inner {
   display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 72px;
-  align-items: center;
+  grid-template-columns: 1fr 480px;
+  gap: 56px;
+  align-items: start;
 }
 .media-social-img-col { position: relative; }
 .media-social-img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 5;
   object-fit: cover;
   object-position: center top;
   display: block;

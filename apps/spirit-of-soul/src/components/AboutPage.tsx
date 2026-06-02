@@ -1,15 +1,19 @@
 import Link from "next/link";
+import ConcentricRings from "@/components/ConcentricRings";
 import { band } from "@/config/band";
 
 export default function AboutPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero section-has-rings">
+        <ConcentricRings className="rings-hero" />
         <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
-          <span className="eyebrow">Über die Band</span>
-          <h1>Über uns</h1>
-          <p>{band.about.bio}</p>
+          <div className="page-hero-text-narrow">
+            <span className="eyebrow">Über die Band</span>
+            <h1>Über uns</h1>
+            <p>25 Jahre Soul, R&amp;B und Funk auf internationalen Bühnen.<br />Entertainment der Extraklasse.</p>
+          </div>
         </div>
       </section>
 

@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { band } from "@/config/band";
+import ConcentricRings from "@/components/ConcentricRings";
 
 export default function ServicesPage() {
   return (
     <>
-      <section className="page-hero">
+      <section className="page-hero section-has-rings">
+        <ConcentricRings className="rings-hero" />
         <img src="/images/gallery/live-vocalist-gold.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
@@ -17,26 +19,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Die Band */}
-      <section className="section">
-        <div className="container">
-          <div className="services-band-text" data-animate="fade-up" style={{ maxWidth: "760px" }}>
-            <span className="eyebrow">Die Band</span>
-            <h2 className="section-title">{band.name}</h2>
-            <p>{band.about.bio}</p>
-            <p style={{ marginTop: "16px", color: "var(--text-muted)", fontSize: "0.9375rem", lineHeight: "1.8" }}>
-              Die Stärke von Spirit of Soul liegt in der Musikalität und Spontanität der
-              einzelnen Bandmitglieder sowie dem erstklassigen Entertainment der Frontleute.
-              Die Programmreihenfolge kann kurzfristig auf der Bühne entschieden werden —
-              so ist die Band in der Lage, spontan das richtige Programm für Ihr Event
-              maßzuschneidern und das Publikum ab dem ersten Ton zum Mitmachen zu bewegen.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Besetzung — volle Breite */}
-      <section className="section" style={{ paddingTop: 0, background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      <section className="section" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Flexibel buchbar</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Besetzung</h2>
