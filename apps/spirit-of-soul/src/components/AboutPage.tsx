@@ -5,8 +5,7 @@ import { band } from "@/config/band";
 export default function AboutPage() {
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <div className="page-hero-text-narrow">
@@ -17,8 +16,9 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
+      <section className="section section-has-rings">
+        <ConcentricRings className="rings-left" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="about-simple-layout">
             <div className="about-simple-img" data-animate="fade-right">
               <img src="/images/gallery/live-stage-duo.webp" alt="Spirit of Soul — Live" />

@@ -814,14 +814,36 @@ h3, h4 {
   height: auto;
 }
 
-/* Hero placement — right side, subtle on dark bg */
+/* Far right — subtle, at edge of layout */
+.rings-far-right {
+  top: 55%;
+  left: 95%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: auto;
+  opacity: 0.45;
+}
+
+/* Lower right — for sections with lots of text */
+.rings-lower-right {
+  top: 75%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: auto;
+  opacity: 0.55;
+}
+
+/* Hero placement — above photo, screen-blend so rings glow on dark bg */
 .rings-hero {
   top: 50%;
   left: 78%;
   transform: translate(-50%, -50%);
-  width: 540px;
+  width: 580px;
   height: auto;
-  opacity: 0.38;
+  opacity: 0.7;
+  z-index: 1;
+  mix-blend-mode: screen;
 }
 
 

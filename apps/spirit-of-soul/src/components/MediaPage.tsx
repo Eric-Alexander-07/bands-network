@@ -20,8 +20,7 @@ export default function MediaPage() {
 
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/gallery/live-guitarist.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>
@@ -31,8 +30,9 @@ export default function MediaPage() {
       </section>
 
       {/* Videos + Spieltermine */}
-      <section className="section">
-        <div className="container">
+      <section className="section section-has-rings">
+        <ConcentricRings className="rings-far-right" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="media-main-layout">
 
             {/* Videos — links */}

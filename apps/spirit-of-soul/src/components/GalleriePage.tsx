@@ -14,8 +14,7 @@ const galleryImages = [
 export default function GalleriePage() {
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/gallery/live-stage-duo.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Fotos</span>
@@ -24,8 +23,9 @@ export default function GalleriePage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
+      <section className="section section-has-rings">
+        <ConcentricRings className="rings-right" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <span className="eyebrow" data-animate="fade-up">Live-Impressionen</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Fotos</h2>
           <GalleryGrid images={galleryImages} />

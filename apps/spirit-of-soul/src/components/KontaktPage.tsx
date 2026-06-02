@@ -4,8 +4,7 @@ import ConcentricRings from "@/components/ConcentricRings";
 export default function KontaktPage() {
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/gallery/live-vocalist-hat.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Schreib uns</span>
@@ -17,8 +16,9 @@ export default function KontaktPage() {
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
+      <section className="section section-has-rings">
+        <ConcentricRings className="rings-far-right" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="contact-grid">
             <div className="contact-info" data-animate="fade-right">
               <h2>Kontaktdaten</h2>

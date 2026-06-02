@@ -5,8 +5,7 @@ import ConcentricRings from "@/components/ConcentricRings";
 export default function ServicesPage() {
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/gallery/live-vocalist-gold.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
@@ -20,7 +19,8 @@ export default function ServicesPage() {
       </section>
 
       {/* Besetzung — volle Breite */}
-      <section className="section" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      <section className="section section-has-rings" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+        <ConcentricRings className="rings-far-right" />
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Flexibel buchbar</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Besetzung</h2>

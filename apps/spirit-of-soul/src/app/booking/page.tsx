@@ -4,8 +4,7 @@ import ConcentricRings from "@/components/ConcentricRings";
 export default function BookingPage() {
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Buchungsanfrage</span>

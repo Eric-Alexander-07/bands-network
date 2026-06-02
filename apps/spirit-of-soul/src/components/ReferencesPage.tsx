@@ -6,8 +6,7 @@ import ReferencesMarquee from "@/components/ReferencesMarquee";
 export default function ReferencesPage() {
   return (
     <>
-      <section className="page-hero section-has-rings">
-        <ConcentricRings className="rings-hero" />
+      <section className="page-hero">
         <img src="/images/gallery/live-festival-singer.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Unsere Kunden</span>
@@ -20,7 +19,8 @@ export default function ReferencesPage() {
         </div>
       </section>
 
-      <section className="section refs-section">
+      <section className="section refs-section section-has-rings">
+        <ConcentricRings className="rings-lower-right" />
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Vertrauen uns</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">
