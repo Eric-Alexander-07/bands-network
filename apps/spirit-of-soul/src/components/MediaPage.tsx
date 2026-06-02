@@ -1,5 +1,6 @@
 import { band } from "@/config/band";
 import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
+import LightboxImage from "@/components/LightboxImage";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
@@ -107,10 +108,12 @@ export default function MediaPage() {
           <div className="media-social-inner">
             {/* Bild links */}
             <div className="media-social-img-col" data-animate="fade-right">
-              <img
+              <LightboxImage
                 src="/images/gallery/live-vocalist-gold.webp"
                 alt="Spirit of Soul Live"
                 className="media-social-img"
+                wrapperClassName="media-social-img-lb"
+                overlayContent="⊕"
               />
             </div>
 

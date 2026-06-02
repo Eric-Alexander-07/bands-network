@@ -43,7 +43,11 @@ export default function Footer() {
         </div>
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} {band.name} · Vivid Music Productions</span>
-          <span>{band.email}</span>
+          <div style={{ display: "flex", gap: "24px", alignItems: "center" }}>
+            <Link href="/impressum" style={{ color: "inherit" }}>Impressum</Link>
+            <Link href="/datenschutz" style={{ color: "inherit" }}>Datenschutz</Link>
+            <span>{band.email}</span>
+          </div>
         </div>
       </div>
     </footer>

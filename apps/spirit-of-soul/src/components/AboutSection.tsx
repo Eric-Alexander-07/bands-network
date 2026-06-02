@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
+import LightboxImage from "@/components/LightboxImage";
 
 export default function AboutSection() {
   return (
@@ -9,10 +10,12 @@ export default function AboutSection() {
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="about-grid">
           <div className="about-image-wrap" data-animate="fade-right">
-            <img
+            <LightboxImage
               src="/images/about.webp"
               alt="Spirit of Soul — Die Band"
               className="about-img"
+              overlayContent="⊕"
+              wrapperClassName="about-img-wrap-inner"
             />
           </div>
           <div className="about-text">

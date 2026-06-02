@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
+import LightboxImage from "@/components/LightboxImage";
 
 const GRID_PHOTOS = [
   { src: "/images/gallery/live-vocalist-gold.webp", alt: "Live Performance" },
@@ -60,18 +61,13 @@ export default function SocialSection() {
 
           <div className="social-photo-grid" data-animate="fade-left">
             {GRID_PHOTOS.map((photo, i) => (
-              <a
+              <LightboxImage
                 key={i}
-                href={band.socials.instagram}
-                className="social-photo-item"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img src={photo.src} alt={photo.alt} />
-                <div className="social-photo-overlay">
-                  <span>↗</span>
-                </div>
-              </a>
+                src={photo.src}
+                alt={photo.alt}
+                wrapperClassName="social-photo-item"
+                overlayContent="⊕"
+              />
             ))}
           </div>
 

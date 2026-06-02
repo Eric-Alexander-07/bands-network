@@ -1,3 +1,5 @@
+import GalleryGrid from "@/components/GalleryGrid";
+
 const galleryImages = [
   { src: "/images/about.webp",                        alt: "Spirit of Soul — Full Band" },
   { src: "/images/gallery/live-guitarist.webp",       alt: "Gitarrist auf der Bühne" },
@@ -24,13 +26,7 @@ export default function GalleriePage() {
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Live-Impressionen</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Fotos</h2>
-          <div className="gallery-editorial">
-            {galleryImages.map((photo, i) => (
-              <div key={i} className={`gallery-editorial-item gallery-editorial-item--${i + 1}`}>
-                <img src={photo.src} alt={photo.alt} />
-              </div>
-            ))}
-          </div>
+          <GalleryGrid images={galleryImages} />
         </div>
       </section>
     </>
