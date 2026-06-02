@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface Photo { src: string; alt: string; }
 
@@ -8,6 +8,7 @@ interface Props { images: Photo[]; }
 
 export default function GalleryGrid({ images }: Props) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const touchStartX = useRef<number | null>(null);
 
   const close = useCallback(() => setOpenIdx(null), []);
   const prev  = useCallback(() => setOpenIdx(i => i !== null ? (i - 1 + images.length) % images.length : 0), [images.length]);
@@ -46,7 +47,17 @@ export default function GalleryGrid({ images }: Props) {
 
       {/* Lightbox */}
       {openIdx !== null && (
-        <div className="glb-overlay" onClick={close}>
+        <div
+          className="glb-overlay"
+          onClick={close}
+          onTouchStart={(e) => { touchStartX.current = e.touches[0].clientX; }}
+          onTouchEnd={(e) => {
+            if (touchStartX.current === null) return;
+            const delta = touchStartX.current - e.changedTouches[0].clientX;
+            if (Math.abs(delta) > 50) { delta > 0 ? next() : prev(); }
+            touchStartX.current = null;
+          }}
+        >
           {/* Close */}
           <button className="glb-close" onClick={close} aria-label="Schließen">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">

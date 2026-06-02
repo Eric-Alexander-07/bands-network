@@ -84,18 +84,6 @@ export default function MediaPage() {
                   </div>
                 ))}
               </div>
-              <div className="media-dates-fb">
-                <iframe
-                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent("https://www.facebook.com/spiritofsoulband/")}&tabs=timeline&width=300&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
-                  width="300"
-                  height="500"
-                  style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
-                  scrolling="no"
-                  allowFullScreen
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="Spirit of Soul Facebook"
-                />
-              </div>
             </div>
 
           </div>
@@ -136,6 +124,21 @@ export default function MediaPage() {
                     <span className="media-platform-arrow">↗</span>
                   </a>
                 ))}
+              </div>
+
+              {/* Facebook embed — unter den Links */}
+              <div className="media-fb-below" data-animate="fade-up">
+                <p className="media-fb-label eyebrow">Facebook</p>
+                <div className="media-fb-frame media-fb-responsive">
+                  <iframe
+                    src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent("https://www.facebook.com/spiritofsoulband/")}&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
+                    style={{ border: "none", overflow: "hidden", display: "block", width: "100%", height: "600px" }}
+                    scrolling="no"
+                    allowFullScreen
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    title="Spirit of Soul Facebook"
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -28,7 +28,7 @@ export default function Navigation() {
 
   return (
     <>
-      <nav className={`nav${scrolled ? " scrolled" : ""}`}>
+      <nav className={`nav${scrolled ? " scrolled" : ""}${mobileOpen ? " nav-open" : ""}`}>
         <div className="nav-glass-bg" />
         <div className="container nav-inner">
           <Link href="/" className="nav-logo">
