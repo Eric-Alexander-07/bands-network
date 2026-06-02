@@ -1,3 +1,24 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Datenschutz – Spirit of Soul",
+  description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+
+  alternates: { canonical: "https://spirit-of-soul.de/datenschutz" },
+  openGraph: {
+    title: "Datenschutz – Spirit of Soul",
+    description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+    url: "https://spirit-of-soul.de/datenschutz",
+    images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Datenschutz – Spirit of Soul",
+    description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+  },
+    robots: { index: false, follow: false },
+};
+
 export default function DatenschutzPage() {
   return (
     <>
