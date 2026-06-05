@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
+import type { Event } from "@/lib/data";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
@@ -11,9 +12,18 @@ function formatGigDate(dateStr: string) {
   return `${day}. ${MONTHS_SHORT[month - 1]}`;
 }
 
-export default function HeroSection() {
+interface Props {
+  /** Events from Supabase DB. Empty array = hide dates section entirely. */
+  dbEvents?: Event[];
+}
+
+export default function HeroSection({ dbEvents = [] }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
-  const nextDates = band.dates.slice(0, 3);
+
+  // Only show dates that come from the DB (visible ones, max 3)
+  const nextDates = dbEvents
+    .filter(e => e.visible)
+    .slice(0, 3);
 
   useEffect(() => {
     const onScroll = () => {
@@ -42,7 +52,6 @@ export default function HeroSection() {
               <filter id="spBlur" x="-30%" y="-10%" width="160%" height="120%">
                 <feGaussianBlur stdDeviation="18" />
               </filter>
-              {/* Gradient: bright at lamp tip, fades to base */}
               <linearGradient id="sg1" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
                 <stop offset="0%" stopColor="#9333ea" stopOpacity="0.55"/>
                 <stop offset="100%" stopColor="#9333ea" stopOpacity="0"/>
@@ -64,20 +73,10 @@ export default function HeroSection() {
                 <stop offset="100%" stopColor="#60a5fa" stopOpacity="0"/>
               </linearGradient>
             </defs>
-
-            {/* Spotlight 1 — violet, from top-left, angled hard right */}
             <polygon points="60,0 100,0 780,1000 -200,1000" fill="url(#sg1)" filter="url(#spBlur)" />
-
-            {/* Spotlight 2 — blue, from top center-left, slight right lean */}
             <polygon points="310,0 345,0 620,1000 80,1000" fill="url(#sg2)" filter="url(#spBlur)" />
-
-            {/* Spotlight 3 — orange, from top center, angled left */}
             <polygon points="510,0 545,0 160,1000 -120,1000" fill="url(#sg3)" filter="url(#spBlur)" />
-
-            {/* Spotlight 4 — pink, from top right, steep left angle */}
             <polygon points="700,0 730,0 200,1000 -80,1000" fill="url(#sg4)" filter="url(#spBlur)" />
-
-            {/* Spotlight 5 — light blue narrow, from top far right, near vertical */}
             <polygon points="790,0 820,0 550,1000 400,1000" fill="url(#sg5)" filter="url(#spBlur)" />
           </svg>
 
@@ -102,15 +101,16 @@ export default function HeroSection() {
               </Link>
             </div>
 
+            {/* Only show dates section if DB has visible events */}
             {nextDates.length > 0 && (
               <div className="hero-dates">
                 <span className="hero-dates-label">Nächste Auftritte</span>
                 <ul className="hero-date-list">
                   {nextDates.map((d, i) => (
-                    <li key={i} className="hero-date-item">
+                    <li key={d.id ?? i} className="hero-date-item">
                       <span className="hero-date-day">{formatGigDate(d.date)}</span>
                       <span className="hero-date-sep" />
-                      <span className="hero-date-event">{d.event}</span>
+                      <span className="hero-date-event">{d.event_name}</span>
                       <span className="hero-date-loc">{d.location}</span>
                     </li>
                   ))}

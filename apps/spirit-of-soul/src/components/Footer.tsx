@@ -47,6 +47,12 @@ export default function Footer() {
             <Link href="/impressum" style={{ color: "inherit" }}>Impressum</Link>
             <Link href="/datenschutz" style={{ color: "inherit" }}>Datenschutz</Link>
             <span>{band.email}</span>
+            <Link
+              href="/admin"
+              style={{ color: "rgba(246,244,240,0.18)", fontSize: "10px", letterSpacing: "0.1em" }}
+            >
+              Admin
+            </Link>
           </div>
         </div>
       </div>

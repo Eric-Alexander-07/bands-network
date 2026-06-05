@@ -359,6 +359,9 @@ h3, h4 {
   display: grid;
   grid-template-columns: 56fr 44fr;
   overflow: hidden;
+  /* Safari: grid children need explicit height from flex parent */
+  min-height: 0;
+  height: 100%;
 }
 .hero-left {
   background: var(--bg-dark);
@@ -368,6 +371,10 @@ h3, h4 {
   justify-content: flex-end;
   padding: calc(var(--nav-height) + 48px) 64px 64px;
   overflow: hidden;
+  /* Safari: explicit height so justify-content:flex-end has context */
+  height: 100%;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 .hero-left::before {
   content: "";
