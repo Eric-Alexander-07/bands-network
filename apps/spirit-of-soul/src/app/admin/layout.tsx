@@ -32,7 +32,7 @@ const NAV: NavEntry[] = [
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const router   = useRouter();
   const pathname = usePathname();
-  const isLogin  = pathname === "/admin/login";
+  const isLogin  = pathname === "/admin/login" || pathname === "/admin/invite";
   const [user, setUser]     = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
