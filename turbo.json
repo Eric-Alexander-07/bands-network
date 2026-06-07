@@ -5,7 +5,11 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "REVALIDATION_SECRET"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
