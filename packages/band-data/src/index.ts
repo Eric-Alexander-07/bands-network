@@ -168,7 +168,7 @@ export const getBesetzung = unstable_cache(
     const supabase = createPublicClient();
     const { data } = await supabase
       .from("besetzung_gruppen")
-      .select("*, besetzung_eintraege(id, name, lineup, position)")
+      .select("*, besetzung_eintraege(id, name, beschreibung, position)")
       .eq("site_id", siteId)
       .order("position", { ascending: true })
       .order("position", { ascending: true, referencedTable: "besetzung_eintraege" });

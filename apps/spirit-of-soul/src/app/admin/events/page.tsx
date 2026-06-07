@@ -5,10 +5,10 @@ import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-p
 import { createClient } from "@bands/supabase/client";
 import { MdDragIndicator, MdAdd, MdDelete } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
-import { adminInsert, adminUpdate, adminUpdateMany, adminDelete } from "@/lib/adminDb";
+import { adminInsert, adminUpdate, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
-interface Evt { id: string; site_id: string; date: string; event_name: string; venue: string | null; location: string | null; event_type: string | null; visible: boolean; created_at: string; }
+interface Evt { id: string; site_id: string | null; name: string; date: string; location: string | null; link: string | null; visible: boolean | null; position: number | null; created_at: string | null; }
 
 export default function EventsAdmin() {
   const { toast } = useToast();
@@ -50,11 +50,11 @@ export default function EventsAdmin() {
   };
 
   const addEvent = async () => {
-    if (!siteId) { toast("Seite nicht gefunden — ist 'spirit-of-soul' in der sites-Tabelle?", "error"); return; }
+    if (!siteId) { toast("Seite nicht gefunden", "error"); return; }
     const today = new Date().toISOString().slice(0, 10);
     const { data, error } = await adminInsert("events", {
-      site_id: siteId, date: today, event_name: "Neues Event",
-      venue: "", location: "", event_type: "", visible: true,
+      site_id: siteId, name: "Neues Event", date: today,
+      location: "", link: "", visible: true, position: events.length,
     });
     if (error) { toast(`Fehler: ${error}`, "error"); return; }
     if (data) { setEvents(p => [...p, data as Evt]); toast("Event erstellt", "success"); }
@@ -74,7 +74,8 @@ export default function EventsAdmin() {
     const [m] = r.splice(result.source.index, 1);
     r.splice(result.destination.index, 0, m);
     setEvents(r);
-    toast("Reihenfolge aktualisiert", "info");
+    await adminUpdateMany("events", r.map((e, i) => ({ id: e.id, position: i })));
+    toast("Reihenfolge gespeichert", "success");
   };
 
   if (loading) return <div className="admin-loading"><div className="admin-spinner" />Lade Events …</div>;
@@ -93,7 +94,7 @@ export default function EventsAdmin() {
       </div>
 
       {!siteId && (
-        <div style={{ background: "rgba(239,68,68,.1)", border: "1px solid var(--a-error)", borderRadius: 8, padding: "12px 16px", marginBottom: 16, fontSize: 13, color: "var(--a-error)" }}>
+        <div style={{ background: "rgba(185,28,28,.07)", border: "1px solid var(--a-error)", borderRadius: 8, padding: "12px 16px", marginBottom: 16, fontSize: 13, color: "var(--a-error)" }}>
           Keine Site gefunden. Bitte einen Eintrag in der <strong>sites</strong>-Tabelle mit <code>slug = &apos;spirit-of-soul&apos;</code> anlegen.
         </div>
       )}
@@ -102,7 +103,7 @@ export default function EventsAdmin() {
         <Droppable droppableId="events">
           {(prov) => (
             <table className="a-table" ref={prov.innerRef} {...prov.droppableProps}>
-              <thead><tr><th style={{ width: 28 }} /><th>Datum</th><th>Name</th><th>Ort</th><th>Typ</th><th>Sichtbar</th><th /></tr></thead>
+              <thead><tr><th style={{ width: 28 }} /><th>Datum</th><th>Name</th><th>Ort</th><th>Link</th><th>Sichtbar</th><th /></tr></thead>
               <tbody>
                 {events.map((e, i) => (
                   <Draggable key={e.id} draggableId={e.id} index={i}>
@@ -110,9 +111,9 @@ export default function EventsAdmin() {
                       <tr ref={p.innerRef} {...p.draggableProps}>
                         <td><span className="a-drag-handle" {...p.dragHandleProps}><MdDragIndicator /></span></td>
                         <td><input className="a-input" type="date" value={String(getVal(e, "date"))} onChange={ev => field(e.id, "date", ev.target.value)} style={{ width: 140 }} /></td>
-                        <td><input className="a-input" value={String(getVal(e, "event_name"))} onChange={ev => field(e.id, "event_name", ev.target.value)} /></td>
-                        <td><input className="a-input" value={String(getVal(e, "location") || "")} onChange={ev => field(e.id, "location", ev.target.value)} placeholder="Ort" style={{ width: 120 }} /></td>
-                        <td><input className="a-input" value={String(getVal(e, "event_type") || "")} onChange={ev => field(e.id, "event_type", ev.target.value)} placeholder="Typ" style={{ width: 100 }} /></td>
+                        <td><input className="a-input" value={String(getVal(e, "name"))} onChange={ev => field(e.id, "name", ev.target.value)} /></td>
+                        <td><input className="a-input" value={String(getVal(e, "location") || "")} onChange={ev => field(e.id, "location", ev.target.value)} placeholder="Ort" style={{ width: 130 }} /></td>
+                        <td><input className="a-input" value={String(getVal(e, "link") || "")} onChange={ev => field(e.id, "link", ev.target.value)} placeholder="https://…" style={{ width: 160 }} /></td>
                         <td>
                           <label className="a-toggle">
                             <input type="checkbox" checked={Boolean(getVal(e, "visible"))} onChange={ev => field(e.id, "visible", ev.target.checked)} />

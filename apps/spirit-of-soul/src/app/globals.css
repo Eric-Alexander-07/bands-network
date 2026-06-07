@@ -580,6 +580,14 @@ h3, h4 {
   background: rgba(246,244,240,0.15);
   flex-shrink: 0;
 }
+.hero-date-event--link {
+  text-decoration: none;
+  color: rgba(246,244,240,0.7);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.hero-date-event--link:hover { color: var(--gold); text-decoration: underline; }
 .hero-date-event {
   font-size: 0.875rem;
   color: rgba(246,244,240,0.7);
@@ -1496,7 +1504,7 @@ h3, h4 {
   display: grid;
   grid-template-columns: 1fr 300px;
   gap: 56px;
-  align-items: start;
+  align-items: stretch;
 }
 
 /* Videos column */
@@ -1525,9 +1533,6 @@ h3, h4 {
 .media-dates-col {
   display: flex;
   flex-direction: column;
-  position: -webkit-sticky;
-  position: sticky;
-  top: calc(var(--nav-height) + 24px);
 }
 .media-dates-list {
   display: flex;
@@ -1545,6 +1550,8 @@ h3, h4 {
   transition: background 0.15s;
 }
 .media-date-item:hover { padding-left: 6px; }
+.media-date-item--link { text-decoration: none; color: inherit; display: flex; cursor: pointer; }
+.media-date-item--link:hover { padding-left: 6px; }
 .media-date-badge {
   display: flex;
   flex-direction: column;
@@ -1598,6 +1605,21 @@ h3, h4 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
+}
+.media-date-link {
+  font-family: var(--font-ui);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+}
+.media-date-link:hover { text-decoration: underline; }
+.media-dates-empty {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 24px 0;
 }
 
 /* ─── VideoPlaylistPlayer ───────────────────────────────────── */
@@ -1844,32 +1866,33 @@ h3, h4 {
 }
 
 /* ─── Services Page ─────────────────────────────────────────── */
-.services-grid {
+.services-split {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1px;
-  background: var(--border);
-  border: 1px solid var(--border);
-  margin-top: 56px;
+  grid-template-columns: 1fr 38%;
+  gap: 72px;
+  align-items: start;
 }
-.service-card { background: var(--bg); padding: 44px 36px; display: flex; flex-direction: column; transition: background 0.15s; }
-.service-card:hover { background: var(--bg-card); }
-.service-number {
-  font-family: var(--font-display);
-  font-size: 4.5rem;
-  font-weight: 700;
-  color: var(--border);
-  line-height: 1;
-  letter-spacing: -0.04em;
-  margin-bottom: 16px;
+.services-split--imgfirst {
+  grid-template-columns: 45% 1fr;
+}
+.services-split-img {
+  overflow: hidden;
+  border-radius: 1px;
+}
+.services-split-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  user-select: none;
 }
-.service-title { font-family: var(--font-ui); font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; color: var(--text); }
-.service-desc { color: var(--text-muted); font-size: 0.9375rem; line-height: 1.75; margin-bottom: 28px; flex: 1; }
-.service-features { list-style: none; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border); padding-top: 20px; }
-.service-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; }
-.service-feature::before { content: "—"; color: var(--gold); flex-shrink: 0; font-weight: 700; }
+.services-split-img--tall {
+  aspect-ratio: 3 / 4;
+}
+@media (max-width: 900px) {
+  .services-split,
+  .services-split--imgfirst { grid-template-columns: 1fr; }
+  .services-split-img--tall { aspect-ratio: 4 / 3; }
+}
 
 /* ─── Services Band Intro ───────────────────────────────────── */
 .services-band-intro {
@@ -2138,6 +2161,14 @@ h3, h4 {
 .booking-contact { display: flex; flex-direction: column; gap: 16px; }
 .booking-contact-label { font-family: var(--font-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
 .booking-contact-value { font-size: 0.9375rem; color: var(--text-light); }
+
+/* Booking checklist */
+.booking-checklist { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(200,165,106,0.2); }
+.booking-checklist-title { font-family: var(--font-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+.booking-checklist-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
+.booking-checklist-list li { font-size: 0.875rem; color: var(--text-light-muted); line-height: 1.55; padding-left: 18px; position: relative; }
+.booking-checklist-list li::before { content: ''; position: absolute; left: 0; top: 8px; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); opacity: 0.6; }
+
 .form { display: flex; flex-direction: column; gap: 16px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-group { display: flex; flex-direction: column; gap: 6px; }
@@ -3005,6 +3036,7 @@ h3, h4 {
 /* ─── Safari: Image rendering ────────────────────────────────── */
 img {
   -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   image-rendering: -webkit-optimize-contrast; /* sharper on retina */
 }
 
@@ -3220,9 +3252,6 @@ select::-ms-expand { display: none; }
   .glb-counter { font-size: 10px; }
 
   /* Services */
-  .services-grid { grid-template-columns: 1fr; }
-  .service-card { padding: 28px 20px; }
-  .service-number { font-size: 3rem; margin-bottom: 10px; }
   .references-grid { grid-template-columns: 1fr; }
 
   /* Formation table */
@@ -3307,30 +3336,28 @@ select::-ms-expand { display: none; }
   .hero-eyebrow { margin-bottom: 16px; }
 }
 
-/* ─── Facebook plugin responsive ─────────────────────────────── */
-.media-fb-below { margin-top: 32px; }
-.media-fb-responsive {
-  border: 1px solid var(--border);
+/* ─── Facebook plugin ─────────────────────────────────────────── */
+.media-fb-inline {
+  flex: 1;
+  min-height: 300px;
+  margin-top: 32px;
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  width: 100%;
-  max-width: 500px;
-  /* Clip any Facebook internal overflow */
-  position: relative;
 }
-.media-fb-responsive iframe {
+.media-fb-inline iframe {
+  flex: 1;
   display: block;
-  /* Let Facebook adapt_container_width handle width */
   width: 100% !important;
+  height: 100% !important;
   border: none;
   overflow: hidden;
 }
-@media (max-width: 640px) {
-  .media-fb-responsive { max-width: 100%; }
-  .media-fb-responsive iframe { height: 480px !important; }
-  /* Scale down slightly to prevent horizontal overflow */
-  .media-fb-responsive {
-    transform-origin: top left;
-  }
+@media (max-width: 900px) {
+  .media-fb-inline { flex: none; }
+  .media-fb-inline iframe { height: 520px !important; }
 }
 
 /* ─── 480px: Small phones (iPhone SE etc.) ────────────────────── */

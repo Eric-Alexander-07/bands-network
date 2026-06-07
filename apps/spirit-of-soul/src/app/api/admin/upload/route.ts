@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const ALLOWED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const ALLOWED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/avif"];
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
 
 export async function POST(request: NextRequest) {
@@ -24,6 +24,7 @@ export async function POST(request: NextRequest) {
 
   const formData = await request.formData();
   const file = formData.get("file") as File | null;
+  const bucket = (formData.get("bucket") as string) || "images";
   const uploadPath = (formData.get("path") as string) || "uploads";
 
   if (!file)                              return NextResponse.json({ error: "No file provided" },      { status: 400 });
@@ -45,13 +46,13 @@ export async function POST(request: NextRequest) {
 
   const bytes = await file.arrayBuffer();
   const { error } = await serviceClient.storage
-    .from("images")
+    .from(bucket)
     .upload(storagePath, bytes, { contentType: file.type, upsert: false });
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
 
   const { data: { publicUrl } } = serviceClient.storage
-    .from("images")
+    .from(bucket)
     .getPublicUrl(storagePath);
 
   return NextResponse.json({ url: publicUrl });

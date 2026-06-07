@@ -5,10 +5,11 @@ import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-p
 import { createClient } from "@bands/supabase/client";
 import { MdDragIndicator, MdAdd, MdDelete, MdExpandMore, MdExpandLess } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
+import { adminInsert, adminDelete, adminDeleteWhere, adminUpdateMany } from "@/lib/adminDb";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
-interface Group { id: string; site_id: string; name: string; subtitle: string | null; position: number; created_at: string; }
-interface Entry { id: string; gruppe_id: string; name: string; lineup: string; position: number; created_at: string; }
+interface Group { id: string; site_id: string | null; name: string; beschreibung: string | null; position: number | null; created_at: string | null; }
+interface Entry { id: string; gruppe_id: string | null; name: string; beschreibung: string | null; position: number | null; created_at: string | null; }
 
 export default function BesetzungAdmin() {
   const { toast } = useToast();
@@ -47,23 +48,31 @@ export default function BesetzungAdmin() {
 
   const saveAll = async () => {
     setSaving(true);
-    await Promise.all([
-      ...Object.entries(editG).map(([id, c]) => supabase.from("besetzung_gruppen").update(c).eq("id", id)),
-      ...Object.entries(editE).map(([id, c]) => supabase.from("besetzung_eintraege").update(c).eq("id", id)),
+    const gUpdates = Object.entries(editG).map(([id, c]) => ({ id, ...c }));
+    const eUpdates = Object.entries(editE).map(([id, c]) => ({ id, ...c }));
+    const errs = await Promise.all([
+      gUpdates.length ? adminUpdateMany("besetzung_gruppen", gUpdates) : Promise.resolve({}),
+      eUpdates.length ? adminUpdateMany("besetzung_eintraege", eUpdates) : Promise.resolve({}),
     ]);
+    const err = errs.find(r => r.error);
+    if (err?.error) { toast(`Fehler: ${err.error}`, "error"); setSaving(false); return; }
     setEditG({}); setEditE({}); setDirty(false); setSaving(false);
     toast("Gespeichert", "success");
   };
 
   const addGroup = async () => {
-    const { data } = await supabase.from("besetzung_gruppen").insert({ site_id: siteId, name: "Neue Gruppe", subtitle: "", position: groups.length }).select().single();
+    const { data, error } = await adminInsert("besetzung_gruppen", {
+      site_id: siteId, name: "Neue Gruppe", beschreibung: "", position: groups.length,
+    });
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     if (data) { setGroups(p => [...p, data as Group]); setEntries(e => ({ ...e, [(data as Group).id]: [] })); toast("Gruppe erstellt", "success"); }
   };
 
   const deleteGroup = async (id: string) => {
     if (!confirm("Gruppe und alle Einträge löschen?")) return;
-    await supabase.from("besetzung_eintraege").delete().eq("gruppe_id", id);
-    await supabase.from("besetzung_gruppen").delete().eq("id", id);
+    await adminDeleteWhere("besetzung_eintraege", "gruppe_id", id);
+    const { error } = await adminDelete("besetzung_gruppen", id);
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     setGroups(p => p.filter(g => g.id !== id));
     setEntries(e => { const n = { ...e }; delete n[id]; return n; });
     toast("Gelöscht", "info");
@@ -71,13 +80,17 @@ export default function BesetzungAdmin() {
 
   const addEntry = async (gruppeId: string) => {
     const pos = (entries[gruppeId] ?? []).length;
-    const { data } = await supabase.from("besetzung_eintraege").insert({ gruppe_id: gruppeId, name: "Neu", lineup: "", position: pos }).select().single();
+    const { data, error } = await adminInsert("besetzung_eintraege", {
+      gruppe_id: gruppeId, name: "Neu", beschreibung: "", position: pos,
+    });
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     if (data) setEntries(e => ({ ...e, [gruppeId]: [...(e[gruppeId] ?? []), data as Entry] }));
   };
 
   const deleteEntry = async (gruppeId: string, id: string) => {
     if (!confirm("Eintrag löschen?")) return;
-    await supabase.from("besetzung_eintraege").delete().eq("id", id);
+    const { error } = await adminDelete("besetzung_eintraege", id);
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     setEntries(e => ({ ...e, [gruppeId]: (e[gruppeId] ?? []).filter(x => x.id !== id) }));
   };
 
@@ -85,7 +98,7 @@ export default function BesetzungAdmin() {
     if (!result.destination) return;
     const r = [...groups]; const [m] = r.splice(result.source.index, 1); r.splice(result.destination.index, 0, m);
     setGroups(r);
-    await Promise.all(r.map((g, i) => supabase.from("besetzung_gruppen").update({ position: i }).eq("id", g.id)));
+    await adminUpdateMany("besetzung_gruppen", r.map((g, i) => ({ id: g.id, position: i })));
     toast("Reihenfolge gespeichert", "success");
   };
 
@@ -93,7 +106,7 @@ export default function BesetzungAdmin() {
     if (!result.destination) return;
     const r = [...(entries[gruppeId] ?? [])]; const [m] = r.splice(result.source.index, 1); r.splice(result.destination.index, 0, m);
     setEntries(e => ({ ...e, [gruppeId]: r }));
-    await Promise.all(r.map((e, i) => supabase.from("besetzung_eintraege").update({ position: i }).eq("id", e.id)));
+    await adminUpdateMany("besetzung_eintraege", r.map((e, i) => ({ id: e.id, position: i })));
   };
 
   if (loading) return <div className="admin-loading"><div className="admin-spinner" />Lade …</div>;
@@ -119,9 +132,7 @@ export default function BesetzungAdmin() {
                     <div ref={p.innerRef} {...p.draggableProps} className="a-accordion">
                       <div className="a-accordion-header" onClick={() => setOpen(o => ({ ...o, [g.id]: !o[g.id] }))}>
                         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                          <span {...p.dragHandleProps} onClick={e => e.stopPropagation()}>
-                            <MdDragIndicator style={{ color: "var(--a-muted)" }} />
-                          </span>
+                          <span {...p.dragHandleProps} onClick={e => e.stopPropagation()}><MdDragIndicator style={{ color: "var(--a-border2)" }} /></span>
                           <span>{String(getG(g, "name"))}</span>
                           <span style={{ fontSize: 11, color: "var(--a-muted)" }}>{(entries[g.id] ?? []).length} Einträge</span>
                         </div>
@@ -137,9 +148,9 @@ export default function BesetzungAdmin() {
                               <label className="a-label">Gruppenname</label>
                               <input className="a-input" value={String(getG(g, "name"))} onChange={e => fieldG(g.id, "name", e.target.value)} />
                             </div>
-                            <div className="a-field" style={{ flex: 1, marginBottom: 0 }}>
-                              <label className="a-label">Untertitel</label>
-                              <input className="a-input" value={String(getG(g, "subtitle") || "")} onChange={e => fieldG(g.id, "subtitle", e.target.value)} />
+                            <div className="a-field" style={{ flex: 2, marginBottom: 0 }}>
+                              <label className="a-label">Beschreibung</label>
+                              <input className="a-input" value={String(getG(g, "beschreibung") || "")} onChange={e => fieldG(g.id, "beschreibung", e.target.value)} />
                             </div>
                           </div>
                           <hr className="a-divider" />
@@ -147,13 +158,13 @@ export default function BesetzungAdmin() {
                             <Droppable droppableId={`entries-${g.id}`}>
                               {(ep) => (
                                 <div ref={ep.innerRef} {...ep.droppableProps} style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                                  {(entries[g.id] ?? []).map((e, j) => (
-                                    <Draggable key={e.id} draggableId={e.id} index={j}>
-                                      {(ep2) => (
-                                        <div ref={ep2.innerRef} {...ep2.draggableProps} style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                                          <span className="a-drag-handle" {...ep2.dragHandleProps}><MdDragIndicator /></span>
-                                          <input className="a-input" value={String(getE(e, "name"))} onChange={ev => fieldE(e.id, "name", ev.target.value)} placeholder="Name" style={{ width: 130 }} />
-                                          <input className="a-input" value={String(getE(e, "lineup"))} onChange={ev => fieldE(e.id, "lineup", ev.target.value)} placeholder="Besetzung" style={{ flex: 1 }} />
+                                  {(entries[g.id] ?? []).map((e, ei) => (
+                                    <Draggable key={e.id} draggableId={e.id} index={ei}>
+                                      {(dp) => (
+                                        <div ref={dp.innerRef} {...dp.draggableProps} style={{ display: "flex", gap: 8, alignItems: "center", background: "var(--a-surface)", border: "1px solid var(--a-border)", borderRadius: 6, padding: "8px 10px" }}>
+                                          <span className="a-drag-handle" {...dp.dragHandleProps}><MdDragIndicator /></span>
+                                          <input className="a-input" value={String(getE(e, "name"))} onChange={ev => fieldE(e.id, "name", ev.target.value)} placeholder="Name" style={{ flex: 1 }} />
+                                          <input className="a-input" value={String(getE(e, "beschreibung") || "")} onChange={ev => fieldE(e.id, "beschreibung", ev.target.value)} placeholder="Instrument / Rolle / Beschreibung" style={{ flex: 2 }} />
                                           <button className="a-btn a-btn-danger a-btn-sm" onClick={() => deleteEntry(g.id, e.id)}><MdDelete size={13} /></button>
                                         </div>
                                       )}
@@ -164,9 +175,7 @@ export default function BesetzungAdmin() {
                               )}
                             </Droppable>
                           </DragDropContext>
-                          <button className="a-btn a-btn-ghost a-btn-sm" style={{ marginTop: 10 }} onClick={() => addEntry(g.id)}>
-                            <MdAdd size={13} />Eintrag
-                          </button>
+                          <button className="a-btn a-btn-ghost a-btn-sm" style={{ marginTop: 8 }} onClick={() => addEntry(g.id)}><MdAdd size={13} />Eintrag</button>
                         </div>
                       )}
                     </div>

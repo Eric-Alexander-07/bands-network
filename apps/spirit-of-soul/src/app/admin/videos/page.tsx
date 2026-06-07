@@ -5,11 +5,13 @@ import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-p
 import { createClient } from "@bands/supabase/client";
 import { MdDragIndicator, MdAdd, MdDelete } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
+import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
-interface Video { id: string; site_id: string; youtube_id: string; title: string; description: string | null; position: number; created_at: string; }
+interface Video { id: string; site_id: string | null; youtube_url: string; title: string | null; position: number | null; created_at: string | null; }
 
 function getYtId(input: string): string {
+  if (!input) return "";
   const m = input.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
   return m?.[1] ?? input;
 }
@@ -34,25 +36,36 @@ export default function VideosAdmin() {
     })();
   }, []);
 
-  const field = (id: string, key: keyof Video, val: string) => { setEditMap(m => ({ ...m, [id]: { ...m[id], [key]: val } })); setIsDirty(true); };
+  const field = (id: string, key: keyof Video, val: string) => {
+    setEditMap(m => ({ ...m, [id]: { ...m[id], [key]: val } }));
+    setIsDirty(true);
+  };
   const getVal = (v: Video, key: keyof Video) => editMap[v.id]?.[key] !== undefined ? editMap[v.id][key] : v[key];
 
   const saveAll = async () => {
     setSaving(true);
-    await Promise.all(Object.entries(editMap).map(([id, c]) => supabase.from("media_videos").update(c).eq("id", id)));
+    const updates = Object.entries(editMap).map(([id, c]) => ({ id, ...c }));
+    if (updates.length > 0) {
+      const { error } = await adminUpdateMany("media_videos", updates);
+      if (error) { toast(`Fehler: ${error}`, "error"); setSaving(false); return; }
+    }
     const { data } = await supabase.from("media_videos").select("*").eq("site_id", siteId).order("position");
     setVideos(data ?? []); setEditMap({}); setIsDirty(false); setSaving(false);
     toast("Gespeichert", "success");
   };
 
   const addVideo = async () => {
-    const { data } = await supabase.from("media_videos").insert({ site_id: siteId, youtube_id: "", title: "Neues Video", description: "", position: videos.length }).select().single();
+    const { data, error } = await adminInsert("media_videos", {
+      site_id: siteId, youtube_url: "", title: "Neues Video", position: videos.length,
+    });
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     if (data) { setVideos(p => [...p, data as Video]); toast("Hinzugefügt", "success"); }
   };
 
   const deleteVideo = async (id: string) => {
     if (!confirm("Video löschen?")) return;
-    await supabase.from("media_videos").delete().eq("id", id);
+    const { error } = await adminDelete("media_videos", id);
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     setVideos(p => p.filter(v => v.id !== id));
     toast("Gelöscht", "info");
   };
@@ -61,7 +74,7 @@ export default function VideosAdmin() {
     if (!result.destination) return;
     const r = [...videos]; const [m] = r.splice(result.source.index, 1); r.splice(result.destination.index, 0, m);
     setVideos(r);
-    await Promise.all(r.map((v, i) => supabase.from("media_videos").update({ position: i }).eq("id", v.id)));
+    await adminUpdateMany("media_videos", r.map((v, i) => ({ id: v.id, position: i })));
     toast("Reihenfolge gespeichert", "success");
   };
 
@@ -82,7 +95,7 @@ export default function VideosAdmin() {
           {(prov) => (
             <div ref={prov.innerRef} {...prov.droppableProps} style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {videos.map((v, i) => {
-                const ytId = getYtId(String(getVal(v, "youtube_id")));
+                const ytId = getYtId(String(getVal(v, "youtube_url")));
                 return (
                   <Draggable key={v.id} draggableId={v.id} index={i}>
                     {(p) => (
@@ -90,9 +103,8 @@ export default function VideosAdmin() {
                         <span className="a-drag-handle" style={{ marginTop: 8 }} {...p.dragHandleProps}><MdDragIndicator /></span>
                         {ytId && <img src={`https://img.youtube.com/vi/${ytId}/mqdefault.jpg`} alt="" className="a-video-thumb" />}
                         <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 7 }}>
-                          <input className="a-input" value={String(getVal(v, "title"))} onChange={e => field(v.id, "title", e.target.value)} placeholder="Titel" />
-                          <input className="a-input" value={String(getVal(v, "youtube_id"))} onChange={e => field(v.id, "youtube_id", e.target.value)} placeholder="YouTube URL oder Video-ID" />
-                          <input className="a-input" value={String(getVal(v, "description") || "")} onChange={e => field(v.id, "description", e.target.value)} placeholder="Beschreibung (optional)" />
+                          <input className="a-input" value={String(getVal(v, "title") || "")} onChange={e => field(v.id, "title", e.target.value)} placeholder="Titel" />
+                          <input className="a-input" value={String(getVal(v, "youtube_url"))} onChange={e => field(v.id, "youtube_url", e.target.value)} placeholder="YouTube URL (https://youtu.be/…)" />
                         </div>
                         <button className="a-btn a-btn-danger a-btn-sm" onClick={() => deleteVideo(v.id)}><MdDelete size={14} /></button>
                       </div>

@@ -20,7 +20,9 @@ export const metadata: Metadata = {
 };
 
 import AboutPage from "@/components/AboutPage";
+import { fetchPageContent } from "@/lib/data";
 
-export default function About() {
-  return <AboutPage />;
+export default async function About() {
+  const content = await fetchPageContent("about");
+  return <AboutPage content={content} />;
 }

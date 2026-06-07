@@ -20,7 +20,9 @@ export const metadata: Metadata = {
 };
 
 import ShopPage from "@/components/ShopPage";
+import { fetchProducts, fetchPageContent } from "@/lib/data";
 
-export default function Shop() {
-  return <ShopPage />;
+export default async function Shop() {
+  const [dbProducts, content] = await Promise.all([fetchProducts(), fetchPageContent("shop")]);
+  return <ShopPage dbProducts={dbProducts as any} content={content} />;
 }

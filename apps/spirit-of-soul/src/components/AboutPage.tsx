@@ -1,8 +1,16 @@
 import Link from "next/link";
 import ConcentricRings from "@/components/ConcentricRings";
-import { band } from "@/config/band";
 
-export default function AboutPage() {
+type PC = Record<string, string>;
+
+interface Props { content?: PC; }
+
+export default function AboutPage({ content = {} }: Props) {
+  const heroText  = content.text_top   || "25 Jahre Soul, R&B und Funk auf internationalen Bühnen.\nEntertainment der Extraklasse.";
+  const mainImage = content.image_main || "/images/gallery/live-stage-duo.webp";
+  const mainText  = content.text_bottom;
+  const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
+
   return (
     <>
       <section className="page-hero">
@@ -11,7 +19,7 @@ export default function AboutPage() {
           <div className="page-hero-text-narrow">
             <span className="eyebrow">Über die Band</span>
             <h1>Über uns</h1>
-            <p>25 Jahre Soul, R&amp;B und Funk auf internationalen Bühnen.<br />Entertainment der Extraklasse.</p>
+            <p>{heroText}</p>
           </div>
         </div>
       </section>
@@ -21,22 +29,28 @@ export default function AboutPage() {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="about-simple-layout">
             <div className="about-simple-img" data-animate="fade-right">
-              <img src="/images/gallery/live-stage-duo.webp" alt="Spirit of Soul — Live" />
+              <img src={mainImage} alt="Spirit of Soul — Live" />
             </div>
             <div className="about-simple-text" data-animate="fade-left">
               <span className="eyebrow">The Finest Of Black Music</span>
               <h2>25 Jahre Bühne.<br />Eine Leidenschaft.</h2>
-              <p>
-                Spirit of Soul steht seit 25 Jahren für erstklassiges Live-Entertainment.
-                Mit internationalen Sängern, erfahrenen Musikern und einer unverwechselbaren
-                Energie begeistert die Band Gäste bei Hochzeiten, Firmenevents, Stadtfesten
-                und exklusiven Galas europaweit.
-              </p>
-              <p>
-                Die Stärke liegt in der Musikalität und Spontanität aller Bandmitglieder —
-                das Programm wird kurzfristig auf der Bühne maßgeschneidert, damit der
-                erste Song das Publikum sofort bewegt.
-              </p>
+              {mainParas ? (
+                mainParas.map((p, i) => <p key={i}>{p}</p>)
+              ) : (
+                <>
+                  <p>
+                    Spirit of Soul steht seit 25 Jahren für erstklassiges Live-Entertainment.
+                    Mit internationalen Sängern, erfahrenen Musikern und einer unverwechselbaren
+                    Energie begeistert die Band Gäste bei Hochzeiten, Firmenevents, Stadtfesten
+                    und exklusiven Galas europaweit.
+                  </p>
+                  <p>
+                    Die Stärke liegt in der Musikalität und Spontanität aller Bandmitglieder —
+                    das Programm wird kurzfristig auf der Bühne maßgeschneidert, damit der
+                    erste Song das Publikum sofort bewegt.
+                  </p>
+                </>
+              )}
               <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
                 <Link href="/booking" className="btn btn-primary">Jetzt buchen</Link>
                 <Link href="/services" className="btn btn-outline">Unsere Services</Link>

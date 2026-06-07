@@ -20,7 +20,9 @@ export const metadata: Metadata = {
 };
 
 import ServicesPage from "@/components/ServicesPage";
+import { fetchBesetzung, fetchPageContent } from "@/lib/data";
 
-export default function Services() {
-  return <ServicesPage />;
+export default async function Services() {
+  const [dbBesetzung, content] = await Promise.all([fetchBesetzung(), fetchPageContent("services")]);
+  return <ServicesPage dbBesetzung={dbBesetzung} content={content} />;
 }

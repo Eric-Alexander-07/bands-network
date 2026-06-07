@@ -2,8 +2,9 @@ import Link from "next/link";
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
 import ReferencesMarquee from "@/components/ReferencesMarquee";
+import type { Referenz } from "@/lib/data";
 
-export default function ReferencesPage() {
+export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
   return (
     <>
       <section className="page-hero">
@@ -31,7 +32,7 @@ export default function ReferencesPage() {
             die {band.name} für ihre Events gebucht haben.
           </p>
         </div>
-        <ReferencesMarquee />
+        <ReferencesMarquee refs={refs} />
       </section>
 
       <section className="booking-cta">

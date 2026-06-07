@@ -20,7 +20,9 @@ export const metadata: Metadata = {
 };
 
 import ReferencesPage from "@/components/ReferencesPage";
+import { fetchReferenzen } from "@/lib/data";
 
-export default function Referenzen() {
-  return <ReferencesPage />;
+export default async function Referenzen() {
+  const refs = await fetchReferenzen();
+  return <ReferencesPage refs={refs} />;
 }

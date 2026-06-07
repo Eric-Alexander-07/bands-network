@@ -1,7 +1,7 @@
 /**
  * Admin DB helpers — all mutations go through /api/admin/db
- * which uses the service role key to bypass RLS.
- * Safe: API route verifies Supabase auth before executing.
+ * which uses the service role key to bypass RLS and triggers
+ * revalidateTag so the Next.js cache is invalidated automatically.
  */
 
 async function call(body: object) {
@@ -24,6 +24,9 @@ export const adminUpdateMany = (table: string, updates: Array<{ id: string } & o
 
 export const adminDelete = (table: string, id: string) =>
   call({ table, operation: "delete", id });
+
+export const adminDeleteWhere = (table: string, column: string, value: string) =>
+  call({ table, operation: "delete_where", column, value });
 
 export const adminUpsert = (table: string, data: object) =>
   call({ table, operation: "upsert", data });

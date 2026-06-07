@@ -1,8 +1,19 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
+import type { BesetzungGruppeWithEintraege } from "@/lib/data";
 
-export default function ServicesPage() {
+type PC = Record<string, string>;
+interface Props { dbBesetzung?: BesetzungGruppeWithEintraege[]; content?: PC; }
+
+export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
+  const formations: Array<{ name: string; beschreibung: string | null; eintraege: Array<{ id: string; name: string; beschreibung: string | null }> }> =
+    dbBesetzung && dbBesetzung.length > 0
+      ? dbBesetzung.map(g => ({ name: g.name, beschreibung: g.beschreibung ?? null, eintraege: g.besetzung_eintraege ?? [] }))
+      : [
+          { name: "Kleine Besetzungen", beschreibung: "Für private Events und kleinere Veranstaltungen (mit Halbplaybacks)", eintraege: band.formations.small.map((f, i) => ({ id: String(i), name: f.name, beschreibung: f.lineup })) },
+          { name: "Komplette Liveband",  beschreibung: "Größere Besetzungen mit kompletter Live-Begleitung",               eintraege: band.formations.full.map((f, i) => ({ id: String(i), name: f.name, beschreibung: f.lineup })) },
+        ];
   return (
     <>
       <section className="page-hero">
@@ -10,11 +21,7 @@ export default function ServicesPage() {
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
           <h1>Services</h1>
-          <p>
-            Vom intimen Dinner bis zur 12-köpfigen Full-Band mit
-            Multimedia-Show — {band.name} bringt die passende Musik
-            und Technik für jeden Anlass.
-          </p>
+          <p>{content.text_top || `Vom intimen Dinner bis zur 12-köpfigen Full-Band mit Multimedia-Show — ${band.name} bringt die passende Musik und Technik für jeden Anlass.`}</p>
         </div>
       </section>
 
@@ -25,52 +32,19 @@ export default function ServicesPage() {
           <span className="eyebrow" data-animate="fade-up">Flexibel buchbar</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Besetzung</h2>
           <p className="formations-intro" data-animate="fade-up" data-delay="200">
-            {band.name} ist für verschiedene Events in verschiedenen Besetzungen buchbar — von der
-            eleganten kleinen Formation bis zur 12-köpfigen Full-Band mit Bläser Sektion.
+            {content.besetzung_text || `${band.name} ist für verschiedene Events in verschiedenen Besetzungen buchbar — von der eleganten kleinen Formation bis zur 12-köpfigen Full-Band mit Bläser Sektion.`}
           </p>
           <div className="formations-grid" data-animate="stagger">
-            <div className="formations-col">
-              <h3 className="formations-col-title">Kleine Besetzungen</h3>
-              <p className="formations-col-sub">Für private Events und kleinere Veranstaltungen (mit Halbplaybacks)</p>
-              <ul className="formations-list">
-                {band.formations.small.map((f, i) => (
-                  <li key={i} className="formation-item">
-                    <span className="formation-name">{f.name}</span>
-                    <span className="formation-lineup">{f.lineup}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="formations-col">
-              <h3 className="formations-col-title">Komplette Liveband</h3>
-              <p className="formations-col-sub">Größere Besetzungen mit kompletter Live-Begleitung</p>
-              <ul className="formations-list">
-                {band.formations.full.map((f, i) => (
-                  <li key={i} className="formation-item">
-                    <span className="formation-name">{f.name}</span>
-                    <span className="formation-lineup">{f.lineup}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Leistungen */}
-      <section className="section" style={{ paddingTop: 48 }}>
-        <div className="container">
-          <span className="eyebrow" data-animate="fade-up">Leistungen</span>
-          <h2 className="section-title" data-animate="fade-up" data-delay="100">Unsere Pakete</h2>
-          <div className="services-grid" data-animate="stagger">
-            {band.services.map((service, i) => (
-              <div key={i} className="service-card">
-                <span className="service-number">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="service-title">{service.title}</h3>
-                <p className="service-desc">{service.description}</p>
-                <ul className="service-features">
-                  {service.features.map((feature, j) => (
-                    <li key={j} className="service-feature">{feature}</li>
+            {formations.map((group, gi) => (
+              <div key={gi} className="formations-col">
+                <h3 className="formations-col-title">{group.name}</h3>
+                {group.beschreibung && <p className="formations-col-sub">{group.beschreibung}</p>}
+                <ul className="formations-list">
+                  {group.eintraege.map(e => (
+                    <li key={e.id} className="formation-item">
+                      <span className="formation-name">{e.name}</span>
+                      <span className="formation-lineup">{e.beschreibung}</span>
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -79,31 +53,24 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Technik */}
+      {/* Technik — Bild links, Text rechts */}
       <section className="section technik-section">
         <div className="container">
-          <span className="eyebrow" data-animate="fade-up">Ton · Licht · Bühne</span>
-          <h2 className="section-title" data-animate="fade-up" data-delay="100">Technik</h2>
-          <p className="technik-intro" data-animate="fade-up" data-delay="200">
-            {band.technik.intro}
-          </p>
-          <div className="technik-grid" data-animate="stagger">
-            {band.technik.packages.map((pkg, i) => (
-              <div key={i} className="technik-card">
-                <span className="technik-number">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="technik-name">{pkg.name}</h3>
-                <p className="technik-desc">{pkg.description}</p>
-                <ul className="service-features">
-                  {pkg.features.map((f, j) => (
-                    <li key={j} className="service-feature">{f}</li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="services-split services-split--imgfirst">
+            <div className="services-split-img services-split-img--tall" data-animate="fade-up">
+              <img src={content.image_main || "/images/gallery/live-stage-duo.webp"} alt="Spirit of Soul auf der Bühne" />
+            </div>
+            <div>
+              <span className="eyebrow" data-animate="fade-up">Ton · Licht · Bühne</span>
+              <h2 className="section-title" data-animate="fade-up" data-delay="100">Technik</h2>
+              <p className="technik-intro" style={{ marginBottom: 24 }} data-animate="fade-up" data-delay="200">
+                {content.technik_text || band.technik.intro}
+              </p>
+              <p className="technik-note" data-animate="fade-up">
+                {band.technik.note}
+              </p>
+            </div>
           </div>
-          <p className="technik-note" data-animate="fade-up">
-            {band.technik.note}
-          </p>
         </div>
       </section>
 

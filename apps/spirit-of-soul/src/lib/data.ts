@@ -10,6 +10,7 @@
 
 import {
   getSite,
+  getPage,
   getEvents,
   getMediaVideos,
   getMediaImages,
@@ -33,87 +34,73 @@ const isSupabaseConfigured =
   !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
   !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.startsWith("<");
 
+function getYtId(input: string): string {
+  const m = input?.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+  return m?.[1] ?? input;
+}
+
+async function fetchYouTubeTitle(ytId: string): Promise<string> {
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${ytId}&format=json`,
+      { next: { revalidate: 86400 } }
+    );
+    if (!res.ok) return "";
+    const data = await res.json() as { title?: string };
+    return data.title ?? "";
+  } catch {
+    return "";
+  }
+}
+
 // ─── Events / Spieltermine ───────────────────────────────────────
 export async function fetchEvents(): Promise<Event[]> {
-  if (!isSupabaseConfigured) {
-    // Fallback: convert static band.dates to Event shape
-    return band.dates.map((d, i) => ({
-      id: String(i),
-      site_id: "",
-      date: d.date,
-      event_name: d.event,
-      venue: d.venue,
-      location: d.location,
-      event_type: d.type,
-      visible: true,
-      created_at: new Date().toISOString(),
-    }));
-  }
-  const events = await getEvents(SITE_SLUG);
-  if (events.length === 0) {
-    return band.dates.map((d, i) => ({
-      id: String(i), site_id: "", date: d.date, event_name: d.event,
-      venue: d.venue, location: d.location, event_type: d.type,
-      visible: true, created_at: new Date().toISOString(),
-    }));
-  }
-  return events;
+  if (!isSupabaseConfigured) return [];
+  // When Supabase is configured, always return DB data — empty = no events shown
+  return getEvents(SITE_SLUG);
 }
 
 // ─── Videos ──────────────────────────────────────────────────────
 export async function fetchVideos(): Promise<MediaVideo[]> {
+  let videos: MediaVideo[];
+
   if (!isSupabaseConfigured) {
-    return band.videos.map((v, i) => ({
-      id: String(i), site_id: "", youtube_id: v.id, title: v.title,
-      description: v.description ?? null, position: i,
-      created_at: new Date().toISOString(),
+    videos = band.videos.map((v, i) => ({
+      id: String(i), site_id: "", youtube_url: v.id, title: v.title ?? null,
+      position: i, created_at: null,
+    }));
+  } else {
+    const db = await getMediaVideos(SITE_SLUG);
+    videos = db.length > 0 ? db : band.videos.map((v, i) => ({
+      id: String(i), site_id: "", youtube_url: v.id, title: v.title ?? null,
+      position: i, created_at: null,
     }));
   }
-  const videos = await getMediaVideos(SITE_SLUG);
-  if (videos.length === 0) {
-    return band.videos.map((v, i) => ({
-      id: String(i), site_id: "", youtube_id: v.id, title: v.title,
-      description: v.description ?? null, position: i,
-      created_at: new Date().toISOString(),
-    }));
-  }
-  return videos;
+
+  // Auto-fill empty titles from YouTube oEmbed (cached 24h)
+  return Promise.all(videos.map(async v => {
+    if (v.title) return v;
+    const title = await fetchYouTubeTitle(getYtId(v.youtube_url));
+    return { ...v, title: title || null };
+  }));
 }
 
 // ─── Images ──────────────────────────────────────────────────────
-export async function fetchImages(category?: string): Promise<MediaImage[]> {
+export async function fetchImages(): Promise<MediaImage[]> {
   if (!isSupabaseConfigured) return [];
-  const images = await getMediaImages(SITE_SLUG);
-  if (!category) return images;
-  return images.filter((img) => img.category === category);
+  return getMediaImages(SITE_SLUG);
 }
 
 // ─── Products ────────────────────────────────────────────────────
-export async function fetchProducts(category?: string): Promise<Product[]> {
+export async function fetchProducts(): Promise<Product[]> {
   if (!isSupabaseConfigured) return [];
-  const products = await getProducts(SITE_SLUG);
-  if (!category) return products;
-  return products.filter((p) => p.category === category);
+  return getProducts(SITE_SLUG);
 }
 
 // ─── Referenzen ──────────────────────────────────────────────────
 export async function fetchReferenzen(): Promise<Referenz[]> {
-  if (!isSupabaseConfigured) {
-    return band.references.map((r, i) => ({
-      id: String(i), site_id: "", client_name: r.client,
-      event_type: r.type, position: i,
-      created_at: new Date().toISOString(),
-    }));
-  }
-  const refs = await getReferenzen(SITE_SLUG);
-  if (refs.length === 0) {
-    return band.references.map((r, i) => ({
-      id: String(i), site_id: "", client_name: r.client,
-      event_type: r.type, position: i,
-      created_at: new Date().toISOString(),
-    }));
-  }
-  return refs;
+  if (!isSupabaseConfigured) return [];
+  return getReferenzen(SITE_SLUG);
 }
 
 // ─── Besetzung ───────────────────────────────────────────────────
@@ -126,6 +113,16 @@ export async function fetchBesetzung(): Promise<BesetzungGruppeWithEintraege[]> 
 export async function fetchSocialLinks(): Promise<SocialLink[]> {
   if (!isSupabaseConfigured) return [];
   return getSocialLinks(SITE_SLUG);
+}
+
+// ─── Page content ────────────────────────────────────────────────
+export async function fetchPageContent(slug: string): Promise<Record<string, string>> {
+  if (!isSupabaseConfigured) return {};
+  const page = await getPage(SITE_SLUG, slug);
+  if (!page?.content) return {};
+  return Object.fromEntries(
+    Object.entries(page.content as Record<string, unknown>).map(([k, v]) => [k, String(v ?? "")])
+  );
 }
 
 // ─── Site info ───────────────────────────────────────────────────

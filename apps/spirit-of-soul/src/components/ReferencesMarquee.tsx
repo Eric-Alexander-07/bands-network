@@ -1,8 +1,8 @@
 "use client";
 
-import { band } from "@/config/band";
+import type { Referenz } from "@/lib/data";
 
-type RefItem = { client: string; type: string };
+type RefItem = { name: string; type: string | null };
 
 function MarqueeCol({
   items,
@@ -22,8 +22,8 @@ function MarqueeCol({
       >
         {doubled.map((item, i) => (
           <div key={i} className="ref-chip">
-            <span className="ref-chip-type">{item.type}</span>
-            <span className="ref-chip-name">{item.client}</span>
+            {item.type && <span className="ref-chip-type">{item.type}</span>}
+            <span className="ref-chip-name">{item.name}</span>
           </div>
         ))}
       </div>
@@ -31,12 +31,11 @@ function MarqueeCol({
   );
 }
 
-export default function ReferencesMarquee() {
-  const refs = band.references as RefItem[];
+export default function ReferencesMarquee({ refs = [] }: { refs?: Referenz[] }) {
   const q = Math.ceil(refs.length / 4);
-  const col1 = refs.slice(0,q);
-  const col2 = refs.slice(q,        q * 2);
-  const col3 = refs.slice(q * 2,    q * 3);
+  const col1 = refs.slice(0,     q);
+  const col2 = refs.slice(q,     q * 2);
+  const col3 = refs.slice(q * 2, q * 3);
   const col4 = refs.slice(q * 3);
 
   return (

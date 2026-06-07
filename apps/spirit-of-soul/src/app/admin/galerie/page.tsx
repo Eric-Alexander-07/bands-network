@@ -1,32 +1,33 @@
 // @ts-nocheck
 "use client";
-import { useEffect, useState, useRef, type ChangeEvent } from "react";
+import { useEffect, useState, useRef, useCallback, type DragEvent, type ChangeEvent } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
 import { createClient } from "@bands/supabase/client";
-import { MdDragIndicator, MdDelete, MdUpload, MdClose } from "react-icons/md";
+import { MdDelete, MdClose } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
+import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
-interface Img { id: string; site_id: string; src: string; alt: string | null; credit: string | null; position: number; category: string | null; created_at: string; }
-interface Preview { file: File; url: string; alt: string; credit: string; }
+interface Img { id: string; site_id: string | null; url: string; caption: string | null; credit: string | null; position: number | null; created_at: string | null; }
+interface UploadItem { id: string; file: File; objectUrl: string; progress: "pending" | "uploading" | "done" | "error"; error?: string; }
 
 export default function GalerieAdmin() {
   const { toast }   = useToast();
   const supabase    = createClient();
   const fileRef     = useRef<HTMLInputElement>(null);
-  const [images, setImages]   = useState<Img[]>([]);
-  const [siteId, setSiteId]   = useState("");
-  const [loading, setLoading] = useState(true);
-  const [previews, setPreviews] = useState<Preview[]>([]);
-  const [uploading, setUploading] = useState(false);
-  const [editMap, setEditMap] = useState<Record<string, Partial<Img>>>({});
-  const [isDirty, setIsDirty] = useState(false);
-  const [saving, setSaving]   = useState(false);
+  const [images, setImages]         = useState<Img[]>([]);
+  const [siteId, setSiteId]         = useState("");
+  const [loading, setLoading]       = useState(true);
+  const [queue, setQueue]           = useState<UploadItem[]>([]);
+  const [isDragOver, setIsDragOver] = useState(false);
+  const uploadingRef = useRef(false);
+  const imagesRef    = useRef(images);
+  useEffect(() => { imagesRef.current = images; }, [images]);
 
   useEffect(() => {
     (async () => {
       const { data: site } = await supabase.from("sites").select("id").eq("slug", SLUG).single();
-      if (!site) return;
+      if (!site) { setLoading(false); return; }
       setSiteId(site.id);
       const { data } = await supabase.from("media_images").select("*").eq("site_id", site.id).order("position");
       setImages(data ?? []);
@@ -34,63 +35,79 @@ export default function GalerieAdmin() {
     })();
   }, []);
 
-  const field = (id: string, key: keyof Img, val: string) => { setEditMap(m => ({ ...m, [id]: { ...m[id], [key]: val } })); setIsDirty(true); };
-  const getVal = (img: Img, key: keyof Img) => editMap[img.id]?.[key] !== undefined ? editMap[img.id][key] : img[key];
-
-  const onFileSelect = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files ?? []);
-    const newPreviews = files.map(f => ({ file: f, url: URL.createObjectURL(f), alt: f.name.replace(/\.[^.]+$/, ""), credit: "" }));
-    setPreviews(p => [...p, ...newPreviews]);
-    if (e.target) e.target.value = "";
-  };
-
-  const uploadAll = async () => {
-    if (!previews.length) return;
-    setUploading(true);
-    try {
-      const newImgs: Img[] = [];
-      for (const prev of previews) {
+  // Auto-upload pending items one by one
+  useEffect(() => {
+    if (uploadingRef.current || !siteId) return;
+    const pending = queue.filter(i => i.progress === "pending");
+    if (!pending.length) return;
+    uploadingRef.current = true;
+    (async () => {
+      for (const item of pending) {
+        setQueue(q => q.map(x => x.id === item.id ? { ...x, progress: "uploading" } : x));
         const formData = new FormData();
-        formData.append("file", prev.file);
+        formData.append("file", item.file);
         formData.append("path", `${SLUG}/galerie`);
-        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
-        const { url, error } = await res.json() as { url?: string; error?: string };
-        if (error || !url) { toast(`Upload fehlgeschlagen: ${error}`, "error"); continue; }
-        const { data } = await supabase.from("media_images")
-          .insert({ site_id: siteId, src: url, alt: prev.alt, credit: prev.credit || null, position: images.length + newImgs.length, category: "gallery" })
-          .select().single();
-        if (data) newImgs.push(data as Img);
+        try {
+          const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+          const { url, error } = await res.json();
+          if (error || !url) throw new Error(error ?? "Upload fehlgeschlagen");
+          const { data, error: dbErr } = await adminInsert("media_images", {
+            site_id: siteId, url,
+            caption: item.file.name.replace(/\.[^.]+$/, ""),
+            credit: null,
+            position: imagesRef.current.length,
+          });
+          if (dbErr) throw new Error(dbErr);
+          setImages(p => [...p, data]);
+          setQueue(q => q.map(x => x.id === item.id ? { ...x, progress: "done" } : x));
+        } catch (e) {
+          const msg = e instanceof Error ? e.message : "Fehler";
+          setQueue(q => q.map(x => x.id === item.id ? { ...x, progress: "error", error: msg } : x));
+          toast(`Upload fehlgeschlagen: ${msg}`, "error");
+        }
       }
-      setImages(p => [...p, ...newImgs]);
-      setPreviews([]);
-      toast(`${newImgs.length} Bild(er) hochgeladen`, "success");
-    } finally { setUploading(false); }
-  };
+      uploadingRef.current = false;
+      setTimeout(() => setQueue(q => q.filter(x => x.progress !== "done")), 1500);
+    })();
+  }, [queue, siteId]);
 
-  const saveEdits = async () => {
-    setSaving(true);
-    await Promise.all(Object.entries(editMap).map(([id, c]) => supabase.from("media_images").update(c).eq("id", id)));
-    setEditMap({}); setIsDirty(false); setSaving(false);
-    toast("Gespeichert", "success");
-  };
+  const addFiles = useCallback((files: File[]) => {
+    const valid = files.filter(f =>
+      ["image/jpeg","image/jpg","image/png","image/webp","image/avif"].includes(f.type) && f.size < 15 * 1024 * 1024
+    );
+    if (!valid.length) { toast("Keine gültigen Bilder (max. 15 MB, JPG/PNG/WebP/AVIF)", "error"); return; }
+    const items: UploadItem[] = valid.map(f => ({
+      id: Math.random().toString(36).slice(2),
+      file: f, objectUrl: URL.createObjectURL(f), progress: "pending",
+    }));
+    setQueue(q => [...q, ...items]);
+  }, [toast]);
+
+  const onDrop = useCallback((e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault(); setIsDragOver(false);
+    addFiles(Array.from(e.dataTransfer.files));
+  }, [addFiles]);
 
   const deleteImage = async (img: Img) => {
     if (!confirm("Bild löschen?")) return;
     try {
-      const url = new URL(img.src);
-      const path = url.pathname.replace(/.*\/storage\/v1\/object\/public\/images\//, "");
+      const urlObj = new URL(img.url);
+      const path = decodeURIComponent(urlObj.pathname.replace(/.*\/storage\/v1\/object\/public\/images\//, ""));
       await supabase.storage.from("images").remove([path]);
     } catch { /* ignore storage errors */ }
-    await supabase.from("media_images").delete().eq("id", img.id);
+    const { error } = await adminDelete("media_images", img.id);
+    if (error) { toast(`Fehler: ${error}`, "error"); return; }
     setImages(p => p.filter(i => i.id !== img.id));
     toast("Bild gelöscht", "info");
   };
 
   const onDragEnd = async (result: DropResult) => {
     if (!result.destination) return;
-    const r = [...images]; const [m] = r.splice(result.source.index, 1); r.splice(result.destination.index, 0, m);
+    const r = [...images];
+    const [m] = r.splice(result.source.index, 1);
+    r.splice(result.destination.index, 0, m);
     setImages(r);
-    await Promise.all(r.map((img, i) => supabase.from("media_images").update({ position: i }).eq("id", img.id)));
+    await adminUpdateMany("media_images", r.map((img, i) => ({ id: img.id, position: i })));
     toast("Reihenfolge gespeichert", "success");
   };
 
@@ -100,57 +117,96 @@ export default function GalerieAdmin() {
     <>
       <div className="a-section-header">
         <h1 className="a-section-title">Galerie</h1>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          {isDirty && <span className="a-unsaved"><span className="a-unsaved-dot" />Ungespeichert</span>}
-          {isDirty && <button className="a-btn a-btn-primary a-btn-sm" onClick={saveEdits} disabled={saving}>{saving ? "…" : "Speichern"}</button>}
-          <button className="a-btn a-btn-ghost a-btn-sm" onClick={() => fileRef.current?.click()}><MdUpload size={14} />Hochladen</button>
-          <input ref={fileRef} type="file" multiple accept="image/jpg,image/jpeg,image/png,image/webp" style={{ display: "none" }} onChange={onFileSelect} />
-        </div>
       </div>
 
-      {previews.length > 0 && (
-        <div className="a-card" style={{ marginBottom: 20 }}>
-          <p className="a-card-title">Vorschau — {previews.length} Bild(er)</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-            {previews.map((prev, i) => (
-              <div key={i} style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                <img src={prev.url} alt="" style={{ width: 80, height: 52, objectFit: "cover", borderRadius: 4, border: "1px solid var(--a-border)", flexShrink: 0 }} />
-                <input className="a-input" value={prev.alt} onChange={e => setPreviews(p => p.map((x, j) => j === i ? { ...x, alt: e.target.value } : x))} placeholder="Alt-Text" style={{ flex: 2 }} />
-                <input className="a-input" value={prev.credit} onChange={e => setPreviews(p => p.map((x, j) => j === i ? { ...x, credit: e.target.value } : x))} placeholder="Foto-Credit" style={{ flex: 1 }} />
-                <button className="a-btn a-btn-danger a-btn-sm" onClick={() => setPreviews(p => p.filter((_, j) => j !== i))}><MdClose size={14} /></button>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 12, display: "flex", gap: 8 }}>
-            <button className="a-btn a-btn-primary" onClick={uploadAll} disabled={uploading}>{uploading ? "Hochladen …" : "Alle hochladen"}</button>
-            <button className="a-btn a-btn-ghost" onClick={() => setPreviews([])}>Abbrechen</button>
-          </div>
+      {/* Drop Zone */}
+      <div
+        className={`a-dropzone${isDragOver ? " a-dropzone--over" : ""}`}
+        onDrop={onDrop}
+        onDragOver={e => { e.preventDefault(); setIsDragOver(true); }}
+        onDragLeave={() => setIsDragOver(false)}
+        onClick={() => fileRef.current?.click()}
+        role="button"
+        tabIndex={0}
+        onKeyDown={e => e.key === "Enter" && fileRef.current?.click()}
+      >
+        <input
+          ref={fileRef}
+          type="file"
+          multiple
+          accept="image/jpeg,image/png,image/webp,image/avif"
+          style={{ display: "none" }}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            addFiles(Array.from(e.target.files ?? []));
+            if (e.target) e.target.value = "";
+          }}
+        />
+        <svg className="a-dropzone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 15V3M12 3L8 7M12 3l4 4"/>
+          <path d="M3 20h18"/>
+        </svg>
+        <p className="a-dropzone-title">Bilder ablegen oder klicken zum Auswählen</p>
+        <p className="a-dropzone-sub">JPG · PNG · WebP · AVIF — max. 15 MB pro Bild</p>
+      </div>
+
+      {/* Upload queue */}
+      {queue.length > 0 && (
+        <div className="a-upload-queue">
+          {queue.map(item => (
+            <div key={item.id} className={`a-upload-item a-upload-item--${item.progress}`}>
+              <img src={item.objectUrl} alt="" className="a-upload-thumb" />
+              <span className="a-upload-name">{item.file.name}</span>
+              <span className="a-upload-status">
+                {item.progress === "pending"   && "Wartet…"}
+                {item.progress === "uploading" && <span className="admin-spinner" style={{ marginRight: 0 }} />}
+                {item.progress === "done"      && "✓"}
+                {item.progress === "error"     && `✗ ${item.error ?? "Fehler"}`}
+              </span>
+              {item.progress === "error" && (
+                <button className="a-upload-remove" onClick={() => setQueue(q => q.filter(x => x.id !== item.id))}>
+                  <MdClose size={13} />
+                </button>
+              )}
+            </div>
+          ))}
         </div>
       )}
 
+      {/* Meta */}
+      <div className="a-gallery-meta">
+        <span>{images.length} Bild{images.length !== 1 ? "er" : ""}</span>
+        {images.length > 1 && <span>· Zum Umsortieren ziehen</span>}
+      </div>
+
+      {/* Image grid */}
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="galerie">
+        <Droppable droppableId="galerie" direction="horizontal">
           {(prov) => (
-            <table className="a-table" ref={prov.innerRef} {...prov.droppableProps}>
-              <thead><tr><th style={{ width: 28 }} /><th>Bild</th><th>Alt-Text</th><th>Credit</th><th>Kategorie</th><th /></tr></thead>
-              <tbody>
-                {images.map((img, i) => (
-                  <Draggable key={img.id} draggableId={img.id} index={i}>
-                    {(p) => (
-                      <tr ref={p.innerRef} {...p.draggableProps}>
-                        <td><span className="a-drag-handle" {...p.dragHandleProps}><MdDragIndicator /></span></td>
-                        <td><img src={img.src} alt={img.alt ?? ""} className="a-img-preview" /></td>
-                        <td><input className="a-input" value={String(getVal(img, "alt") || "")} onChange={e => field(img.id, "alt", e.target.value)} placeholder="Alt-Text" /></td>
-                        <td><input className="a-input" value={String(getVal(img, "credit") || "")} onChange={e => field(img.id, "credit", e.target.value)} placeholder="Fotograf" /></td>
-                        <td><input className="a-input" value={String(getVal(img, "category") || "")} onChange={e => field(img.id, "category", e.target.value)} placeholder="gallery" style={{ width: 100 }} /></td>
-                        <td><button className="a-btn a-btn-danger a-btn-sm" onClick={() => deleteImage(img)}><MdDelete size={14} /></button></td>
-                      </tr>
-                    )}
-                  </Draggable>
-                ))}
-                {prov.placeholder}
-              </tbody>
-            </table>
+            <div className="a-gallery-grid" ref={prov.innerRef} {...prov.droppableProps}>
+              {images.map((img, i) => (
+                <Draggable key={img.id} draggableId={img.id} index={i}>
+                  {(p, snap) => (
+                    <div
+                      ref={p.innerRef}
+                      {...p.draggableProps}
+                      {...p.dragHandleProps}
+                      className={`a-gallery-item${snap.isDragging ? " a-gallery-item--dragging" : ""}`}
+                    >
+                      <img src={img.url} alt={img.caption ?? ""} className="a-gallery-img" loading="lazy" />
+                      <span className="a-gallery-num">{i + 1}</span>
+                      <button
+                        className="a-gallery-del"
+                        onClick={e => { e.stopPropagation(); deleteImage(img); }}
+                        title="Löschen"
+                      >
+                        <MdDelete size={13} />
+                      </button>
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {prov.placeholder}
+            </div>
           )}
         </Droppable>
       </DragDropContext>

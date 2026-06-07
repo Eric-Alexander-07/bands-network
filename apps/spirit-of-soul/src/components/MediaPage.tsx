@@ -2,11 +2,12 @@ import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
 import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 import LightboxImage from "@/components/LightboxImage";
+import type { Event, MediaVideo, SocialLink } from "@/lib/data";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
 function fmtDay(d: string)   { const [,, day] = d.split("-").map(Number); return String(day).padStart(2, "0"); }
-function fmtMonth(d: string) { const [, m]    = d.split("-").map(Number); return MONTHS_SHORT[m - 1]; }
+function fmtMonth(d: string) { const [, m]    = d.split("-").map(Number); return MONTHS_SHORT[m - 1].toUpperCase(); }
 function fmtYear(d: string)  { const [year]   = d.split("-").map(Number); return year; }
 
 const PLATFORMS = [
@@ -15,8 +16,22 @@ const PLATFORMS = [
   { key: "youtube"   as const, label: "YouTube",   handle: "@spiritofsoul" },
 ];
 
-export default function MediaPage() {
-  const [mainVideo, ...playlistVideos] = band.videos;
+function getYtId(input: string): string {
+  const m = input?.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
+  return m?.[1] ?? input;
+}
+
+interface Props { dbEvents?: Event[]; dbVideos?: MediaVideo[]; content?: Record<string, string>; socialLinks?: SocialLink[]; }
+
+export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socialLinks = [] }: Props) {
+  const socialMap: Record<string, string> = {};
+  socialLinks.forEach(l => { if (l.url) socialMap[l.platform] = l.url; });
+  const rawVideos = dbVideos && dbVideos.length > 0 ? dbVideos : null;
+  const videos = rawVideos
+    ? rawVideos.map(v => ({ id: getYtId(v.youtube_url), title: v.title ?? "" }))
+    : band.videos.map(v => ({ id: v.id, title: v.title ?? "" }));
+  const [mainVideo, ...playlistVideos] = videos;
+  const showEvents = dbEvents.filter(e => e.visible);
 
   return (
     <>
@@ -25,7 +40,7 @@ export default function MediaPage() {
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>
           <h1>Media &amp; News</h1>
-          <p>Aktuelle Spieltermine, Videos und Social Media von {band.name}.</p>
+          <p>{content.text_top || `Aktuelle Spieltermine, Videos und Social Media von ${band.name}.`}</p>
         </div>
       </section>
 
@@ -50,12 +65,14 @@ export default function MediaPage() {
                     allowFullScreen loading="lazy"
                   />
                 </div>
-                <div className="media-video-meta">
-                  <p className="media-video-title">{mainVideo.title}</p>
-                  {mainVideo.description && (
-                    <p className="media-video-desc">{mainVideo.description}</p>
-                  )}
-                </div>
+                {mainVideo.title && (
+                  <div className="media-video-meta">
+                    <p className="media-video-title">{mainVideo.title}</p>
+                  </div>
+                )}
+                {content.video_text && (
+                  <p className="media-video-desc">{content.video_text}</p>
+                )}
               </div>
 
               {/* Weitere Videos — Playlist Player */}
@@ -68,23 +85,47 @@ export default function MediaPage() {
 
             {/* Spieltermine — rechts */}
             <div className="media-dates-col">
-              <span className="eyebrow" data-animate="fade-up">Kommende Events</span>
-              <h2 className="section-title" data-animate="fade-up" data-delay="100">Termine</h2>
-              <div className="media-dates-list" data-animate="stagger">
-                {band.dates.map((d, i) => (
-                  <div key={i} className="media-date-item">
-                    <div className="media-date-badge">
-                      <span className="media-date-day">{fmtDay(d.date)}</span>
-                      <span className="media-date-month">{fmtMonth(d.date)}</span>
-                      <span className="media-date-year">{fmtYear(d.date)}</span>
-                    </div>
-                    <div className="media-date-info">
-                      <p className="media-date-event">{d.event}</p>
-                      <p className="media-date-venue">{d.location}</p>
-                      <span className="media-date-type">{d.type}</span>
-                    </div>
+              {showEvents.length > 0 && (
+                <>
+                  <span className="eyebrow" data-animate="fade-up">Kommende Events</span>
+                  <h2 className="section-title" data-animate="fade-up" data-delay="100">Termine</h2>
+                  <div className="media-dates-list" data-animate="stagger">
+                    {showEvents.map((d) => {
+                      const inner = (
+                        <>
+                          <div className="media-date-badge">
+                            <span className="media-date-day">{fmtDay(d.date)}</span>
+                            <span className="media-date-month">{fmtMonth(d.date)}</span>
+                            <span className="media-date-year">{fmtYear(d.date)}</span>
+                          </div>
+                          <div className="media-date-info">
+                            <p className="media-date-event">{d.name}</p>
+                            <p className="media-date-venue">{d.location}</p>
+                            {d.link && <span className="media-date-link">Tickets / Info ↗</span>}
+                          </div>
+                        </>
+                      );
+                      return d.link ? (
+                        <a key={d.id} href={d.link} className="media-date-item media-date-item--link"
+                           target="_blank" rel="noopener noreferrer">{inner}</a>
+                      ) : (
+                        <div key={d.id} className="media-date-item">{inner}</div>
+                      );
+                    })}
                   </div>
-                ))}
+                </>
+              )}
+
+              {/* Facebook Page Plugin */}
+              <div className="media-fb-inline" data-animate="fade-up">
+                <iframe
+                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(socialMap.facebook || band.socials.facebook)}&tabs=timeline&width=500&height=2000&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
+                  style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
+                  scrolling="no"
+                  allowFullScreen
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  title="Spirit of Soul Facebook"
+                />
               </div>
             </div>
 
@@ -99,7 +140,7 @@ export default function MediaPage() {
             {/* Bild links */}
             <div className="media-social-img-col" data-animate="fade-right">
               <LightboxImage
-                src="/images/gallery/live-vocalist-gold.webp"
+                src={content.image_main || "/images/gallery/live-vocalist-gold.webp"}
                 alt="Spirit of Soul Live"
                 className="media-social-img"
                 wrapperClassName="media-social-img-lb"
@@ -119,7 +160,7 @@ export default function MediaPage() {
               </div>
               <div className="media-social-platforms" data-animate="stagger">
                 {PLATFORMS.map((p) => (
-                  <a key={p.key} href={band.socials[p.key]} className="media-platform-link"
+                  <a key={p.key} href={socialMap[p.key] || band.socials[p.key]} className="media-platform-link"
                      target="_blank" rel="noopener noreferrer">
                     <span className="media-platform-label">{p.label}</span>
                     <span className="media-platform-handle">{p.handle}</span>
@@ -128,20 +169,6 @@ export default function MediaPage() {
                 ))}
               </div>
 
-              {/* Facebook embed — unter den Links */}
-              <div className="media-fb-below" data-animate="fade-up">
-                <p className="media-fb-label eyebrow">Facebook</p>
-                <div className="media-fb-frame media-fb-responsive">
-                  <iframe
-                    src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent("https://www.facebook.com/spiritofsoulband/")}&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
-                    style={{ border: "none", overflow: "hidden", display: "block", width: "100%", height: "600px" }}
-                    scrolling="no"
-                    allowFullScreen
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                    title="Spirit of Soul Facebook"
-                  />
-                </div>
-              </div>
             </div>
           </div>
         </div>

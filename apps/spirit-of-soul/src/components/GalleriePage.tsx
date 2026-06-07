@@ -1,7 +1,8 @@
 import GalleryGrid from "@/components/GalleryGrid";
 import ConcentricRings from "@/components/ConcentricRings";
+import type { MediaImage } from "@/lib/data";
 
-const galleryImages = [
+const STATIC_IMAGES = [
   { src: "/images/about.webp",                        alt: "Spirit of Soul — Full Band" },
   { src: "/images/gallery/live-guitarist.webp",       alt: "Gitarrist auf der Bühne" },
   { src: "/images/gallery/live-vocalist-gold.webp",   alt: "Vocalist im Gold-Jacket" },
@@ -11,7 +12,13 @@ const galleryImages = [
   { src: "/images/hero.webp",                         alt: "Sängerin — Live Performance" },
 ];
 
-export default function GalleriePage() {
+interface Props { dbImages?: MediaImage[]; }
+
+export default function GalleriePage({ dbImages = [] }: Props) {
+  const images = dbImages.length > 0
+    ? dbImages.map(img => ({ src: img.url, alt: img.caption ?? "" }))
+    : STATIC_IMAGES;
+
   return (
     <>
       <section className="page-hero">
@@ -28,7 +35,7 @@ export default function GalleriePage() {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <span className="eyebrow" data-animate="fade-up">Live-Impressionen</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Fotos</h2>
-          <GalleryGrid images={galleryImages} />
+          <GalleryGrid images={images} />
         </div>
       </section>
     </>

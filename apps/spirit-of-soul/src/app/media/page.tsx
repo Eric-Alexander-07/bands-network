@@ -20,7 +20,11 @@ export const metadata: Metadata = {
 };
 
 import MediaPage from "@/components/MediaPage";
+import { fetchEvents, fetchVideos, fetchPageContent, fetchSocialLinks } from "@/lib/data";
 
-export default function Media() {
-  return <MediaPage />;
+export default async function Media() {
+  const [dbEvents, dbVideos, content, socialLinks] = await Promise.all([
+    fetchEvents(), fetchVideos(), fetchPageContent("media"), fetchSocialLinks(),
+  ]);
+  return <MediaPage dbEvents={dbEvents} dbVideos={dbVideos} content={content} socialLinks={socialLinks} />;
 }

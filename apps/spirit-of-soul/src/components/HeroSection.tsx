@@ -110,7 +110,13 @@ export default function HeroSection({ dbEvents = [] }: Props) {
                     <li key={d.id ?? i} className="hero-date-item">
                       <span className="hero-date-day">{formatGigDate(d.date)}</span>
                       <span className="hero-date-sep" />
-                      <span className="hero-date-event">{d.event_name}</span>
+                      {d.link ? (
+                        <a href={d.link} className="hero-date-event hero-date-event--link" target="_blank" rel="noopener noreferrer">
+                          {d.name}
+                        </a>
+                      ) : (
+                        <span className="hero-date-event">{d.name}</span>
+                      )}
                       <span className="hero-date-loc">{d.location}</span>
                     </li>
                   ))}

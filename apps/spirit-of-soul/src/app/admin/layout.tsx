@@ -8,22 +8,25 @@ import type { User } from "@supabase/supabase-js";
 import "./admin.css";
 import { ToastProvider } from "@/components/admin/Toast";
 import {
-  MdDashboard, MdArticle, MdEvent, MdImage, MdPlayCircle,
-  MdShoppingBag, MdStar, MdGroup, MdShare, MdLogout,
+  MdDashboard, MdImage, MdPlayCircle,
+  MdShoppingBag, MdStar, MdPerson, MdGroups, MdLogout,
 } from "react-icons/md";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
-const NAV = [
-  { href: "/admin",            label: "Dashboard",  Icon: MdDashboard  },
-  { href: "/admin/seiten",     label: "Seiten",      Icon: MdArticle    },
-  { href: "/admin/events",     label: "Events",      Icon: MdEvent      },
-  { href: "/admin/galerie",    label: "Galerie",     Icon: MdImage      },
-  { href: "/admin/videos",     label: "Videos",      Icon: MdPlayCircle },
-  { href: "/admin/produkte",   label: "Produkte",    Icon: MdShoppingBag},
-  { href: "/admin/referenzen", label: "Referenzen",  Icon: MdStar       },
-  { href: "/admin/besetzung",  label: "Besetzung",   Icon: MdGroup      },
-  { href: "/admin/social",     label: "Social",      Icon: MdShare      },
+type NavSection = { section: string };
+type NavItem    = { href: string; label: string; Icon: React.ComponentType<{ size?: number }> };
+type NavEntry   = NavSection | NavItem;
+
+const NAV: NavEntry[] = [
+  { href: "/admin",            label: "Dashboard",    Icon: MdDashboard  },
+  { section: "Seiten" },
+  { href: "/admin/media",      label: "Media & News", Icon: MdPlayCircle },
+  { href: "/admin/galerie",    label: "Galerie",      Icon: MdImage      },
+  { href: "/admin/produkte",   label: "Shop",         Icon: MdShoppingBag},
+  { href: "/admin/about",      label: "Über uns",     Icon: MdPerson     },
+  { href: "/admin/services",   label: "Services",     Icon: MdGroups     },
+  { href: "/admin/referenzen", label: "Referenzen",   Icon: MdStar       },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -103,7 +106,11 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               <p>Admin</p>
             </div>
             <nav className="admin-nav">
-              {NAV.map(({ href, label, Icon }) => {
+              {NAV.map((entry, i) => {
+                if ("section" in entry) {
+                  return <span key={`s-${i}`} className="admin-nav-section">{entry.section}</span>;
+                }
+                const { href, label, Icon } = entry;
                 const active = href === "/admin"
                   ? pathname === "/admin"
                   : pathname.startsWith(href);
