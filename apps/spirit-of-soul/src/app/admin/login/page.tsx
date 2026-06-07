@@ -4,20 +4,41 @@ import { useState, useEffect, type FormEvent } from "react";
 import { createClient } from "@bands/supabase/client";
 import "../admin.css";
 
+const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+
 export default function AdminLogin() {
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [error, setError]       = useState("");
   const [loading, setLoading]   = useState(false);
 
-  // If an invite link lands here instead of the homepage, redirect to /admin/invite
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) return;
-    const params = new URLSearchParams(hash.slice(1));
-    if (params.get("type") === "invite" && params.get("access_token")) {
-      window.location.replace("/admin/invite" + hash);
-    }
+    const supabase = createClient();
+
+    // Supabase auto-detects #access_token in the URL hash and clears it before
+    // we can read it. Listening to onAuthStateChange catches the resulting
+    // SIGNED_IN event so we can redirect invite users to /admin/invite instead
+    // of leaving them stuck on the login form.
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event !== "SIGNED_IN" || !session) return;
+
+      // Check if this user is already an admin for this site
+      const { data: site } = await supabase
+        .from("sites").select("id").eq("slug", SITE_SLUG).single<{ id: string }>();
+
+      const { data: admin } = site
+        ? await supabase
+            .from("site_admins")
+            .select("user_id")
+            .eq("user_id", session.user.id)
+            .eq("site_id", site.id)
+            .single<{ user_id: string }>()
+        : { data: null };
+
+      window.location.href = admin ? "/admin" : "/admin/invite";
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -28,10 +49,8 @@ export default function AdminLogin() {
     if (authError) {
       setError("E-Mail oder Passwort falsch.");
       setLoading(false);
-    } else {
-      // Hard navigation ensures Supabase session cookies are sent with the new request
-      window.location.href = "/admin";
     }
+    // Redirect is handled by onAuthStateChange above
   };
 
   return (

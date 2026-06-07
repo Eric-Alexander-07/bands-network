@@ -14,40 +14,30 @@ export default function AdminInvite() {
 
   useEffect(() => {
     const supabase = createClient();
-    const hash = window.location.hash;
 
-    if (hash && hash.includes("access_token")) {
-      // Implicit flow — Supabase sent the token in the URL hash fragment
-      const params        = new URLSearchParams(hash.slice(1));
-      const access_token  = params.get("access_token");
-      const refresh_token = params.get("refresh_token") ?? "";
-
-      if (!access_token) {
-        window.location.href = "/admin/login?error=invalid_token";
+    // The Supabase client auto-processes the #access_token hash from invite emails
+    // and fires SIGNED_IN before this component mounts. By the time we run,
+    // the hash is gone but the session is already established — getUser() works.
+    const check = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        // No session yet — wait for SIGNED_IN (hash might still be processing)
         return;
       }
+      setEmail(user.email ?? "");
+      setChecking(false);
+    };
 
-      supabase.auth.setSession({ access_token, refresh_token }).then(({ data: { session }, error: err }) => {
-        if (err || !session) {
-          window.location.href = "/admin/login?error=invalid_token";
-          return;
-        }
+    // Also listen in case the session isn't ready yet on mount
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN" && session) {
         setEmail(session.user.email ?? "");
-        // Remove the tokens from the address bar
-        window.history.replaceState(null, "", window.location.pathname);
         setChecking(false);
-      });
-    } else {
-      // PKCE flow — server-side callback already set the session cookie
-      supabase.auth.getUser().then(({ data: { user } }) => {
-        if (!user) {
-          window.location.href = "/admin/login?error=invalid_token";
-        } else {
-          setEmail(user.email ?? "");
-          setChecking(false);
-        }
-      });
-    }
+      }
+    });
+
+    check();
+    return () => subscription.unsubscribe();
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -99,10 +89,7 @@ export default function AdminInvite() {
               <div className="a-field">
                 <label className="a-label">E-Mail</label>
                 <input
-                  className="a-input"
-                  type="email"
-                  value={email}
-                  readOnly
+                  className="a-input" type="email" value={email} readOnly
                   style={{ opacity: 0.7, cursor: "default" }}
                 />
               </div>
