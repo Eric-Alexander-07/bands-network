@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, useEffect, type FormEvent } from "react";
 import { createClient } from "@bands/supabase/client";
 import "../admin.css";
 
@@ -9,6 +9,16 @@ export default function AdminLogin() {
   const [password, setPassword] = useState("");
   const [error, setError]       = useState("");
   const [loading, setLoading]   = useState(false);
+
+  // If an invite link lands here instead of the homepage, redirect to /admin/invite
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+    const params = new URLSearchParams(hash.slice(1));
+    if (params.get("type") === "invite" && params.get("access_token")) {
+      window.location.replace("/admin/invite" + hash);
+    }
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
