@@ -33,14 +33,14 @@ const TAG_MAP: Record<string, string> = {
 // Map DB table names to public page paths to revalidate (Full Route Cache)
 const PATH_MAP: Record<string, string[]> = {
   pages:               ["/about", "/services", "/media", "/shop"],
-  events:              ["/media"],
+  events:              ["/", "/media"],
   media_videos:        ["/media"],
   media_images:        ["/galerie"],
   products:            ["/shop"],
   referenzen:          ["/referenzen"],
   besetzung_gruppen:   ["/services"],
   besetzung_eintraege: ["/services"],
-  social_links:        ["/"],
+  social_links:        ["/", "/media"],
 };
 
 export async function POST(request: NextRequest) {

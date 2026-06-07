@@ -12,18 +12,7 @@ import type {
   BesetzungGruppeWithEintraege,
 } from "@bands/db-types";
 
-// ─── Internal helper ─────────────────────────────────────────────
-async function getSiteId(siteSlug: string): Promise<string | null> {
-  const supabase = createPublicClient();
-  const { data } = await supabase
-    .from("sites")
-    .select("id")
-    .eq("slug", siteSlug)
-    .single<{ id: string }>();
-  return data?.id ?? null;
-}
-
-// ─── getSite ─────────────────────────────────────────────────────
+// ─── getSite (cached 24 h) ────────────────────────────────────────
 export const getSite = unstable_cache(
   async (siteSlug: string): Promise<Site | null> => {
     const supabase = createPublicClient();
@@ -37,6 +26,12 @@ export const getSite = unstable_cache(
   ["site"],
   { tags: ["site"], revalidate: 86400 }
 );
+
+// ─── Internal helper — reuses the cached getSite to avoid extra queries ──
+async function getSiteId(siteSlug: string): Promise<string | null> {
+  const site = await getSite(siteSlug);
+  return site?.id ?? null;
+}
 
 // ─── getPages ────────────────────────────────────────────────────
 export const getPages = unstable_cache(

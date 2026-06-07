@@ -1,3 +1,5 @@
+export const revalidate = 3600; // re-render at most once per hour; admin mutations trigger instant revalidation via revalidatePath
+
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SocialSection from "@/components/SocialSection";
