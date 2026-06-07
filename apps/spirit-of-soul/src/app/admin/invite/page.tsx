@@ -13,31 +13,16 @@ export default function AdminInvite() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const supabase = createClient();
-
-    // The Supabase client auto-processes the #access_token hash from invite emails
-    // and fires SIGNED_IN before this component mounts. By the time we run,
-    // the hash is gone but the session is already established — getUser() works.
-    const check = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+    // After the PKCE callback, session cookies are already set server-side.
+    // Just verify the session and load the user's email.
+    createClient().auth.getUser().then(({ data: { user } }) => {
       if (!user) {
-        // No session yet — wait for SIGNED_IN (hash might still be processing)
-        return;
-      }
-      setEmail(user.email ?? "");
-      setChecking(false);
-    };
-
-    // Also listen in case the session isn't ready yet on mount
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === "SIGNED_IN" && session) {
-        setEmail(session.user.email ?? "");
+        window.location.href = "/admin/login?error=invalid_token";
+      } else {
+        setEmail(user.email ?? "");
         setChecking(false);
       }
     });
-
-    check();
-    return () => subscription.unsubscribe();
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
