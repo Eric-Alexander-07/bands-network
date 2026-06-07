@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import ScrollAnimations from "@/components/ScrollAnimations";
 import JsonLd from "@/components/JsonLd";
 import SiteWrapper from "@/components/SiteWrapper";
+import InviteHashHandler from "@/components/InviteHashHandler";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -113,6 +114,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="de" className={`${inter.variable} ${playfair.variable}`}>
       <body>
+        <InviteHashHandler />
         <JsonLd data={musicGroupSchema} />
         <SiteWrapper
           nav={<Navigation />}

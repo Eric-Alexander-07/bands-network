@@ -7,15 +7,47 @@ import "../admin.css";
 export default function AdminInvite() {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm]   = useState("");
+  const [email, setEmail]       = useState("");
   const [error, setError]       = useState("");
   const [loading, setLoading]   = useState(false);
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    createClient().auth.getUser().then(({ data: { user } }) => {
-      if (!user) window.location.href = "/admin/login?error=invalid_token";
-      else setChecking(false);
-    });
+    const supabase = createClient();
+    const hash = window.location.hash;
+
+    if (hash && hash.includes("access_token")) {
+      // Implicit flow — Supabase sent the token in the URL hash fragment
+      const params        = new URLSearchParams(hash.slice(1));
+      const access_token  = params.get("access_token");
+      const refresh_token = params.get("refresh_token") ?? "";
+
+      if (!access_token) {
+        window.location.href = "/admin/login?error=invalid_token";
+        return;
+      }
+
+      supabase.auth.setSession({ access_token, refresh_token }).then(({ data: { session }, error: err }) => {
+        if (err || !session) {
+          window.location.href = "/admin/login?error=invalid_token";
+          return;
+        }
+        setEmail(session.user.email ?? "");
+        // Remove the tokens from the address bar
+        window.history.replaceState(null, "", window.location.pathname);
+        setChecking(false);
+      });
+    } else {
+      // PKCE flow — server-side callback already set the session cookie
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        if (!user) {
+          window.location.href = "/admin/login?error=invalid_token";
+        } else {
+          setEmail(user.email ?? "");
+          setChecking(false);
+        }
+      });
+    }
   }, []);
 
   const handleSubmit = async (e: FormEvent) => {
@@ -63,6 +95,18 @@ export default function AdminInvite() {
             Willkommen! Lege jetzt ein Passwort fest, um deinen Admin-Zugang zu aktivieren.
           </p>
           <form onSubmit={handleSubmit}>
+            {email && (
+              <div className="a-field">
+                <label className="a-label">E-Mail</label>
+                <input
+                  className="a-input"
+                  type="email"
+                  value={email}
+                  readOnly
+                  style={{ opacity: 0.7, cursor: "default" }}
+                />
+              </div>
+            )}
             <div className="a-field">
               <label className="a-label">Passwort</label>
               <input
