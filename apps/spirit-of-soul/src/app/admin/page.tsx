@@ -1,9 +1,9 @@
 // @ts-nocheck
 "use client";
 import Link from "next/link";
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { createClient } from "@bands/supabase/client";
-import { MdEvent, MdImage, MdPlayCircle, MdShoppingBag, MdStar, MdPerson, MdGroups, MdPersonAdd } from "react-icons/md";
+import { MdImage, MdPlayCircle, MdShoppingBag, MdStar, MdPerson, MdGroups } from "react-icons/md";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
@@ -29,11 +29,6 @@ export default function AdminDashboard() {
   const supabase = createClient();
   const [stats, setStats] = useState<Stats | null>(null);
 
-  // Invite form state
-  const [inviteEmail, setInviteEmail] = useState("");
-  const [inviting, setInviting]       = useState(false);
-  const [inviteMsg, setInviteMsg]     = useState<{ ok: boolean; text: string } | null>(null);
-
   useEffect(() => {
     (async () => {
       const { data: site } = await supabase.from("sites").select("id").eq("slug", SLUG).single();
@@ -57,30 +52,6 @@ export default function AdminDashboard() {
       });
     })();
   }, []);
-
-  const handleInvite = async (e: FormEvent) => {
-    e.preventDefault();
-    setInviting(true);
-    setInviteMsg(null);
-    try {
-      const res = await fetch("/api/admin/invite-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: inviteEmail }),
-      });
-      const json = await res.json();
-      if (res.ok) {
-        setInviteMsg({ ok: true, text: `Einladung an ${inviteEmail} gesendet.` });
-        setInviteEmail("");
-      } else {
-        setInviteMsg({ ok: false, text: json.error ?? "Fehler beim Senden." });
-      }
-    } catch {
-      setInviteMsg({ ok: false, text: "Netzwerkfehler." });
-    } finally {
-      setInviting(false);
-    }
-  };
 
   return (
     <>
@@ -113,41 +84,6 @@ export default function AdminDashboard() {
         ))}
       </div>
 
-      {/* Invite section */}
-      <p style={{ fontSize: 11, fontWeight: 700, color: "var(--a-muted)", textTransform: "uppercase", letterSpacing: ".08em", margin: "32px 0 12px" }}>Admin einladen</p>
-      <div className="a-card" style={{ maxWidth: 480 }}>
-        <p style={{ fontSize: 13, color: "var(--a-text2)", marginBottom: 16, lineHeight: 1.6 }}>
-          Schicke einer Person eine Einladungs-E-Mail. Sie erhält einen Link, über den sie ein Passwort festlegen und Zugang zum Admin-Bereich erhalten.
-        </p>
-        <form onSubmit={handleInvite} style={{ display: "flex", gap: 8 }}>
-          <input
-            className="a-input"
-            type="email"
-            placeholder="email@beispiel.de"
-            value={inviteEmail}
-            onChange={e => setInviteEmail(e.target.value)}
-            required
-            style={{ flex: 1 }}
-          />
-          <button
-            className="a-btn a-btn-primary"
-            type="submit"
-            disabled={inviting}
-            style={{ whiteSpace: "nowrap", gap: 6 }}
-          >
-            <MdPersonAdd size={15} />
-            {inviting ? "Sende …" : "Einladen"}
-          </button>
-        </form>
-        {inviteMsg && (
-          <p style={{
-            marginTop: 10, fontSize: 13,
-            color: inviteMsg.ok ? "var(--a-success, #4ade80)" : "var(--a-error)",
-          }}>
-            {inviteMsg.text}
-          </p>
-        )}
-      </div>
     </>
   );
 }
