@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { createPortal } from "react-dom";
 
 interface Photo { src: string; alt: string; }
 
@@ -45,8 +46,8 @@ export default function GalleryGrid({ images }: Props) {
         ))}
       </div>
 
-      {/* Lightbox */}
-      {openIdx !== null && (
+      {/* Lightbox — portal to document.body so z-index:500 beats nav z-index:100 */}
+      {openIdx !== null && createPortal(
         <div
           className="glb-overlay"
           onClick={close}
@@ -109,7 +110,8 @@ export default function GalleryGrid({ images }: Props) {
               />
             ))}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );
