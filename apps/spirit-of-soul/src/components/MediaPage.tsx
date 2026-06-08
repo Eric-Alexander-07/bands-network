@@ -87,8 +87,8 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
             <div className="media-dates-col">
               {showEvents.length > 0 && (
                 <>
-                  <span className="eyebrow" data-animate="fade-up">Kommende Events</span>
-                  <h2 className="section-title" data-animate="fade-up" data-delay="100">Termine</h2>
+                  <span className="eyebrow" data-animate="fade-up">Öffentliche Auftritte</span>
+                  <h2 className="section-title" data-animate="fade-up" data-delay="100">Öffentliche Termine</h2>
                   <div className="media-dates-list" data-animate="stagger">
                     {showEvents.map((d) => {
                       const inner = (
@@ -119,7 +119,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
               {/* Facebook Page Plugin */}
               <div className="media-fb-inline" data-animate="fade-up">
                 <iframe
-                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(socialMap.facebook || band.socials.facebook)}&tabs=timeline&width=500&height=2000&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
+                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(socialMap.facebook || band.socials.facebook)}&tabs=timeline&width=400&height=2000&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
                   style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
                   scrolling="no"
                   allowFullScreen

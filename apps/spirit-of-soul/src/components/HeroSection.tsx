@@ -104,7 +104,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
             {/* Only show dates section if DB has visible events */}
             {nextDates.length > 0 && (
               <div className="hero-dates">
-                <span className="hero-dates-label">Nächste Auftritte</span>
+                <span className="hero-dates-label">Nächste öffentliche Auftritte</span>
                 <ul className="hero-date-list">
                   {nextDates.map((d, i) => (
                     <li key={d.id ?? i} className="hero-date-item">
@@ -122,7 +122,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
                   ))}
                 </ul>
                 <Link href="/media" className="hero-dates-more">
-                  Alle Termine ansehen →
+                  Alle öffentlichen Termine →
                 </Link>
               </div>
             )}
