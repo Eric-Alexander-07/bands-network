@@ -1,13 +1,12 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createClient } from "@bands/supabase/client";
 
 const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
 function CallbackHandler() {
-  const router      = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -22,7 +21,7 @@ function CallbackHandler() {
         // ── PKCE flow: ?code= in query string (sent when redirectTo is explicit) ──
         const { error } = await supabase.auth.exchangeCodeForSession(code);
         if (error) {
-          router.replace("/admin/login?error=expired");
+          window.location.href = "/admin/login?error=expired";
           return;
         }
       } else {
@@ -33,13 +32,13 @@ function CallbackHandler() {
         const refreshToken = params.get("refresh_token") ?? "";
 
         if (!accessToken) {
-          router.replace("/admin/login?error=no_token");
+          window.location.href = "/admin/login?error=no_token";
           return;
         }
 
         const { error } = await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
         if (error) {
-          router.replace("/admin/login?error=expired");
+          window.location.href = "/admin/login?error=expired";
           return;
         }
       }
@@ -47,7 +46,7 @@ function CallbackHandler() {
       // ── Check if this user is already set up as a site admin ──
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        router.replace("/admin/login?error=no_user");
+        window.location.href = "/admin/login?error=no_user";
         return;
       }
 
@@ -63,11 +62,12 @@ function CallbackHandler() {
             .single<{ user_id: string }>()
         : { data: null };
 
-      router.replace(admin ? "/admin" : "/admin/invite");
+      // Use full reload so Safari properly reads the newly set session cookies
+      window.location.href = admin ? "/admin" : "/admin/invite";
     }
 
     handle();
-  }, [router, searchParams]);
+  }, [searchParams]);
 
   return (
     <div style={{

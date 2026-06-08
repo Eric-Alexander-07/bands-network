@@ -72,9 +72,13 @@ export default function GalerieAdmin() {
   }, [queue, siteId]);
 
   const addFiles = useCallback((files: File[]) => {
-    const valid = files.filter(f =>
-      ["image/jpeg","image/jpg","image/png","image/webp","image/avif"].includes(f.type) && f.size < 15 * 1024 * 1024
-    );
+    const valid = files.filter(f => {
+      const type = f.type.toLowerCase();
+      const ext  = f.name.split(".").pop()?.toLowerCase() ?? "";
+      const okType = ["image/jpeg","image/jpg","image/png","image/webp","image/avif"].includes(type);
+      const okExt  = ["jpg","jpeg","png","webp","avif"].includes(ext);
+      return (okType || okExt) && f.size < 15 * 1024 * 1024;
+    });
     if (!valid.length) { toast("Keine gültigen Bilder (max. 15 MB, JPG/PNG/WebP/AVIF)", "error"); return; }
     const items: UploadItem[] = valid.map(f => ({
       id: Math.random().toString(36).slice(2),
