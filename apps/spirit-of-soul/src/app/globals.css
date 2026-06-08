@@ -367,7 +367,7 @@ h3, h4 {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   padding: calc(var(--nav-height) + 48px) 64px 64px;
   overflow: hidden;
   box-sizing: border-box;
@@ -466,6 +466,7 @@ h3, h4 {
 .hero-content {
   position: relative;
   z-index: 1;
+  margin-top: auto; /* push to bottom when there's room; falls back to padding-top when hero is short */
 }
 .hero-eyebrow {
   font-family: var(--font-ui);
@@ -3107,11 +3108,11 @@ select::-ms-expand { display: none; }
 @media (max-width: 1024px) {
   .hero-split { grid-template-columns: 1fr; }
   .hero-right { display: none; }
-  /* flex-start so content starts from padding-top and doesn't overflow upward */
   .hero-left {
     padding: calc(var(--nav-height) + 40px) 40px 56px;
-    justify-content: flex-start;
   }
+  /* On mobile, content at top — no auto margin needed */
+  .hero-content { margin-top: 0; }
   /* Nav: hide links, show toggle (nav has 8 items — needs toggle early) */
   .nav-links { display: none; }
   .nav-toggle { display: flex; }

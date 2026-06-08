@@ -50,9 +50,21 @@ export async function POST(request: NextRequest) {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   );
 
-  const safeName    = file.name.replace(/[^a-z0-9.-]/gi, "-").toLowerCase();
-  const uid         = crypto.randomUUID().slice(0, 8);
-  const fileName    = `${uid}-${safeName}`;
+  // Robust filename sanitization — handles umlauts, NFD-encoded chars, spaces, etc.
+  // Split on last dot so extension stays intact.
+  const dotIdx   = file.name.lastIndexOf(".");
+  const rawBase  = dotIdx > 0 ? file.name.slice(0, dotIdx) : file.name;
+  const rawExt   = dotIdx > 0 ? file.name.slice(dotIdx + 1) : "";
+  const safeBase = rawBase
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")  // strip combining diacritical marks (umlauts etc.)
+    .replace(/[^a-z0-9]/gi, "-")       // replace anything non-alphanumeric with -
+    .replace(/-{2,}/g, "-")            // collapse consecutive dashes
+    .replace(/^-+|-+$/g, "")           // trim leading/trailing dashes
+    .toLowerCase() || "image";
+  const safeExt  = rawExt.toLowerCase() || (validByExt ? ext : "jpg");
+  const uid      = crypto.randomUUID().slice(0, 8);
+  const fileName = `${uid}-${safeBase}.${safeExt}`;
   const storagePath = `${uploadPath}/${fileName}`;
 
   const bytes = await file.arrayBuffer();
