@@ -348,8 +348,7 @@ h3, h4 {
 /* ─── Hero ─────────────────────────────────────────────────── */
 .hero {
   height: 100vh;               /* fallback */
-  height: -webkit-fill-available; /* iOS Safari ≤ 15.3 */
-  height: 100svh;              /* modern Safari 15.4+ */
+  height: 100svh;              /* modern — respects browser chrome on iOS */
   min-height: 640px;
   display: flex;
   flex-direction: column;
