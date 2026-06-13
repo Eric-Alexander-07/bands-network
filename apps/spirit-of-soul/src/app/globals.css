@@ -2226,25 +2226,27 @@ h3, h4 {
   display: block;
 }
 
-/* Layout: 7 items, 6 columns */
-.gallery-editorial-item--1 { grid-column: span 4; grid-row: span 2; } /* large hero */
-.gallery-editorial-item--2 { grid-column: span 2; }                   /* small right top */
-.gallery-editorial-item--3 { grid-column: span 2; }                   /* small right bottom */
-.gallery-editorial-item--4 { grid-column: span 3; }                   /* mid left */
-.gallery-editorial-item--5 { grid-column: span 3; }                   /* mid right */
-.gallery-editorial-item--6 { grid-column: span 4; grid-row: span 2; } /* large bottom left */
-.gallery-editorial-item--7 { grid-column: span 2; grid-row: span 2; } /* tall right */
+/* Layout: repeating 7-item editorial pattern (works for any number of images) */
+.gallery-editorial-item:nth-child(7n+1) { grid-column: span 4; grid-row: span 2; }
+.gallery-editorial-item:nth-child(7n+2) { grid-column: span 2; }
+.gallery-editorial-item:nth-child(7n+3) { grid-column: span 2; }
+.gallery-editorial-item:nth-child(7n+4) { grid-column: span 3; }
+.gallery-editorial-item:nth-child(7n+5) { grid-column: span 3; }
+.gallery-editorial-item:nth-child(7n+6) { grid-column: span 4; grid-row: span 2; }
+.gallery-editorial-item:nth-child(7n)   { grid-column: span 2; grid-row: span 2; }
 
 @media (max-width: 900px) {
   .gallery-editorial {
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: 200px;
   }
-  .gallery-editorial-item--1 { grid-column: span 4; grid-row: span 1; }
-  .gallery-editorial-item--2, .gallery-editorial-item--3 { grid-column: span 2; }
-  .gallery-editorial-item--4, .gallery-editorial-item--5 { grid-column: span 2; }
-  .gallery-editorial-item--6 { grid-column: span 4; grid-row: span 1; }
-  .gallery-editorial-item--7 { grid-column: span 4; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+1) { grid-column: span 4; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+2),
+  .gallery-editorial-item:nth-child(7n+3) { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+4),
+  .gallery-editorial-item:nth-child(7n+5) { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+6) { grid-column: span 4; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n)   { grid-column: span 4; grid-row: span 1; }
 }
 @media (max-width: 640px) {
   .gallery-editorial { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
@@ -3238,10 +3240,13 @@ select::-ms-expand { display: none; }
 
   /* Gallery editorial */
   .gallery-editorial { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
-  .gallery-editorial-item--1,
-  .gallery-editorial-item--4,
-  .gallery-editorial-item--6 { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item--7 { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+1),
+  .gallery-editorial-item:nth-child(7n+4),
+  .gallery-editorial-item:nth-child(7n+6),
+  .gallery-editorial-item:nth-child(7n)   { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+2),
+  .gallery-editorial-item:nth-child(7n+3),
+  .gallery-editorial-item:nth-child(7n+5) { grid-column: span 1; grid-row: span 1; }
 
   /* Gallery lightbox */
   .glb-main { padding: 52px 48px 8px; }
@@ -3320,13 +3325,13 @@ select::-ms-expand { display: none; }
     gap: 3px;
   }
   /* Keep some items spanning 2 cols for visual variety */
-  .gallery-editorial-item--1 { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item--2 { grid-column: span 1; }
-  .gallery-editorial-item--3 { grid-column: span 1; }
-  .gallery-editorial-item--4 { grid-column: span 1; }
-  .gallery-editorial-item--5 { grid-column: span 1; }
-  .gallery-editorial-item--6 { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item--7 { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+1),
+  .gallery-editorial-item:nth-child(7n+6),
+  .gallery-editorial-item:nth-child(7n)   { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+2),
+  .gallery-editorial-item:nth-child(7n+3),
+  .gallery-editorial-item:nth-child(7n+4),
+  .gallery-editorial-item:nth-child(7n+5) { grid-column: span 1; grid-row: span 1; }
 }
 
 /* ─── Hero padding at 640px ──────────────────────────────────── */
