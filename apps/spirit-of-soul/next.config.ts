@@ -5,6 +5,10 @@ import type { NextConfig } from "next";
 // in Edge Runtime and can only read the app's own .env files.
 // Vercel: set shared vars at Team level; they apply to all projects.
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  experimental: {
+    serverBodySizeLimit: "15mb",
+  },
+};
 
 export default nextConfig;

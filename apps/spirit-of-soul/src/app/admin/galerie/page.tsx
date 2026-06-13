@@ -11,6 +11,37 @@ const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 interface Img { id: string; site_id: string | null; url: string; caption: string | null; credit: string | null; position: number | null; created_at: string | null; }
 interface UploadItem { id: string; file: File; objectUrl: string; progress: "pending" | "uploading" | "done" | "error"; error?: string; }
 
+// Resize images > 4 MB to max 2000px long side (JPEG 88 %) before upload.
+// Keeps files well below Vercel's serverless body limit (~4.5 MB).
+async function resizeForUpload(file: File): Promise<File> {
+  if (file.size <= 4 * 1024 * 1024) return file;
+  return new Promise((resolve) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const MAX = 2000;
+      let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > MAX || h > MAX) {
+        if (w >= h) { h = Math.round(h * MAX / w); w = MAX; }
+        else         { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d")!.drawImage(img, 0, 0, w, h);
+      canvas.toBlob(
+        (blob) => {
+          if (blob) resolve(new File([blob], file.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" }));
+          else resolve(file);
+        },
+        "image/jpeg", 0.88
+      );
+    };
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); resolve(file); };
+    img.src = objectUrl;
+  });
+}
+
 export default function GalerieAdmin() {
   const { toast }   = useToast();
   const supabase    = createClient();
@@ -44,12 +75,16 @@ export default function GalerieAdmin() {
     (async () => {
       for (const item of pending) {
         setQueue(q => q.map(x => x.id === item.id ? { ...x, progress: "uploading" } : x));
+        const resized = await resizeForUpload(item.file);
         const formData = new FormData();
-        formData.append("file", item.file);
+        formData.append("file", resized);
         formData.append("path", `${SLUG}/galerie`);
         try {
           const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
-          const { url, error } = await res.json();
+          let json: { url?: string; error?: string };
+          try { json = await res.json(); }
+          catch { json = { error: `Serverfehler ${res.status}` }; }
+          const { url, error } = json;
           if (error || !url) throw new Error(error ?? "Upload fehlgeschlagen");
           const { data, error: dbErr } = await adminInsert("media_images", {
             site_id: siteId, url,
@@ -77,9 +112,9 @@ export default function GalerieAdmin() {
       const ext  = f.name.split(".").pop()?.toLowerCase() ?? "";
       const okType = ["image/jpeg","image/jpg","image/png","image/webp","image/avif"].includes(type);
       const okExt  = ["jpg","jpeg","png","webp","avif"].includes(ext);
-      return (okType || okExt) && f.size < 15 * 1024 * 1024;
+      return okType || okExt;
     });
-    if (!valid.length) { toast("Keine gültigen Bilder (max. 15 MB, JPG/PNG/WebP/AVIF)", "error"); return; }
+    if (!valid.length) { toast("Keine gültigen Bilder (JPG/PNG/WebP/AVIF)", "error"); return; }
     const items: UploadItem[] = valid.map(f => ({
       id: Math.random().toString(36).slice(2),
       file: f, objectUrl: URL.createObjectURL(f), progress: "pending",
