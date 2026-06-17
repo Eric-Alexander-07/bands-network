@@ -3140,16 +3140,63 @@ select::-ms-expand { display: none; }
   }
   /* On mobile, content anchors from top — prevent overflow under nav */
   .hero-content { margin-top: 0; }
-  /* Dates list: fade out after ~2 items, "alle Termine" stays visible */
+  /* Nav: hide links, show toggle (nav has 8 items — needs toggle early) */
+  .nav-links { display: none; }
+  .nav-toggle { display: flex; }
+}
+
+/* ─── Tablets (520–1024px): hero dates as compact inline bar ─── */
+@media (min-width: 520px) and (max-width: 1024px) {
+  .hero-dates {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .hero-dates-label {
+    margin-bottom: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .hero-date-list {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    min-width: 0;
+    max-height: none;
+    overflow: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .hero-date-item:not(:first-child) { display: none; }
+  .hero-date-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    border-bottom: none;
+    min-width: 0;
+  }
+  .hero-date-sep,
+  .hero-date-loc { display: none; }
+  .hero-date-day { flex-shrink: 0; }
+  .hero-dates-more {
+    margin-top: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+/* ─── Phones (<520px): hero dates fade-out list ──────────────── */
+@media (max-width: 519px) {
   .hero-date-list {
     max-height: 80px;
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
   }
-  /* Nav: hide links, show toggle (nav has 8 items — needs toggle early) */
-  .nav-links { display: none; }
-  .nav-toggle { display: flex; }
 }
 
 /* ─── 900px: Two-column grids → single column ────────────────── */
