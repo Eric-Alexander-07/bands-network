@@ -31,7 +31,7 @@ export default function BookingPage() {
         <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Buchungsanfrage</span>
-          <h1>Buchen</h1>
+          <h1>Anfragen</h1>
           <p>
             Jetzt euer Datum anfragen und ein maßgeschneidertes Angebot
             erhalten. Wir melden uns innerhalb von 24 Stunden.

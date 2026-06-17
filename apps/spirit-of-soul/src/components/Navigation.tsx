@@ -48,7 +48,7 @@ export default function Navigation() {
           </ul>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
             <Link href="/booking" className="nav-cta">
-              Buchen
+              Anfragen
             </Link>
             <button
               className="nav-toggle"
@@ -83,7 +83,7 @@ export default function Navigation() {
           </Link>
         ))}
         <Link href="/booking" className="btn btn-gold nav-mobile-cta">
-          Jetzt buchen
+          Jetzt anfragen
         </Link>
       </div>
     </>

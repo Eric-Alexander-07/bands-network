@@ -357,7 +357,7 @@ h3, h4 {
 .hero-split {
   flex: 1 0 0%;               /* flex-basis:0 lets Safari resolve height from flex */
   display: grid;
-  grid-template-columns: 56fr 44fr;
+  grid-template-columns: 48fr 52fr;
   grid-template-rows: 1fr;    /* explicit row forces definite height in Safari */
   overflow: hidden;
   min-height: 0;
@@ -367,7 +367,7 @@ h3, h4 {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   padding: calc(var(--nav-height) + 48px) 64px 64px;
   overflow: hidden;
   box-sizing: border-box;
@@ -425,6 +425,17 @@ h3, h4 {
   position: relative;
   overflow: hidden;
   background: var(--bg-dark-3);
+}
+.hero-right::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(to right, var(--bg-dark) 0%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
 }
 /* Parallax inner — oversized so translateY has room */
 .hero-right-inner {
@@ -990,6 +1001,7 @@ h3, h4 {
   aspect-ratio: 16 / 9;
   background: var(--bg-dark-2);
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white, white);
 }
 .video-item iframe { width: 100%; height: 100%; border: none; display: block; }
 
@@ -3009,10 +3021,10 @@ h3, h4 {
   -webkit-perspective: 1200px;
   perspective: 1200px;
 }
-/* Refs marquee 3D — webkit prefix must come before standard */
+/* Refs marquee 3D — webkit prefix must match standard values */
 .refs-scene-inner {
-  -webkit-transform: perspective(420px) rotateX(28deg) rotateY(-4deg);
-  transform: perspective(420px) rotateX(28deg) rotateY(-4deg);
+  -webkit-transform: perspective(800px) rotateX(20deg) rotateY(-10deg);
+  transform: perspective(800px) rotateX(20deg) rotateY(-10deg);
 }
 /* Force GPU compositing on animated elements */
 .nav-glass-bg,
@@ -3108,12 +3120,25 @@ select::-ms-expand { display: none; }
 
 /* ─── 1024px: Hero collapse ──────────────────────────────────── */
 @media (max-width: 1024px) {
-  .hero-split { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
+  .hero-split { grid-template-columns: 1fr; position: relative; }
+  .hero-right {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-right::before {
+    width: 100%;
+    background: linear-gradient(to right, rgba(25, 23, 20, 0.85) 0%, rgba(25, 23, 20, 0.40) 100%);
+  }
   .hero-left {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    justify-content: center;
     padding: calc(var(--nav-height) + 40px) 40px 56px;
   }
-  /* On mobile, content at top — no auto margin needed */
+  /* On mobile, content centered vertically */
   .hero-content { margin-top: 0; }
   /* Nav: hide links, show toggle (nav has 8 items — needs toggle early) */
   .nav-links { display: none; }

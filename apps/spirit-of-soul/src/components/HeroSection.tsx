@@ -29,7 +29,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
     const onScroll = () => {
       if (!parallaxRef.current) return;
       const y = Math.min(window.scrollY * 0.22, 100);
-      parallaxRef.current.style.transform = `translateY(${y}px)`;
+      parallaxRef.current.style.transform = `translateY(${y}px) translateZ(0)`;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -94,7 +94,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
             </p>
             <div className="hero-actions">
               <Link href="/booking" className="btn btn-light">
-                Jetzt buchen
+                Jetzt anfragen
               </Link>
               <Link href="/about" className="btn btn-outline-light">
                 Über uns

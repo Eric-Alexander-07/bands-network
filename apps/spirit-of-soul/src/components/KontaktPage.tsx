@@ -1,7 +1,32 @@
+"use client";
+
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
+import { type FormEvent } from "react";
 
 export default function KontaktPage() {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const subject = (form.elements.namedItem("subject") as HTMLInputElement).value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+    const mailSubject = `Anfrage für ${band.name}${subject ? ` – ${subject}` : ""}`;
+    const mailBody = [
+      `Name: ${name}`,
+      `E-Mail: ${email}`,
+      "",
+      `Nachricht:`,
+      message,
+      "",
+      "--",
+      `Diese Anfrage wurde über die ${band.name} Website gesendet.`,
+    ].join("\n");
+
+    window.location.href = `mailto:info@v-m-p.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+  }
   return (
     <>
       <section className="page-hero">
@@ -46,7 +71,7 @@ export default function KontaktPage() {
               </div>
             </div>
 
-            <form className="contact-form" data-animate="fade-left">
+            <form className="contact-form" data-animate="fade-left" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Name</label>
                 <input type="text" id="name" name="name" placeholder="Dein Name" required />
