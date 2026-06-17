@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Über uns – Spirit of Soul | Soulband Frankfurt",
   description: "Spirit of Soul – 25 Jahre authentischer Soul, R&B und Funk. Flexible Besetzungen vom Duo bis zur 12-köpfigen Full-Band. Erfahrene Profimusiker aus Frankfurt am Main.",
-  keywords: ["Soulband Geschichte", "Spirit of Soul Band", "Soul R&B Funk Frankfurt", "Profimusiker Frankfurt"],
+  keywords: ["Soulband Geschichte", "Spirit of Soul Band", "Soul R&B Funk Frankfurt", "Profimusiker Frankfurt", "Sänger Bläser", "Motown", "Blues", "Soul Classics"],
   alternates: { canonical: "https://spirit-of-soul.de/about" },
   openGraph: {
     title: "Über uns – Spirit of Soul | Soulband Frankfurt",

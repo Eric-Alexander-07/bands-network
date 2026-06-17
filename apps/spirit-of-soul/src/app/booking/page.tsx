@@ -5,19 +5,19 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Buchungsanfrage – Spirit of Soul | Band buchen",
-  description: "Spirit of Soul für Ihr Event buchen – Anfrage für Hochzeiten, Firmenevents, Galas und Stadtfeste. Persönliches Angebot innerhalb von 24 Stunden.",
-  keywords: ["Soulband buchen", "Band buchen Frankfurt", "Partyband anfragen", "Liveband Hochzeit buchen"],
+  description: "Spirit of Soul für Ihr Event buchen. Persönliches Angebot innerhalb von 24 Stunden.",
+  keywords: ["Soulband buchen", "Band buchen Frankfurt", "Partyband anfragen", "Liveband Hochzeit buchen", "Tributeband anfragen", "Eventband buchen", "Soul Tribute Band", "Soulband Booking"],
   alternates: { canonical: "https://spirit-of-soul.de/booking" },
   openGraph: {
     title: "Buchungsanfrage – Spirit of Soul | Band buchen",
-    description: "Spirit of Soul für Ihr Event buchen – Anfrage für Hochzeiten, Firmenevents, Galas und Stadtfeste. Persönliches Angebot innerhalb von 24 Stunden.",
+    description: "Spirit of Soul für Ihr Event buchen. Persönliches Angebot innerhalb von 24 Stunden.",
     url: "https://spirit-of-soul.de/booking",
     images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Buchungsanfrage – Spirit of Soul | Band buchen",
-    description: "Spirit of Soul für Ihr Event buchen – Anfrage für Hochzeiten, Firmenevents, Galas und Stadtfeste. Persönliches Angebot innerhalb von 24 Stunden.",
+    description: "Spirit of Soul für Ihr Event buchen. Persönliches Angebot innerhalb von 24 Stunden.",
   },
     robots: { index: true, follow: true },
 };
