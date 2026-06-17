@@ -10,8 +10,7 @@ export default function BookingCTA() {
           Unvergessliche Musik<br />für Ihr Event
         </h2>
         <p data-animate="fade-up" data-delay="200">
-          Von der Dinner-Besetzung bis zur 12-köpfigen Full-Band — wir
-          erstellen ein maßgeschneidertes Angebot für Ihre Veranstaltung.
+          Von der kleinen Dinner Besetzung bis zur 12-köpfigen Full-Band mit Bläser Sektion &amp; Percussions — wir erstellen ein maßgeschneidertes Angebot für Ihre Veranstaltung.
         </p>
         <div className="booking-cta-actions" data-animate="fade-up" data-delay="300">
           <Link href="/booking" className="btn btn-gold">
