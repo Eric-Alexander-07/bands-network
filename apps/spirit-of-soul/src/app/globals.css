@@ -3135,11 +3135,18 @@ select::-ms-expand { display: none; }
     position: relative;
     z-index: 1;
     background: transparent;
-    justify-content: center;
+    justify-content: flex-start;
     padding: calc(var(--nav-height) + 40px) 40px 56px;
   }
-  /* On mobile, content centered vertically */
+  /* On mobile, content anchors from top — prevent overflow under nav */
   .hero-content { margin-top: 0; }
+  /* Dates list: fade out after ~2 items, "alle Termine" stays visible */
+  .hero-date-list {
+    max-height: 80px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  }
   /* Nav: hide links, show toggle (nav has 8 items — needs toggle early) */
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
