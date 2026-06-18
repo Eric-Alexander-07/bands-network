@@ -7,26 +7,31 @@ export default function GallerySection() {
       <div className="container">
         <div className="gallery-layout">
           <div className="gallery-text">
-            <span className="eyebrow">Fotos & Videos</span>
-            <h2 className="section-title">Galerie & Medien</h2>
-            <p className="gallery-desc">
+            <span className="eyebrow" data-animate="fade-up">Impressionen</span>
+            <h2 className="section-title" data-animate="fade-up" data-delay="100">
+              Galerie &amp; Medien
+            </h2>
+            <p className="gallery-desc" data-animate="fade-up" data-delay="200">
               Eindrücke von Auftritten, Studio-Sessions und Events — Fotos und
               Videos aus dem Live-Alltag von {band.name}.
             </p>
-            <Link href="/media" className="btn btn-primary">
-              Mehr erfahren
-            </Link>
+            <div data-animate="fade-up" data-delay="300">
+              <Link href="/galerie" className="btn btn-light">
+                Zur Galerie
+              </Link>
+            </div>
           </div>
-          <div className="gallery-preview">
-            <div className="gallery-preview-photo gallery-photo-placeholder">
-              <span className="gallery-photo-label">FOTO</span>
+          <div className="gallery-preview" data-animate="fade-left">
+            <div className="gallery-preview-photo">
+              <span className="gallery-photo-placeholder">Foto</span>
             </div>
             <div className="gallery-preview-video video-item">
               <iframe
-                src={`https://www.youtube.com/embed/${band.videos[0].id}`}
+                src={`https://www.youtube-nocookie.com/embed/${band.videos[0].id}`}
                 title={band.videos[0].title}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                loading="lazy"
               />
             </div>
           </div>

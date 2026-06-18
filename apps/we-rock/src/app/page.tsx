@@ -1,18 +1,45 @@
+﻿export const revalidate = 3600; // re-render at most once per hour; admin mutations trigger instant revalidation via revalidatePath
+
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import SocialSection from "@/components/SocialSection";
-import GallerySection from "@/components/GallerySection";
 import OccasionsSection from "@/components/OccasionsSection";
 import ClientsStrip from "@/components/ClientsStrip";
 import BookingCTA from "@/components/BookingCTA";
+import { fetchEvents } from "@/lib/data";
 
-export default function HomePage() {
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
+  description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+  keywords: ["Soulband Frankfurt", "Partyband Rhein-Main", "Soul Motown R&B Hiphop", "Band Hochzeit Frankfurt", "Liveband Firmenevent", "Spirit of Soul", "Hochzeit Eventband Partyband", "Black Music", "Schausteller Party", "Soul Musik Soulmusik"],
+  alternates: { canonical: "https://we-rock.de" },
+  openGraph: {
+    title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
+    description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+    url: "https://we-rock.de",
+    images: [{ url: "https://we-rock.de/images/about.webp" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
+    description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+  },
+    robots: { index: true, follow: true },
+};
+
+
+
+export default async function HomePage() {
+  // Fetch events from DB — only show in hero if entries exist
+  const dbEvents = await fetchEvents();
+
   return (
     <>
-      <HeroSection />
+      <HeroSection dbEvents={dbEvents} />
       <AboutSection />
       <SocialSection />
-      <GallerySection />
       <OccasionsSection />
       <ClientsStrip />
       <BookingCTA />

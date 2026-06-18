@@ -3439,8 +3439,12 @@ select::-ms-expand { display: none; }
   overflow: hidden;
 }
 @media (max-width: 900px) {
-  .media-fb-inline { flex: none; }
-  .media-fb-inline iframe { height: 520px !important; }
+  .media-fb-inline { flex: none; height: 700px; }
+  .media-fb-inline iframe { height: 700px !important; }
+}
+@media (max-width: 519px) {
+  .media-fb-inline { height: 600px; }
+  .media-fb-inline iframe { height: 600px !important; }
 }
 
 /* ─── 480px: Small phones (iPhone SE etc.) ────────────────────── */

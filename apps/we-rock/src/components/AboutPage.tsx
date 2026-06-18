@@ -1,86 +1,60 @@
-import { band } from "@/config/band";
+import Link from "next/link";
+import ConcentricRings from "@/components/ConcentricRings";
 
-const platforms = [
-  { key: "instagram" as const, label: "Instagram", handle: "@" },
-  { key: "facebook" as const, label: "Facebook", handle: "facebook.com/" },
-  { key: "youtube" as const, label: "YouTube", handle: "youtube.com/" },
-  { key: "spotify" as const, label: "Spotify", handle: "open.spotify.com/" },
-];
+type PC = Record<string, string>;
 
-export default function AboutPage() {
-  const facebookEmbedUrl = `https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(band.socials.facebook)}&tabs=timeline&width=500&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true`;
+interface Props { content?: PC; }
+
+export default function AboutPage({ content = {} }: Props) {
+  const heroText  = content.text_top   || "25 Jahre Soul, R&B und Funk auf internationalen Bühnen.\nEntertainment der Extraklasse.";
+  const mainImage = content.image_main || "/images/gallery/live-stage-duo.webp";
+  const mainText  = content.text_bottom;
+  const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
 
   return (
     <>
-      <section className="page-hero about-hero">
+      <section className="page-hero">
+        <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
-          <div className="about-hero-layout">
-            <div className="about-hero-text">
-              <span className="eyebrow">Unsere Geschichte</span>
-              <h1>Über {band.name}</h1>
-              <p>{band.about.bio}</p>
-            </div>
-            <div className="about-hero-image about-image-placeholder" />
+          <div className="page-hero-text-narrow">
+            <span className="eyebrow">Über die Band</span>
+            <h1>Über uns</h1>
+            <p>{heroText}</p>
           </div>
         </div>
       </section>
 
-      <section className="section">
-        <div className="container">
-          <span className="eyebrow">Das Team</span>
-          <h2 className="section-title">Bandmitglieder</h2>
-          <div className="members-grid">
-            {band.about.members.map((member, i) => (
-              <div key={i} className="member-card">
-                <div className="member-photo-placeholder" />
-                <div className="member-info">
-                  <p className="member-name">{member.name}</p>
-                  <p className="member-role">{member.role}</p>
-                </div>
+      <section className="section section-has-rings">
+        <ConcentricRings className="rings-left" />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="about-simple-layout">
+            <div className="about-simple-img" data-animate="fade-right">
+              <img src={mainImage} alt="Spirit of Soul — Live" />
+            </div>
+            <div className="about-simple-text" data-animate="fade-left">
+              <span className="eyebrow">The Finest Of Black Music</span>
+              <h2>25 Jahre Bühne.<br />Eine Leidenschaft.</h2>
+              {mainParas ? (
+                mainParas.map((p, i) => <p key={i}>{p}</p>)
+              ) : (
+                <>
+                  <p>
+                    Spirit of Soul steht seit 25 Jahren für erstklassiges Live-Entertainment.
+                    Mit internationalen Sängern, erfahrenen Musikern und einer unverwechselbaren
+                    Energie begeistert die Band Gäste bei Hochzeiten, Firmenevents, Stadtfesten
+                    und exklusiven Galas europaweit.
+                  </p>
+                  <p>
+                    Die Stärke liegt in der Musikalität und Spontanität aller Bandmitglieder —
+                    das Programm wird kurzfristig auf der Bühne maßgeschneidert, damit der
+                    erste Song das Publikum sofort bewegt.
+                  </p>
+                </>
+              )}
+              <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
+                <Link href="/booking" className="btn btn-primary">Jetzt anfragen</Link>
+                <Link href="/services" className="btn btn-outline">Unsere Services</Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="section about-social-section">
-        <div className="container">
-          <span className="eyebrow">Folgt uns</span>
-          <h2 className="section-title">Social Media</h2>
-          <p className="about-social-intro">
-            Bleibt auf dem Laufenden — neue Termine, Fotos und
-            Behind-the-Scenes direkt in eurem Feed.
-          </p>
-
-          <div className="about-social-platforms">
-            {platforms.map((p) => (
-              <a
-                key={p.key}
-                href={band.socials[p.key]}
-                className="about-social-card"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="about-social-card-label">{p.label}</span>
-                <span className="about-social-card-arrow">↗</span>
-              </a>
-            ))}
-          </div>
-
-          <div className="about-facebook-embed">
-            <div className="about-facebook-label">
-              <span className="eyebrow">Facebook-Seite</span>
-            </div>
-            <div className="about-facebook-frame">
-              <iframe
-                src={facebookEmbedUrl}
-                width="500"
-                height="600"
-                style={{ border: "none", overflow: "hidden" }}
-                allowFullScreen
-                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                title="Facebook Seite"
-              />
             </div>
           </div>
         </div>
