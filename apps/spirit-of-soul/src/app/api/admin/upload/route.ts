@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createServerSupabaseClient } from "@bands/supabase/server";
 
 const ALLOWED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/avif"];
 const ALLOWED_EXTS  = ["jpg", "jpeg", "png", "webp", "avif"];
@@ -9,21 +8,11 @@ const EXT_TO_MIME: Record<string, string> = {
   jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png",
   webp: "image/webp", avif: "image/avif",
 };
-const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const MAX_SIZE = 4 * 1024 * 1024; // 4 MB — Vercel body limit is 4.5 MB; client compresses above 2 MB
 
 export async function POST(request: NextRequest) {
-  // Verify authenticated user
-  const cookieStore = await cookies();
-  const authClient = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll: () => cookieStore.getAll(),
-        setAll: () => {},
-      },
-    }
-  );
+  // Verify authenticated user via shared server helper (avoids deprecated createServerClient overload)
+  const authClient = await createServerSupabaseClient();
   const { data: { user } } = await authClient.auth.getUser();
   if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
@@ -33,7 +22,7 @@ export async function POST(request: NextRequest) {
   const uploadPath = (formData.get("path") as string) || "uploads";
 
   if (!file) return NextResponse.json({ error: "No file provided" }, { status: 400 });
-  if (file.size > MAX_SIZE) return NextResponse.json({ error: "File too large (10MB)" }, { status: 400 });
+  if (file.size > MAX_SIZE) return NextResponse.json({ error: "File too large (max. 4 MB)" }, { status: 400 });
 
   // Safari sometimes sends empty MIME type in FormData — fall back to extension
   const ext = file.name.split(".").pop()?.toLowerCase() ?? "";

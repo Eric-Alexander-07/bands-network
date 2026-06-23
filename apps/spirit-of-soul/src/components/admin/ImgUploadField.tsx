@@ -10,20 +10,47 @@ interface Props {
   onAutoSave: (url: string) => Promise<void>;
 }
 
+// Compress images > 2 MB to stay safely under Vercel's 4.5 MB API body limit.
+async function compressForUpload(file: File): Promise<File> {
+  if (file.size <= 2 * 1024 * 1024) return file;
+  return new Promise((resolve) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+      const MAX = 1600;
+      let w = img.naturalWidth, h = img.naturalHeight;
+      if (w > MAX || h > MAX) {
+        if (w >= h) { h = Math.round(h * MAX / w); w = MAX; }
+        else         { w = Math.round(w * MAX / h); h = MAX; }
+      }
+      const canvas = document.createElement("canvas");
+      canvas.width = w; canvas.height = h;
+      canvas.getContext("2d")!.drawImage(img, 0, 0, w, h);
+      canvas.toBlob(
+        (blob) => {
+          if (blob) resolve(new File([blob], file.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" }));
+          else resolve(file);
+        },
+        "image/jpeg", 0.85
+      );
+    };
+    img.onerror = () => { URL.revokeObjectURL(objectUrl); resolve(file); };
+    img.src = objectUrl;
+  });
+}
+
 export default function ImgUploadField({ pageSlug, value, onChange, onAutoSave }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
 
   const handleFile = async (file: File) => {
-    if (file.size > 10 * 1024 * 1024) {
-      toast("Datei zu groß (max. 10 MB)", "error");
-      return;
-    }
     setUploading(true);
     try {
+      const compressed = await compressForUpload(file);
       const fd = new FormData();
-      fd.append("file", file);
+      fd.append("file", compressed);
       fd.append("bucket", "images");
       fd.append("path", `pages/${pageSlug}`);
       const res = await fetch("/api/admin/upload", { method: "POST", body: fd });

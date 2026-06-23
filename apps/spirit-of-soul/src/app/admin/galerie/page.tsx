@@ -11,10 +11,10 @@ const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 interface Img { id: string; site_id: string | null; url: string; caption: string | null; credit: string | null; position: number | null; created_at: string | null; }
 interface UploadItem { id: string; file: File; objectUrl: string; progress: "pending" | "uploading" | "done" | "error"; error?: string; }
 
-// Resize images > 4 MB to max 2000px long side (JPEG 88 %) before upload.
-// Keeps files well below Vercel's serverless body limit (~4.5 MB).
+// Resize images > 2 MB to max 2000px long side (JPEG 88 %) before upload.
+// Keeps files well below Vercel's serverless body limit (4.5 MB).
 async function resizeForUpload(file: File): Promise<File> {
-  if (file.size <= 4 * 1024 * 1024) return file;
+  if (file.size <= 2 * 1024 * 1024) return file;
   return new Promise((resolve) => {
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
