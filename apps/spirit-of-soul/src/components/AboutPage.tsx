@@ -1,5 +1,6 @@
 import Link from "next/link";
 import ConcentricRings from "@/components/ConcentricRings";
+import SingerCarousel from "@/components/SingerCarousel";
 
 type PC = Record<string, string>;
 
@@ -59,6 +60,8 @@ export default function AboutPage({ content = {} }: Props) {
           </div>
         </div>
       </section>
+
+      <SingerCarousel />
     </>
   );
 }

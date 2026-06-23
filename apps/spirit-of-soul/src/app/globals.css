@@ -1351,6 +1351,84 @@ h3, h4 {
   .about-simple-layout { grid-template-columns: 1fr; gap: 40px; }
 }
 
+/* ─── Singer Carousel ───────────────────────────────────────── */
+.singer-carousel-section { background: var(--bg-section); padding-top: 0px; }
+
+.singer-carousel-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 48px;
+}
+
+.singer-carousel-track {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+.singer-carousel-track::-webkit-scrollbar { display: none; }
+
+.singer-card {
+  flex: 0 0 240px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.singer-card img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  border-radius: 2px;
+  background: var(--bg-elevated);
+}
+.singer-card-name {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.singer-carousel-btn {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-dark);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  align-self: center;
+  margin-bottom: 28px;
+}
+.singer-carousel-btn:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #000000;
+}
+
+@media (max-width: 900px) {
+  .singer-carousel-btn { display: none; }
+  .singer-card { flex: 0 0 200px; }
+}
+@media (max-width: 640px) {
+  .singer-card { flex: 0 0 160px; }
+}
+
 /* ─── About Page ────────────────────────────────────────────── */
 .about-hero { padding-bottom: 0; }
 .about-hero-layout {
