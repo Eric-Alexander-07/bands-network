@@ -19,15 +19,21 @@ interface Product {
   position: number | null; visible: boolean | null; created_at: string | null;
 }
 
-async function uploadImg(file: File, productId: string, slot: "front" | "back"): Promise<string | null> {
+async function uploadImg(file: File, productId: string, slot: "front" | "back"): Promise<{ url: string | null; error?: string }> {
   const formData = new FormData();
   formData.append("file", file);
   formData.append("bucket", "products");
   formData.append("path", `${SLUG}/${slot}`);
-  const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
-  const { url, error } = await res.json();
-  if (error || !url) return null;
-  return url;
+  try {
+    const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+    let json: { url?: string; error?: string };
+    try { json = await res.json(); }
+    catch { return { url: null, error: `Serverfehler ${res.status}` }; }
+    if (!res.ok || json.error || !json.url) return { url: null, error: json.error ?? res.statusText };
+    return { url: json.url };
+  } catch (e) {
+    return { url: null, error: e instanceof Error ? e.message : "Netzwerkfehler" };
+  }
 }
 
 // ─── Seitentext ───────────────────────────────────────────────────
@@ -160,11 +166,12 @@ function ProdukteSection({ siteId, supabase, toast }) {
   const handleImageUpload = async (p, slot, file) => {
     const key = `${p.id}-${slot}`;
     setUploading(u => ({ ...u, [key]: true }));
-    const url = await uploadImg(file, p.id, slot);
+    const { url, error } = await uploadImg(file, p.id, slot);
     setUploading(u => ({ ...u, [key]: false }));
-    if (!url) { toast("Upload fehlgeschlagen", "error"); return; }
+    if (!url) { toast(`Upload fehlgeschlagen: ${error ?? "Unbekannter Fehler"}`, "error"); return; }
     const dbKey = slot === "front" ? "image_url" : "image_url_back";
-    await adminUpdate("products", p.id, { [dbKey]: url });
+    const { error: dbErr } = await adminUpdate("products", p.id, { [dbKey]: url });
+    if (dbErr) { toast(`Bild hochgeladen, aber DB-Fehler: ${dbErr}`, "error"); return; }
     setProducts(prev => prev.map(x => x.id === p.id ? { ...x, [dbKey]: url } : x));
     toast("Bild hochgeladen", "success");
   };

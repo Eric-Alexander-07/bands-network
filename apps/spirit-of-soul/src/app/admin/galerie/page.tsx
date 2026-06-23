@@ -185,7 +185,7 @@ export default function GalerieAdmin() {
           <path d="M3 20h18"/>
         </svg>
         <p className="a-dropzone-title">Bilder ablegen oder klicken zum Auswählen</p>
-        <p className="a-dropzone-sub">JPG · PNG · WebP · AVIF — max. 15 MB pro Bild</p>
+        <p className="a-dropzone-sub">JPG · PNG · WebP · AVIF — max. 10 MB pro Bild</p>
       </div>
 
       {/* Upload queue */}

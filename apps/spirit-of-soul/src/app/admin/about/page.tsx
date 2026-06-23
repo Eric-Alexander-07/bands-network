@@ -42,6 +42,7 @@ export default function AboutAdmin() {
   const setField = (key: string, val: string) => { setContent(c => ({ ...c, [key]: val })); setIsDirty(true); };
 
   const saveImgField = async (key: string, url: string) => {
+    if (!siteId) { toast("Seite noch nicht geladen, bitte kurz warten", "error"); return; }
     const updated = { ...content, [key]: url };
     if (pageId) {
       const { error } = await adminUpdate("pages", pageId, { content: updated });
