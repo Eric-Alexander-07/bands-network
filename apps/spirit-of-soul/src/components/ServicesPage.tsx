@@ -34,21 +34,35 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
           <p className="formations-intro" data-animate="fade-up" data-delay="200">
             {content.besetzung_text || `${band.name} ist für verschiedene Events in verschiedenen Besetzungen buchbar — von der eleganten kleinen Formation bis zur 12-köpfigen Full-Band mit Bläser Sektion.`}
           </p>
-          <div className="formations-grid" data-animate="stagger">
-            {formations.map((group, gi) => (
-              <div key={gi} className="formations-col">
-                <h3 className="formations-col-title">{group.name}</h3>
-                {group.beschreibung && <p className="formations-col-sub">{group.beschreibung}</p>}
-                <ul className="formations-list">
-                  {group.eintraege.map(e => (
-                    <li key={e.id} className="formation-item">
-                      <span className="formation-name">{e.name}</span>
-                      <span className="formation-lineup">{e.beschreibung}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <div className="formations-grid" data-animate="fade-up">
+            {(() => {
+              const left  = formations[0];
+              const right = formations[1];
+              const rows  = Math.max(left?.eintraege.length ?? 0, right?.eintraege.length ?? 0);
+              const cells = [
+                <div key="hl" className="formations-col-header">
+                  <h3 className="formations-col-title">{left?.name}</h3>
+                  {left?.beschreibung && <p className="formations-col-sub">{left.beschreibung}</p>}
+                </div>,
+                <div key="hr" className="formations-col-header">
+                  <h3 className="formations-col-title">{right?.name}</h3>
+                  {right?.beschreibung && <p className="formations-col-sub">{right.beschreibung}</p>}
+                </div>,
+              ];
+              for (let i = 0; i < rows; i++) {
+                const l = left?.eintraege[i];
+                const r = right?.eintraege[i];
+                cells.push(
+                  <div key={`l${i}`} className="formation-cell">
+                    {l && <><span className="formation-name">{l.name}</span><span className="formation-lineup">{l.beschreibung}</span></>}
+                  </div>,
+                  <div key={`r${i}`} className="formation-cell">
+                    {r && <><span className="formation-name">{r.name}</span><span className="formation-lineup">{r.beschreibung}</span></>}
+                  </div>
+                );
+              }
+              return cells;
+            })()}
           </div>
         </div>
       </section>

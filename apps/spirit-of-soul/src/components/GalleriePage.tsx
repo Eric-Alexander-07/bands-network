@@ -3,13 +3,12 @@ import ConcentricRings from "@/components/ConcentricRings";
 import type { MediaImage } from "@/lib/data";
 
 const STATIC_IMAGES = [
-  { src: "/images/about.webp",                        alt: "Spirit of Soul — Full Band" },
+  { src: "/images/spirit-of-soul-54.webp",          alt: "Spirit of Soul — Live" },
   { src: "/images/gallery/live-guitarist.webp",       alt: "Gitarrist auf der Bühne" },
   { src: "/images/gallery/live-vocalist-gold.webp",   alt: "Vocalist im Gold-Jacket" },
   { src: "/images/gallery/live-stage-duo.webp",       alt: "Sänger und Gitarrist" },
   { src: "/images/gallery/live-festival-singer.webp", alt: "Festival Performance" },
   { src: "/images/gallery/live-vocalist-hat.webp",    alt: "Lead Vocalist" },
-  { src: "/images/hero.webp",                         alt: "Sängerin — Live Performance" },
 ];
 
 interface Props { dbImages?: MediaImage[]; }

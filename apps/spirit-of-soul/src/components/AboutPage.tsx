@@ -8,14 +8,14 @@ interface Props { content?: PC; }
 
 export default function AboutPage({ content = {} }: Props) {
   const heroText  = content.text_top   || "25 Jahre Soul, R&B und Funk auf internationalen Bühnen.\nEntertainment der Extraklasse.";
-  const mainImage = content.image_main || "/images/gallery/live-stage-duo.webp";
+  const mainImage = content.image_main || "/images/uber-uns.webp";
   const mainText  = content.text_bottom;
   const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
 
   return (
     <>
       <section className="page-hero">
-        <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/uber-uns.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <div className="page-hero-text-narrow">
             <span className="eyebrow">Über die Band</span>

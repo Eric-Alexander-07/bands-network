@@ -2,12 +2,11 @@
 import { useRef } from "react";
 
 const SINGERS = [
-  { src: "/images/gallery/live-vocalist-gold.webp",   name: "Sänger 1" },
-  { src: "/images/hero.webp",                         name: "Sängerin 2" },
-  { src: "/images/gallery/live-vocalist-hat.webp",    name: "Sänger 3" },
-  { src: "/images/gallery/live-festival-singer.webp", name: "Sängerin 4" },
-  { src: "/images/about.webp",                        name: "Sänger 5" },
-  { src: "/images/gallery/live-stage-duo.webp",       name: "Sängerin 6" },
+  { src: "/images/sanger1.webp", name: "Sänger 1" },
+  { src: "/images/sanger2.webp", name: "Sängerin 2" },
+  { src: "/images/sanger3.webp", name: "Sänger 3" },
+  { src: "/images/sanger4.webp", name: "Sängerin 4" },
+  { src: "/images/sanger5.webp", name: "Sänger 5" },
 ];
 
 export default function SingerCarousel() {
@@ -41,7 +40,6 @@ export default function SingerCarousel() {
               <div key={i} className="singer-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={singer.src} alt={singer.name} />
-                <p className="singer-card-name">{singer.name}</p>
               </div>
             ))}
           </div>

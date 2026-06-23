@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { band } from "@/config/band";
 
@@ -7,7 +8,13 @@ export default function Footer() {
       <div className="container">
         <div className="footer-grid">
           <div>
-            <p className="footer-brand-name">{band.name}</p>
+            <Image
+              src="/images/logo_original.png"
+              alt={band.name}
+              width={180}
+              height={60}
+              style={{ height: "120px", width: "auto" }}
+            />
             <p className="footer-brand-claim">
               {band.claim}
               <br />
