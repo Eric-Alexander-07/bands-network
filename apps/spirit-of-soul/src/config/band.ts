@@ -2,9 +2,9 @@ export const band = {
   name: "Spirit of Soul",
   claim: "The Finest Of Black Music",
   tagline: "Entertainment der Extraklasse",
-  genre: "Soul / R&B / Funk",
+  genre: "Soul / Funk / Motown / R&B / Hiphop",
   location: "Frankfurt am Main",
-  email: "booking@spirit-of-soul.de",
+  email: "info@v-m-p.com",
   accentColor: "#c8a56a",
 
   nav: [

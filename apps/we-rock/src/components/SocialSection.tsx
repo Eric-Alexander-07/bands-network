@@ -1,49 +1,74 @@
 import Link from "next/link";
 import { band } from "@/config/band";
+import ConcentricRings from "@/components/ConcentricRings";
+import LightboxImage from "@/components/LightboxImage";
 
-const platforms = [
-  { key: "instagram", label: "Instagram" },
-  { key: "facebook", label: "Facebook" },
-  { key: "youtube", label: "YouTube" },
-  { key: "spotify", label: "Spotify" },
-] as const;
+const GRID_PHOTOS = [
+  { src: "/images/gallery/live-vocalist-gold.webp", alt: "Live Performance" },
+  { src: "/images/gallery/live-guitarist.webp",     alt: "Gitarrist" },
+  { src: "/images/gallery/live-stage-duo.webp",     alt: "Auf der Bühne" },
+  { src: "/images/gallery/live-festival-singer.webp", alt: "Festival" },
+  { src: "/images/gallery/live-vocalist-hat.webp",  alt: "Vocalist" },
+  { src: "/images/hero.webp",                       alt: "Sängerin Live" },
+];
+
+const PLATFORMS = [
+  { key: "instagram" as const, label: "Instagram" },
+  { key: "facebook"  as const, label: "Facebook"  },
+  { key: "youtube"   as const, label: "YouTube"   },
+];
 
 export default function SocialSection() {
   return (
-    <section className="section social-section">
+    <section className="section social-media-section section-has-rings">
+      <ConcentricRings className="rings-right" />
       <div className="container">
-        <div className="social-layout">
-          <div className="social-text">
-            <span className="eyebrow">Folgt uns</span>
-            <h2 className="section-title">Social Media</h2>
-            <p className="social-desc">
-              Folgt {band.name} auf Social Media und bleibt immer up to date —
-              neue Auftritte, Behind-the-Scenes und mehr.
+        <div className="social-media-layout">
+
+          <div className="social-media-text">
+            <span className="eyebrow" data-animate="fade-up">Folgt uns</span>
+            <h2 className="social-media-heading" data-animate="fade-up" data-delay="100">
+              News auf Instagram<br />&amp; Facebook
+            </h2>
+            <p className="social-media-desc" data-animate="fade-up" data-delay="200">
+              Bleibt up to date — neue Auftritte, Behind-the-Scenes und direkte Einblicke in unser Bandleben.
             </p>
-            <div className="social-platforms">
-              {platforms.map((p) => (
+
+            <div className="social-platform-links" data-animate="stagger">
+              {PLATFORMS.map((p) => (
                 <a
                   key={p.key}
                   href={band.socials[p.key]}
-                  className="social-platform-chip"
+                  className="social-platform-link"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  {p.label}
+                  <span>{p.label}</span>
+                  <span className="social-platform-arrow">↗</span>
                 </a>
               ))}
             </div>
-            <Link href="/about" className="btn btn-primary social-cta">
-              Mehr erfahren
-            </Link>
+
+            <div data-animate="fade-up" data-delay="400">
+              <Link href="/media" className="social-media-cta">
+                <span className="social-media-cta-bar" />
+                Alle News &amp; Medien ansehen
+              </Link>
+            </div>
           </div>
-          <div className="social-images">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div key={i} className="social-post-placeholder">
-                <span className="social-post-label">POST</span>
-              </div>
+
+          <div className="social-photo-grid" data-animate="fade-left">
+            {GRID_PHOTOS.map((photo, i) => (
+              <LightboxImage
+                key={i}
+                src={photo.src}
+                alt={photo.alt}
+                wrapperClassName="social-photo-item"
+                overlayContent="⊕"
+              />
             ))}
           </div>
+
         </div>
       </div>
     </section>

@@ -8,6 +8,30 @@ export default function BookingForm() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value;
+    const date = (form.elements.namedItem("date") as HTMLInputElement).value;
+    const occasion = (form.elements.namedItem("occasion") as HTMLSelectElement).value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+    const mailSubject = `Buchungsanfrage für ${band.name}${occasion ? ` – ${occasion}` : ""}`;
+    const mailBody = [
+      `Name: ${name}`,
+      `E-Mail: ${email}`,
+      phone ? `Telefon: ${phone}` : "",
+      date ? `Veranstaltungsdatum: ${date}` : "",
+      occasion ? `Anlass: ${occasion}` : "",
+      "",
+      `Nachricht:`,
+      message,
+      "",
+      "--",
+      `Diese Anfrage wurde über die ${band.name} Website gesendet.`,
+    ].filter(line => line !== undefined).join("\n");
+
+    window.location.href = `mailto:info@v-m-p.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
     setSubmitted(true);
   }
 
@@ -15,7 +39,7 @@ export default function BookingForm() {
     <div className="booking-layout">
       <div className="booking-info">
         <span className="eyebrow">Kontakt aufnehmen</span>
-        <h2>{band.name} buchen</h2>
+        <h2>{band.name} anfragen</h2>
         <p>
           Schreibt uns für Verfügbarkeiten, Konditionen und individuelle
           Wünsche. Wir melden uns in der Regel innerhalb von 24 Stunden.
@@ -31,6 +55,22 @@ export default function BookingForm() {
             <span className="booking-contact-label">Standort</span>
             <span className="booking-contact-value">{band.location}</span>
           </div>
+        </div>
+
+        <div className="booking-checklist">
+          <p className="booking-checklist-title">Hilfreiche Angaben für Ihre Anfrage</p>
+          <ul className="booking-checklist-list">
+            <li>In welcher Stadt findet Ihre Veranstaltung statt?</li>
+            <li>In welcher Location feiern Sie?</li>
+            <li>Wie viele Gäste werden in etwa erwartet?</li>
+            <li>Gibt es dort Technik, oder soll die Band diese mitbringen?</li>
+            <li>Gibt es eine Bühne?</li>
+            <li>Haben Sie einen Budgetrahmen, oder welche Besetzung wünschen Sie?</li>
+            <li>Wie lange soll die Band in etwa spielen?</li>
+            <li>Treten noch andere Künstler an dem Abend auf?</li>
+            <li>Wünschen Sie Pausenmusik oder einen DJ-Service der Band?</li>
+            <li>Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
+          </ul>
         </div>
       </div>
 
@@ -53,6 +93,7 @@ export default function BookingForm() {
                 name="name"
                 type="text"
                 className="form-input"
+                placeholder="Vor- und Nachname"
                 required
               />
             </div>
@@ -65,6 +106,7 @@ export default function BookingForm() {
                 name="email"
                 type="email"
                 className="form-input"
+                placeholder="ihre@email.de"
                 required
               />
             </div>
@@ -79,6 +121,7 @@ export default function BookingForm() {
                 name="phone"
                 type="tel"
                 className="form-input"
+                placeholder="+49 ..."
               />
             </div>
             <div className="form-group">
@@ -119,7 +162,7 @@ export default function BookingForm() {
             />
           </div>
           <div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-gold" style={{ padding: "14px 40px", fontSize: "12px" }}>
               Anfrage senden
             </button>
           </div>

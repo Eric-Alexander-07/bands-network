@@ -1,32 +1,36 @@
 export const band = {
   name: "We Rock",
   claim: "Classic Rock & Hardrock – laut, authentisch, unvergesslich",
-  genre: "Classic Rock",
-  location: "Hamburg",
-  email: "booking@we-rock.de",
+  tagline: "Die Classic Rock Tribute Show",
+  genre: "Classic Rock / Hard Rock / Tribute",
+  location: "Groß-Umstadt",
+  email: "info@v-m-p.com",
   accentColor: "#7c3aed",
 
   nav: [
+    { label: "Home", href: "/" },
     { label: "Über uns", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Media & News", href: "/media" },
     { label: "Galerie", href: "/galerie" },
     { label: "Shop", href: "/shop" },
     { label: "Referenzen", href: "/referenzen" },
-    { label: "Kontakt", href: "/kontakt" },
+    { label: "Kontakt", href: "/booking" },
   ],
+
+  dates: [],
 
   facts: [
     { value: "20+", label: "Jahre auf der Bühne" },
     { value: "800+", label: "Live-Auftritte" },
-    { value: "5", label: "Bandmitglieder" },
+    { value: "7", label: "Bandmitglieder" },
     { value: "300+", label: "Songs im Repertoire" },
   ],
 
   occasions: [
     {
       icon: "🎸",
-      title: "Festivals",
+      title: "Festivals & Stadtfeste",
       description: "Explosive Rock-Shows für Open-Air-Events, Stadtfeste und Festivals jeder Größe.",
     },
     {
@@ -41,22 +45,46 @@ export const band = {
     },
     {
       icon: "🏟️",
-      title: "Große Bühnen",
-      description: "Hallenkonzerte und Open-Air-Auftritte – wir füllen jede Bühne mit Power.",
+      title: "Tribute-Shows",
+      description: "Originalgetreue Tribute-Shows für AC/DC, Queen, Led Zeppelin und viele mehr.",
     },
   ],
 
   photos: [
-    { src: "https://placehold.co/600x800/e4e4e4/9ca3af?text=WE+ROCK+1", alt: "We Rock Live 1" },
-    { src: "https://placehold.co/600x800/e4e4e4/9ca3af?text=WE+ROCK+2", alt: "We Rock Live 2" },
-    { src: "https://placehold.co/600x800/e4e4e4/9ca3af?text=WE+ROCK+3", alt: "We Rock Live 3" },
+    { src: "/images/gallery/live-1.webp", alt: "We Rock Live" },
+    { src: "/images/gallery/live-2.webp", alt: "We Rock auf der Bühne" },
+    { src: "/images/gallery/live-3.webp", alt: "We Rock Festival" },
   ],
 
   videos: [
-    { id: "dQw4w9WgXcQ", title: "We Rock – Live at Stadtpark Hamburg" },
-    { id: "dQw4w9WgXcQ", title: "We Rock – Corporate Event Highlights" },
-    { id: "dQw4w9WgXcQ", title: "We Rock – Festival Reel 2024" },
+    {
+      id: "dQw4w9WgXcQ",
+      title: "We Rock – Live Highlights",
+      description: "Ein Querschnitt durch die besten Momente unserer Live-Shows – Classic Rock vom Feinsten.",
+    },
+    {
+      id: "dQw4w9WgXcQ",
+      title: "We Rock – Festival Reel",
+      description: "",
+    },
+    {
+      id: "dQw4w9WgXcQ",
+      title: "We Rock – Corporate Event",
+      description: "",
+    },
   ],
+
+  formations: {
+    small: [
+      { name: "Trio", lineup: "Vocals / Gitarre, Bass, Drums" },
+      { name: "Quartet", lineup: "Vocals / Gitarre, Lead Gitarre, Bass, Drums" },
+      { name: "Quintett", lineup: "2 Vocals, Gitarre, Bass, Drums" },
+    ],
+    full: [
+      { name: "6er Besetzung", lineup: "2 Vocals, Gitarre, Bass, Drums, Keyboards" },
+      { name: "7er Besetzung (Full Band)", lineup: "4 Vocals, Gitarre, Bass, Drums" },
+    ],
+  },
 
   clients: [
     "Hamburg Stadtpark",
@@ -75,13 +103,20 @@ export const band = {
   },
 
   about: {
-    bio: "We Rock ist Hamburgs härteste Party-Band. Seit über 20 Jahren bringen wir Classic Rock und Hardrock auf die Bühne – von AC/DC über Led Zeppelin bis zu modernem Rock. Mit 800+ Auftritten in der Rücklage wissen wir, wie man eine Menge auf die Beine bringt.",
+    bio: "WE ROCK – Die Classic Rock Tribute Show bringt die großen Helden des Rock authentisch auf die Bühne. Von Led Zeppelin über AC/DC bis zu Queen und Guns N' Roses – sieben Profimusiker mit vier Sängern liefern eine mitreißende musikalische Zeitreise durch die Jahrzehnte des Classic Rock. Mit über 20 Jahren Bühnenerfahrung und 800+ Live-Auftritten steht WE ROCK für Energie, Leidenschaft und rockige Perfektion.",
+    shows: [
+      "Klassische Rock-Party mit Hits aus fünf Jahrzehnten",
+      "Dedizierte Tribute-Blöcke: AC/DC, Queen, Led Zeppelin, Guns N' Roses – in originalgetreuer Optik",
+      "Akustik-Set für Dinner- und Hintergrundmusik",
+    ],
     members: [
       { name: "Alex Stone", role: "Lead Vocals / Gitarre" },
-      { name: "Marcus Wolf", role: "Lead Guitar" },
+      { name: "Marcus Wolf", role: "Lead Gitarre" },
       { name: "Tim Krause", role: "Bass" },
       { name: "Lars Berg", role: "Drums" },
       { name: "Nina Koch", role: "Keyboards / Backing Vocals" },
+      { name: "Sarah Roth", role: "Vocals" },
+      { name: "Ben Fischer", role: "Vocals / Percussion" },
     ],
   },
 
@@ -94,8 +129,8 @@ export const band = {
           "Highway to Hell – AC/DC",
           "Whole Lotta Love – Led Zeppelin",
           "Smoke on the Water – Deep Purple",
-          "Born to Run – Bruce Springsteen",
           "Don't Stop Me Now – Queen",
+          "Born to Run – Bruce Springsteen",
         ],
       },
       {
@@ -104,72 +139,47 @@ export const band = {
           "Welcome to the Jungle – Guns N' Roses",
           "Pour Some Sugar on Me – Def Leppard",
           "Living on a Prayer – Bon Jovi",
-          "Eye of the Tiger – Survivor",
-          "We Will Rock You – Queen",
+          "You Give Love a Bad Name – Bon Jovi",
+          "Panama – Van Halen",
         ],
       },
       {
         name: "Power Ballads",
         songs: [
           "November Rain – Guns N' Roses",
+          "Is This Love – Whitesnake",
           "Every Rose Has Its Thorn – Poison",
           "More Than Words – Extreme",
-          "Is This Love – Whitesnake",
         ],
       },
     ],
   },
 
   references: [
-    {
-      event: "Stadtpark Open Air",
-      type: "Festival",
-      year: "2024",
-      location: "Hamburg Stadtpark",
-      client: "Stadtpark Hamburg",
-      quote: "We Rock hat 3.000 Besucher begeistert. Eine der besten Live-Bands, die wir je gebucht haben.",
-    },
-    {
-      event: "Airbus Sommerfest",
-      type: "Firmenevent",
-      year: "2024",
-      location: "Airbus-Gelände Hamburg",
-      client: "Airbus SE",
-      quote: "Professionell, energiegeladen und perfekt organisiert. Unsere Mitarbeiter reden noch heute davon.",
-    },
-    {
-      event: "Reeperbahn Festival",
-      type: "Festival",
-      year: "2023",
-      location: "Hamburg Reeperbahn",
-      client: "Reeperbahn Festival GmbH",
-      quote: "",
-    },
-    {
-      event: "Beiersdorf Jubiläum 125 Jahre",
-      type: "Firmenevent",
-      year: "2023",
-      location: "Hamburger Fischauktionshalle",
-      client: "Beiersdorf AG",
-      quote: "Ein unvergesslicher Abend – We Rock hat unsere 125-Jahr-Feier perfekt zum Abschluss gebracht.",
-    },
-    {
-      event: "Hamburger DOM Spezial",
-      type: "Festival",
-      year: "2022",
-      location: "Heiligengeistfeld Hamburg",
-      client: "Hamburger DOM",
-      quote: "",
-    },
-    {
-      event: "50. Geburtstag Thomas Müller",
-      type: "Private Feier",
-      year: "2022",
-      location: "Privatclub Hamburg-Blankenese",
-      client: "Familie Müller",
-      quote: "Die Band hat meinen 50. zu einem absoluten Highlight gemacht. Alle Gäste waren aus dem Häuschen!",
-    },
+    { client: "Airbus SE",               type: "Firmenevent" },
+    { client: "Beiersdorf AG",           type: "Firmenevent" },
+    { client: "Hamburg Stadtpark",       type: "Festival"    },
+    { client: "Reeperbahn Festival",     type: "Festival"    },
+    { client: "Hamburger DOM",           type: "Festival"    },
+    { client: "Hamburger Fischauktionshalle", type: "Gala"   },
   ],
+
+  technik: {
+    intro: "Wir bringen auf Wunsch das komplette Bühnen-Setup mit – von PA-Anlage und Monitoring bis zu Lichtanlage und Backline. Unsere erfahrenen Techniker kennen die Anforderungen großer Rock-Shows und sorgen für optimalen Sound in jeder Location.",
+    packages: [
+      {
+        name: "Standard-Setup",
+        description: "PA, Monitoring und Backline – alles dabei für mittelgroße Venues.",
+        features: ["Details auf Anfrage"],
+      },
+      {
+        name: "Festival-Production",
+        description: "Vollständiges Stage-Setup mit Lichtanlage für große Open-Air-Events.",
+        features: ["Details auf Anfrage"],
+      },
+    ],
+    note: "Gerne erstellen wir Ihnen ein Paket-Angebot über Band, Bühne, Tonanlage & Licht inkl. technischer Betreuung.",
+  },
 
   services: [
     {
@@ -188,19 +198,9 @@ export const band = {
       features: ["Flexible Besetzung (Trio bis Full-Band)", "Akustik-Set verfügbar", "DJ-Anschluss nach dem Auftritt"],
     },
     {
-      title: "Hallen-Konzert",
-      description: "Vollständige Konzert-Produktion für große Hallen und Veranstaltungszentren.",
-      features: ["Komplettes Bühnen-Setup", "Professionelles Front-of-House-Mixing", "Merchandise auf Anfrage"],
-    },
-    {
       title: "Tribute-Show",
       description: "Dedizierte Tribute-Shows für einzelne Bands – AC/DC, Queen, Led Zeppelin und mehr.",
       features: ["Originalgetreue Kostüme & Staging", "Bis zu 2 Stunden Programm", "Perfekt für besondere Anlässe"],
-    },
-    {
-      title: "Workshop & Rock-Coaching",
-      description: "Gitarren- und Drum-Workshops sowie Rock-Vocal-Coaching für Einsteiger und Fortgeschrittene.",
-      features: ["Einzelstunden und Gruppen-Workshops", "Mit Marcus Wolf & Lars Berg", "Auf Anfrage buchbar"],
     },
   ],
 };

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { band } from "@/config/band";
 
 export default function ClientsStrip() {
@@ -11,6 +12,11 @@ export default function ClientsStrip() {
               {client}
             </span>
           ))}
+        </div>
+        <div className="clients-cta">
+          <Link href="/referenzen" className="btn btn-primary">
+            Alle Referenzen ansehen
+          </Link>
         </div>
       </div>
     </div>

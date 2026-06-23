@@ -31,9 +31,7 @@ export default function SocialSection() {
               News auf Instagram<br />&amp; Facebook
             </h2>
             <p className="social-media-desc" data-animate="fade-up" data-delay="200">
-              Bleibt up to date — neue Auftritte, Behind-the-Scenes und
-              direkte Einblicke in unser Bandleben. Wir freuen uns über
-              Likes, Kommentare und euer Feedback.
+              Bleibt up to date — neue Auftritte, Behind-the-Scenes und direkte Einblicke in unser Bandleben.
             </p>
 
             <div className="social-platform-links" data-animate="stagger">

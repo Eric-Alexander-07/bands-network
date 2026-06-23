@@ -8,6 +8,30 @@ export default function BookingForm() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const email = (form.elements.namedItem("email") as HTMLInputElement).value;
+    const phone = (form.elements.namedItem("phone") as HTMLInputElement).value;
+    const date = (form.elements.namedItem("date") as HTMLInputElement).value;
+    const occasion = (form.elements.namedItem("occasion") as HTMLSelectElement).value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+
+    const mailSubject = `Buchungsanfrage für ${band.name}${occasion ? ` – ${occasion}` : ""}`;
+    const mailBody = [
+      `Name: ${name}`,
+      `E-Mail: ${email}`,
+      phone ? `Telefon: ${phone}` : "",
+      date ? `Veranstaltungsdatum: ${date}` : "",
+      occasion ? `Anlass: ${occasion}` : "",
+      "",
+      `Nachricht:`,
+      message,
+      "",
+      "--",
+      `Diese Anfrage wurde über die ${band.name} Website gesendet.`,
+    ].filter(line => line !== undefined).join("\n");
+
+    window.location.href = `mailto:info@v-m-p.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
     setSubmitted(true);
   }
 
@@ -15,7 +39,7 @@ export default function BookingForm() {
     <div className="booking-layout">
       <div className="booking-info">
         <span className="eyebrow">Kontakt aufnehmen</span>
-        <h2>{band.name} buchen</h2>
+        <h2>{band.name} anfragen</h2>
         <p>
           Schreibt uns für Verfügbarkeiten, Konditionen und individuelle
           Wünsche. Wir melden uns in der Regel innerhalb von 24 Stunden.

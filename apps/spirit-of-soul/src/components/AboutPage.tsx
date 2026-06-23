@@ -53,7 +53,7 @@ export default function AboutPage({ content = {} }: Props) {
                 </>
               )}
               <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
-                <Link href="/booking" className="btn btn-primary">Jetzt buchen</Link>
+                <Link href="/booking" className="btn btn-primary">Jetzt anfragen</Link>
                 <Link href="/services" className="btn btn-outline">Unsere Services</Link>
               </div>
             </div>

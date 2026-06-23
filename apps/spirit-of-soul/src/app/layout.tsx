@@ -88,7 +88,7 @@ const musicGroupSchema = {
   description:
     "Spirit of Soul ist eine professionelle Soulband aus Frankfurt am Main. Seit 2000 steht die Band für Entertainment der Extraklasse – Soul, R&B und Funk für Hochzeiten, Firmenevents und Festivals.",
   url: BASE_URL,
-  email: "booking@spirit-of-soul.de",
+  email: "info@v-m-p.com",
   foundingDate: "2000",
   genre: ["Soul", "R&B", "Funk", "Motown"],
   image: `${BASE_URL}/images/about.webp`,
