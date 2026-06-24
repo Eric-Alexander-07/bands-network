@@ -113,7 +113,7 @@ export default function ShopPage({ dbProducts = [], content = {} }: Props) {
               ? content.text_body.split("\n").filter(Boolean).map((line, i) => <p key={i}>{line}</p>)
               : (
                 <p>
-                  Alle Produkte kosten <strong>15,00 EUR</strong> zzgl. Versand.
+                  Alle Preise verstehen sich zzgl. Versand.
                   Schreibt uns eine E-Mail an{" "}
                   <a href={`mailto:${band.email}`}>{band.email}</a> mit eurem
                   Namen, eurer Adresse sowie der gewünschten Anzahl der CDs bzw.

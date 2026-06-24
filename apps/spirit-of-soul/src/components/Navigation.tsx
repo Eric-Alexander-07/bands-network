@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,14 +32,7 @@ export default function Navigation() {
         <div className="nav-glass-bg" />
         <div className="container nav-inner">
           <Link href="/" className="nav-logo">
-            <Image
-              src="/images/logo_original.png"
-              alt={band.name}
-              width={180}
-              height={60}
-              style={{ height: "80px", width: "auto" }}
-              priority
-            />
+            {band.name}
           </Link>
           <ul className="nav-links">
             {band.nav.map((item) => (
@@ -56,7 +48,7 @@ export default function Navigation() {
           </ul>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
             <Link href="/booking" className="nav-cta">
-              Anfragen
+              Booking
             </Link>
             <button
               className="nav-toggle"
@@ -91,7 +83,7 @@ export default function Navigation() {
           </Link>
         ))}
         <Link href="/booking" className="btn btn-gold nav-mobile-cta">
-          Jetzt anfragen
+          Booking
         </Link>
       </div>
     </>

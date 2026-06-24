@@ -119,7 +119,7 @@ export const band = {
   },
 
   about: {
-    bio: "Spirit of Soul ist ein Zusammenschluss aus erfahrenen Profimusikern und -sängern, die sich entschlossen haben, den Geist des Soul auf der Bühne neu zu erwecken und zu zelebrieren. Die Band bietet eine Auswahl an individuellen Showpaketen und Bandkonstellationen für jede Veranstaltung. Die Vielseitigkeit und Flexibilität lässt sich auf den jeweiligen Event anpassen — egal ob Clubs, Firmenfeiern, Produktpräsentationen oder Privatveranstaltungen. Spirit of Soul garantiert ein Entertainment der Extraklasse, das Ihren Gästen noch lange in Erinnerung bleiben wird.",
+    bio: "Spirit of Soul ist ein Zusammenschluss aus erfahrenen Profimusikern und -sängern, die sich entschlossen haben, den Geist des Soul auf der Bühne neu zu erwecken und zu zelebrieren. Die Band bietet eine Auswahl an individuellen Showpaketen und Bandkonstellationen für jede Veranstaltung. Die Vielseitigkeit und Flexibilität lässt sich an den jeweiligen Event anpassen — egal ob Clubs, Firmenfeiern, Produktpräsentationen oder Privatveranstaltungen. Spirit of Soul garantiert ein Entertainment der Extraklasse, das Ihren Gästen noch lange in Erinnerung bleiben wird.",
     shows: [
       "Reguläre Partyvariante mit gemischtem Repertoire aus Klassikern und Modernem",
       "Dinner-, Hintergrund- bzw. Lounge-Musik in kleiner Besetzung",
@@ -194,7 +194,7 @@ export const band = {
   ],
 
   technik: {
-    intro: "Planen Sie in Absprache mit uns auch die optische und akustische Präsentation von Spirit of Soul. Vertrauen Sie auf ein Team aus Künstlern und Technikern, das schon jahrelang zusammenarbeitet. Unsere Techniker sind Firmenevent- sowie Gala-erfahren und kennen die Einsätze eines jeden Sängers und Instrumentalisten — eine Tatsache, die Ihre Veranstaltung hörbar zu einem akustischen Leckerbissen werden lässt.",
+    intro: "Planen Sie in Absprache mit uns auch die optische und akustische Präsentation von Spirit of Soul. Vertrauen Sie auf ein Team aus Künstlern und Technikern, das schon jahrelang zusammenarbeitet. Unsere Techniker sind firmenevent- sowie galaerfahren und kennen die Einsätze eines jeden Sängers und Instrumentalisten — eine Tatsache, die Ihre Veranstaltung hörbar zu einem akustischen Leckerbissen werden lässt.",
     packages: [
       {
         name: "Konventionelle Show",

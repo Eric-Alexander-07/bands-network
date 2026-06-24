@@ -7,6 +7,10 @@ const SINGERS = [
   { src: "/images/sanger3.webp", name: "Sänger 3" },
   { src: "/images/sanger4.webp", name: "Sängerin 4" },
   { src: "/images/sanger5.webp", name: "Sänger 5" },
+  { src: "/images/sanger6.webp", name: "Sänger 6" },
+  { src: "/images/sanger7.webp", name: "Sängerin 7" },
+  { src: "/images/sanger8.webp", name: "Sänger 8" },
+  { src: "/images/sanger9.webp", name: "Sängerin 9" },
 ];
 
 export default function SingerCarousel() {

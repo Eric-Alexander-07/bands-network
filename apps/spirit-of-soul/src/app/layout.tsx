@@ -70,6 +70,11 @@ export const metadata: Metadata = {
       "25 Jahre Soul, R&B und Funk auf internationalen Bühnen. Soulband für Hochzeiten, Firmenevents und Festivals.",
     images: [`${BASE_URL}/images/about.webp`],
   },
+  icons: {
+    icon: "/images/logo_original.png",
+    shortcut: "/images/logo_original.png",
+    apple: "/images/logo_original.png",
+  },
   alternates: {
     canonical: BASE_URL,
   },

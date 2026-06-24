@@ -28,10 +28,10 @@ export default function BookingPage() {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/spirit-of-soul-62.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/sanger2.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Buchungsanfrage</span>
-          <h1>Anfragen</h1>
+          <h1>Booking</h1>
           <p>
             Jetzt euer Datum anfragen und ein maßgeschneidertes Angebot
             erhalten. Wir melden uns innerhalb von 24 Stunden.
