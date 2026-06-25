@@ -1,4 +1,4 @@
-import BookingForm from "@/components/BookingForm";
+﻿import BookingForm from "@/components/BookingForm";
 import ConcentricRings from "@/components/ConcentricRings";
 
 import type { Metadata } from "next";
@@ -7,12 +7,12 @@ export const metadata: Metadata = {
   title: "Buchungsanfrage – Spirit of Soul | Band buchen",
   description: "Spirit of Soul für Ihr Event buchen. Persönliches Angebot innerhalb von 24 Stunden.",
   keywords: ["Soulband buchen", "Band buchen Frankfurt", "Partyband anfragen", "Liveband Hochzeit buchen", "Tributeband anfragen", "Eventband buchen", "Soul Tribute Band", "Soulband Booking"],
-  alternates: { canonical: "https://spirit-of-soul.de/booking" },
+  alternates: { canonical: "https://spiritofsoul.com/booking" },
   openGraph: {
     title: "Buchungsanfrage – Spirit of Soul | Band buchen",
     description: "Spirit of Soul für Ihr Event buchen. Persönliches Angebot innerhalb von 24 Stunden.",
-    url: "https://spirit-of-soul.de/booking",
-    images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
+    url: "https://spiritofsoul.com/booking",
+    images: [{ url: "https://spiritofsoul.com/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",

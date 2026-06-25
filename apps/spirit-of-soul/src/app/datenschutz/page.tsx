@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Datenschutz – Spirit of Soul",
   description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
 
-  alternates: { canonical: "https://spirit-of-soul.de/datenschutz" },
+  alternates: { canonical: "https://spiritofsoul.com/datenschutz" },
   openGraph: {
     title: "Datenschutz – Spirit of Soul",
     description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
-    url: "https://spirit-of-soul.de/datenschutz",
-    images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
+    url: "https://spiritofsoul.com/datenschutz",
+    images: [{ url: "https://spiritofsoul.com/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",

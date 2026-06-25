@@ -1,15 +1,15 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Impressum – Spirit of Soul",
   description: "Impressum von Spirit of Soul – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
 
-  alternates: { canonical: "https://spirit-of-soul.de/impressum" },
+  alternates: { canonical: "https://spiritofsoul.com/impressum" },
   openGraph: {
     title: "Impressum – Spirit of Soul",
     description: "Impressum von Spirit of Soul – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
-    url: "https://spirit-of-soul.de/impressum",
-    images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
+    url: "https://spiritofsoul.com/impressum",
+    images: [{ url: "https://spiritofsoul.com/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",

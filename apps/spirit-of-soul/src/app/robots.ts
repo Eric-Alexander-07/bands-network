@@ -1,7 +1,7 @@
-import { MetadataRoute } from "next";
+﻿import { MetadataRoute } from "next";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://spirit-of-soul.de";
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://spiritofsoul.com";
 
 export default function robots(): MetadataRoute.Robots {
   return {

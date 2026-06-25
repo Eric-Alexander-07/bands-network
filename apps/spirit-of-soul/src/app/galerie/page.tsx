@@ -1,4 +1,4 @@
-export const revalidate = 3600;
+﻿export const revalidate = 3600;
 
 import type { Metadata } from "next";
 
@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Galerie – Spirit of Soul | Live-Fotos",
   description: "Fotogalerie – Impressionen von unseren öffentlichen Live-Konzerten",
   keywords: ["Spirit of Soul Fotos", "Soulband Bilder", "Liveband Bilder Frankfurt", "Livekonzert", "Konzertbilder", "Eventfotografie", "Liveband", "Coverband"],
-  alternates: { canonical: "https://spirit-of-soul.de/galerie" },
+  alternates: { canonical: "https://spiritofsoul.com/galerie" },
   openGraph: {
     title: "Galerie – Spirit of Soul | Live-Fotos",
     description: "Fotogalerie – Impressionen von unseren öffentlichen Live-Konzerten",
-    url: "https://spirit-of-soul.de/galerie",
-    images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
+    url: "https://spiritofsoul.com/galerie",
+    images: [{ url: "https://spiritofsoul.com/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",

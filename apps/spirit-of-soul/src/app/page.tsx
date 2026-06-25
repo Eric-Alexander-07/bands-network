@@ -1,4 +1,4 @@
-export const revalidate = 3600; // re-render at most once per hour; admin mutations trigger instant revalidation via revalidatePath
+﻿export const revalidate = 3600; // re-render at most once per hour; admin mutations trigger instant revalidation via revalidatePath
 
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -14,12 +14,12 @@ export const metadata: Metadata = {
   title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
   description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
   keywords: ["Soulband Frankfurt", "Partyband Rhein-Main", "Soul Motown R&B Hiphop", "Band Hochzeit Frankfurt", "Liveband Firmenevent", "Spirit of Soul", "Hochzeit Eventband Partyband", "Black Music", "Schausteller Party", "Soul Musik Soulmusik"],
-  alternates: { canonical: "https://spirit-of-soul.de" },
+  alternates: { canonical: "https://spiritofsoul.com" },
   openGraph: {
     title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
     description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
-    url: "https://spirit-of-soul.de",
-    images: [{ url: "https://spirit-of-soul.de/images/about.webp" }],
+    url: "https://spiritofsoul.com",
+    images: [{ url: "https://spiritofsoul.com/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",

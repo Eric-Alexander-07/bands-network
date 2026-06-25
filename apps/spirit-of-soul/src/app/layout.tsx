@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
@@ -21,7 +21,7 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const BASE_URL = "https://spirit-of-soul.de";
+const BASE_URL = "https://spiritofsoul.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
