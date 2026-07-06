@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import { createClient } from "@bands/supabase/client";
@@ -6,7 +6,7 @@ import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminUpdate } from "@/lib/adminDb";
 import ImgUploadField from "@/components/admin/ImgUploadField";
 
-const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 const PAGE_SLUG = "about";
 
 const FIELDS = [
@@ -42,6 +42,7 @@ export default function AboutAdmin() {
   const setField = (key: string, val: string) => { setContent(c => ({ ...c, [key]: val })); setIsDirty(true); };
 
   const saveImgField = async (key: string, url: string) => {
+    if (!siteId) { toast("Seite noch nicht geladen, bitte kurz warten", "error"); return; }
     const updated = { ...content, [key]: url };
     if (pageId) {
       const { error } = await adminUpdate("pages", pageId, { content: updated });

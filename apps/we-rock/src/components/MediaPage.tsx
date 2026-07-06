@@ -11,9 +11,9 @@ function fmtMonth(d: string) { const [, m]    = d.split("-").map(Number); return
 function fmtYear(d: string)  { const [year]   = d.split("-").map(Number); return year; }
 
 const PLATFORMS = [
-  { key: "instagram" as const, label: "Instagram", handle: "@bobbystoecker" },
-  { key: "facebook"  as const, label: "Facebook",  handle: "Spirit of Soul" },
-  { key: "youtube"   as const, label: "YouTube",   handle: "@spiritofsoul" },
+  { key: "instagram" as const, label: "Instagram", handle: "@werock_rockband" },
+  { key: "facebook"  as const, label: "Facebook",  handle: "WE ROCK" },
+  { key: "youtube"   as const, label: "YouTube",   handle: "@werockband" },
 ];
 
 function getYtId(input: string): string {
@@ -36,7 +36,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-guitarist.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/live-main.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>
           <h1>Media &amp; News</h1>
@@ -124,7 +124,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
                   scrolling="no"
                   allowFullScreen
                   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="Spirit of Soul Facebook"
+                  title="WE ROCK Facebook"
                 />
               </div>
             </div>
@@ -140,8 +140,8 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
             {/* Bild links */}
             <div className="media-social-img-col" data-animate="fade-right">
               <LightboxImage
-                src={content.image_main || "/images/gallery/live-vocalist-gold.webp"}
-                alt="Spirit of Soul Live"
+                src={content.image_main || "/images/gallery/live-1.webp"}
+                alt="WE ROCK Live"
                 className="media-social-img"
                 wrapperClassName="media-social-img-lb"
                 overlayContent="⊕"

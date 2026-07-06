@@ -3,20 +3,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Media & News – Spirit of Soul | Videos & Konzerttermine",
-  description: "Aktuelle Spieltermine, Videos und News von Spirit of Soul. Erleben Sie Soul, R&B und Funk live.",
-  keywords: ["Spirit of Soul Videos", "Tourdates", "Live Soul Frankfurt", "Konzerttermine", "Eventband Musikband", "Tour Daten", "Konzert Videos", "Youtube Videos"],
+  title: "Media & News – WE ROCK | Videos & Konzerttermine",
+  description: "Aktuelle Spieltermine, Videos und News von WE ROCK. Classic Rock & Hardrock live erleben.",
+  keywords: ["WE ROCK Videos", "Classic Rock Konzerttermine", "Rockband Live-Videos", "WE ROCK Tourdates", "Rock Tribute Show Termine", "Classic Rock YouTube"],
   alternates: { canonical: "https://we-rock.de/media" },
   openGraph: {
-    title: "Media & News – Spirit of Soul | Videos & Konzerttermine",
-    description: "Aktuelle Spieltermine, Videos und News von Spirit of Soul. Erleben Sie Soul, R&B und Funk live.",
+    title: "Media & News – WE ROCK | Videos & Konzerttermine",
+    description: "Aktuelle Spieltermine, Videos und News von WE ROCK. Classic Rock & Hardrock live.",
     url: "https://we-rock.de/media",
     images: [{ url: "https://we-rock.de/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Media & News – Spirit of Soul | Videos & Konzerttermine",
-    description: "Aktuelle Spieltermine, Videos und News von Spirit of Soul. Erleben Sie Soul, R&B und Funk live.",
+    title: "Media & News – WE ROCK | Videos & Konzerttermine",
+    description: "Aktuelle Spieltermine, Videos und News von WE ROCK. Classic Rock & Hardrock live.",
   },
     robots: { index: true, follow: true },
 };

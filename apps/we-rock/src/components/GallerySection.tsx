@@ -23,7 +23,7 @@ export default function GallerySection() {
           </div>
           <div className="gallery-preview" data-animate="fade-left">
             <div className="gallery-preview-photo">
-              <span className="gallery-photo-placeholder">Foto</span>
+              <img src="/images/live-main.webp" alt="WE ROCK Live" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </div>
             <div className="gallery-preview-video video-item">
               <iframe

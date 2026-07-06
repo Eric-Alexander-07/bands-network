@@ -4,12 +4,12 @@ import ConcentricRings from "@/components/ConcentricRings";
 import LightboxImage from "@/components/LightboxImage";
 
 const GRID_PHOTOS = [
-  { src: "/images/gallery/live-vocalist-gold.webp", alt: "Live Performance" },
-  { src: "/images/gallery/live-guitarist.webp",     alt: "Gitarrist" },
-  { src: "/images/gallery/live-stage-duo.webp",     alt: "Auf der Bühne" },
-  { src: "/images/gallery/live-festival-singer.webp", alt: "Festival" },
-  { src: "/images/gallery/live-vocalist-hat.webp",  alt: "Vocalist" },
-  { src: "/images/hero.webp",                       alt: "Sängerin Live" },
+  { src: "/images/gallery/live-4.webp",  alt: "WE ROCK Live" },
+  { src: "/images/gallery/live-8.webp",  alt: "WE ROCK Gitarrist" },
+  { src: "/images/gallery/live-12.webp", alt: "WE ROCK auf der Bühne" },
+  { src: "/images/gallery/live-16.webp", alt: "WE ROCK Festival" },
+  { src: "/images/gallery/live-20.webp", alt: "WE ROCK Vocalist" },
+  { src: "/images/hero.webp",            alt: "WE ROCK Live" },
 ];
 
 const PLATFORMS = [

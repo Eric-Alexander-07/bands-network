@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 "use client";
 import { useEffect, useState, useRef, useCallback, type DragEvent, type ChangeEvent } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
@@ -7,14 +7,14 @@ import { MdDelete, MdClose } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
-const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 interface Img { id: string; site_id: string | null; url: string; caption: string | null; credit: string | null; position: number | null; created_at: string | null; }
 interface UploadItem { id: string; file: File; objectUrl: string; progress: "pending" | "uploading" | "done" | "error"; error?: string; }
 
-// Resize images > 4 MB to max 2000px long side (JPEG 88 %) before upload.
-// Keeps files well below Vercel's serverless body limit (~4.5 MB).
+// Resize images > 2 MB to max 2000px long side (JPEG 88 %) before upload.
+// Keeps files well below Vercel's serverless body limit (4.5 MB).
 async function resizeForUpload(file: File): Promise<File> {
-  if (file.size <= 4 * 1024 * 1024) return file;
+  if (file.size <= 2 * 1024 * 1024) return file;
   return new Promise((resolve) => {
     const img = new Image();
     const objectUrl = URL.createObjectURL(file);
@@ -185,7 +185,7 @@ export default function GalerieAdmin() {
           <path d="M3 20h18"/>
         </svg>
         <p className="a-dropzone-title">Bilder ablegen oder klicken zum Auswählen</p>
-        <p className="a-dropzone-sub">JPG · PNG · WebP · AVIF — max. 15 MB pro Bild</p>
+        <p className="a-dropzone-sub">JPG · PNG · WebP · AVIF — max. 10 MB pro Bild</p>
       </div>
 
       {/* Upload queue */}

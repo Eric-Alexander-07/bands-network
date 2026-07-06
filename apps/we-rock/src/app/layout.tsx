@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Anton, Oswald, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -9,15 +9,25 @@ import JsonLd from "@/components/JsonLd";
 import SiteWrapper from "@/components/SiteWrapper";
 import InviteHashHandler from "@/components/InviteHashHandler";
 
-const inter = Inter({
+const anton = Anton({
   subsets: ["latin"],
-  variable: "--font-inter",
+  weight: ["400"],
+  variable: "--font-anton",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const oswald = Oswald({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-oswald",
+  display: "swap",
+});
+
+const barlow = Barlow_Condensed({
+  subsets: ["latin"],
+  weight: ["300", "400", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-barlow",
   display: "swap",
 });
 
@@ -112,7 +122,7 @@ const musicGroupSchema = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="de" className={`${anton.variable} ${oswald.variable} ${barlow.variable}`}>
       <body>
         <InviteHashHandler />
         <JsonLd data={musicGroupSchema} />

@@ -13,7 +13,7 @@ export default function OccasionsSection() {
             <PhotoCarousel photos={band.photos} />
           </div>
           <div className="occasions-text">
-            <span className="eyebrow" data-animate="fade-up">Wir spielen bei</span>
+            <span className="eyebrow" data-animate="fade-up">Wir spielen zu</span>
             <h2 className="section-title" data-animate="fade-up" data-delay="100">Jedem Anlass</h2>
             <p className="occasions-desc" data-animate="fade-up" data-delay="200">
               Ob Hochzeit, Firmen-Event, Stadtfest oder exklusive Feier —{" "}

@@ -63,9 +63,9 @@ export default function BookingForm() {
             <li>In welcher Stadt findet Ihre Veranstaltung statt?</li>
             <li>In welcher Location feiern Sie?</li>
             <li>Wie viele Gäste werden in etwa erwartet?</li>
-            <li>Gibt es dort Technik, oder soll die Band diese mitbringen?</li>
+            <li>Gibt es dort Technik oder soll die Band diese mitbringen?</li>
             <li>Gibt es eine Bühne?</li>
-            <li>Haben Sie einen Budgetrahmen, oder welche Besetzung wünschen Sie?</li>
+            <li>Haben Sie einen Budgetrahmen oder welche Besetzung wünschen Sie?</li>
             <li>Wie lange soll die Band in etwa spielen?</li>
             <li>Treten noch andere Künstler an dem Abend auf?</li>
             <li>Wünschen Sie Pausenmusik oder einen DJ-Service der Band?</li>

@@ -46,31 +46,31 @@ export default function HeroSection({ dbEvents = [] }: Props) {
             preserveAspectRatio="xMidYMid slice"
             xmlns="http://www.w3.org/2000/svg"
             aria-hidden="true"
-            opacity="0.35"
+            opacity="0.4"
           >
             <defs>
               <filter id="spBlur" x="-30%" y="-10%" width="160%" height="120%">
                 <feGaussianBlur stdDeviation="18" />
               </filter>
               <linearGradient id="sg1" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#9333ea" stopOpacity="0.55"/>
-                <stop offset="100%" stopColor="#9333ea" stopOpacity="0"/>
+                <stop offset="0%" stopColor="#C8151A" stopOpacity="0.7"/>
+                <stop offset="100%" stopColor="#C8151A" stopOpacity="0"/>
               </linearGradient>
               <linearGradient id="sg2" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.5"/>
-                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0"/>
+                <stop offset="0%" stopColor="#E84118" stopOpacity="0.5"/>
+                <stop offset="100%" stopColor="#E84118" stopOpacity="0"/>
               </linearGradient>
               <linearGradient id="sg3" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#f97316" stopOpacity="0.45"/>
-                <stop offset="100%" stopColor="#f97316" stopOpacity="0"/>
+                <stop offset="0%" stopColor="#8b0f13" stopOpacity="0.55"/>
+                <stop offset="100%" stopColor="#8b0f13" stopOpacity="0"/>
               </linearGradient>
               <linearGradient id="sg4" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#ec4899" stopOpacity="0.38"/>
-                <stop offset="100%" stopColor="#ec4899" stopOpacity="0"/>
+                <stop offset="0%" stopColor="#C8151A" stopOpacity="0.35"/>
+                <stop offset="100%" stopColor="#C8151A" stopOpacity="0"/>
               </linearGradient>
               <linearGradient id="sg5" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.3"/>
-                <stop offset="100%" stopColor="#60a5fa" stopOpacity="0"/>
+                <stop offset="0%" stopColor="#E84118" stopOpacity="0.28"/>
+                <stop offset="100%" stopColor="#E84118" stopOpacity="0"/>
               </linearGradient>
             </defs>
             <polygon points="60,0 100,0 780,1000 -200,1000" fill="url(#sg1)" filter="url(#spBlur)" />
@@ -82,19 +82,19 @@ export default function HeroSection({ dbEvents = [] }: Props) {
 
           <div className="hero-content">
             <p className="hero-eyebrow">
-              {band.genre} · {band.location} · Seit 2000
+              {band.genre} · {band.location} · Seit 2001
             </p>
             <h1 className="hero-title">
-              <span className="hero-title-line">Spirit</span>
-              <span className="hero-title-line hero-title-italic">of Soul</span>
+              <span className="hero-title-line">WE</span>
+              <span className="hero-title-line hero-title-italic">ROCK</span>
             </h1>
             <p className="hero-claim">{band.claim}</p>
             <p className="hero-sub">
-              {band.tagline} — 25 Jahre Live-Erfahrung auf internationalen Bühnen.
+              {band.tagline} — 7 Profimusiker, 4 Sänger, unzählige Bühnen.
             </p>
             <div className="hero-actions">
-              <Link href="/booking" className="btn btn-light">
-                Jetzt anfragen
+              <Link href="/booking" className="btn btn-primary">
+                Jetzt buchen
               </Link>
               <Link href="/about" className="btn btn-outline-light">
                 Über uns
@@ -132,7 +132,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
           <div ref={parallaxRef} className="hero-right-inner">
             <img
               src="/images/hero.webp"
-              alt="Spirit of Soul — Live Performance"
+              alt="WE ROCK — Live Performance"
               className="hero-right-img"
             />
           </div>

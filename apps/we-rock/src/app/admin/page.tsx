@@ -1,11 +1,11 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@bands/supabase/client";
 import { MdImage, MdPlayCircle, MdShoppingBag, MdStar, MdPerson, MdGroups } from "react-icons/md";
 
-const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
 const NAV_CARDS = [
   { href: "/admin/media",      label: "Media & News", Icon: MdPlayCircle,  desc: "Videos, Termine & Social" },

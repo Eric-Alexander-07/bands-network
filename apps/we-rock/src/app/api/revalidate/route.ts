@@ -1,7 +1,7 @@
-﻿import { revalidateTag } from "next/cache";
+import { revalidateTag } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
 // Supabase Webhook → Cache-Tag Mapping
 const TABLE_TAG_MAP: Record<string, string[]> = {

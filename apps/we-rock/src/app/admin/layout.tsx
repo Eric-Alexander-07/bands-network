@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, type ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
@@ -9,7 +9,7 @@ import "./admin.css";
 import { ToastProvider } from "@/components/admin/Toast";
 import {
   MdDashboard, MdImage, MdPlayCircle,
-  MdShoppingBag, MdStar, MdPerson, MdGroups, MdLogout,
+  MdStar, MdPerson, MdGroups, MdLogout,
 } from "react-icons/md";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
@@ -23,8 +23,7 @@ const NAV: NavEntry[] = [
   { section: "Seiten" },
   { href: "/admin/media",      label: "Media & News", Icon: MdPlayCircle },
   { href: "/admin/galerie",    label: "Galerie",      Icon: MdImage      },
-  { href: "/admin/produkte",   label: "Shop",         Icon: MdShoppingBag},
-  { href: "/admin/about",      label: "Über uns",     Icon: MdPerson     },
+{ href: "/admin/about",      label: "Über uns",     Icon: MdPerson     },
   { href: "/admin/services",   label: "Services",     Icon: MdGroups     },
   { href: "/admin/referenzen", label: "Referenzen",   Icon: MdStar       },
 ];
@@ -101,7 +100,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className="admin-sidebar-logo">
               <strong>
                 <span className="a-dot" />
-                Spirit of Soul
+                WE ROCK
               </strong>
               <p>Admin</p>
             </div>

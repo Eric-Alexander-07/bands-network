@@ -1,13 +1,14 @@
 import Link from "next/link";
 import ConcentricRings from "@/components/ConcentricRings";
+import SingerCarousel from "@/components/SingerCarousel";
 
 type PC = Record<string, string>;
 
 interface Props { content?: PC; }
 
 export default function AboutPage({ content = {} }: Props) {
-  const heroText  = content.text_top   || "25 Jahre Soul, R&B und Funk auf internationalen Bühnen.\nEntertainment der Extraklasse.";
-  const mainImage = content.image_main || "/images/gallery/live-stage-duo.webp";
+  const heroText  = content.text_top   || "7 Profimusiker. 4 Sänger. Pure Rockenergie auf jeder Bühne.";
+  const mainImage = content.image_main || "/images/about.webp";
   const mainText  = content.text_bottom;
   const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
 
@@ -29,25 +30,26 @@ export default function AboutPage({ content = {} }: Props) {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="about-simple-layout">
             <div className="about-simple-img" data-animate="fade-right">
-              <img src={mainImage} alt="Spirit of Soul — Live" />
+              <img src={mainImage} alt="WE ROCK — Live" />
             </div>
             <div className="about-simple-text" data-animate="fade-left">
-              <span className="eyebrow">The Finest Of Black Music</span>
-              <h2>25 Jahre Bühne.<br />Eine Leidenschaft.</h2>
+              <span className="eyebrow">Die Classic Rock Tribute Show</span>
+              <h2>Seit 2001.<br />Unzählige Bühnen.</h2>
               {mainParas ? (
                 mainParas.map((p, i) => <p key={i}>{p}</p>)
               ) : (
                 <>
                   <p>
-                    Spirit of Soul steht seit 25 Jahren für erstklassiges Live-Entertainment.
-                    Mit internationalen Sängern, erfahrenen Musikern und einer unverwechselbaren
-                    Energie begeistert die Band Gäste bei Hochzeiten, Firmenevents, Stadtfesten
-                    und exklusiven Galas europaweit.
+                    WE ROCK ist ein 7-köpfiges Profi-Ensemble aus der Rhein-Main-Region.
+                    Mit vier wechselnden Frontsängern — darunter Emmo Acar und Jessica Conte —
+                    und einem außergewöhnlich vielseitigen Sound bringen sie die Helden des Rock
+                    authentisch auf die Bühne: Led Zeppelin, Deep Purple, AC/DC, Queen, Van Halen,
+                    Bon Jovi und viele mehr.
                   </p>
                   <p>
-                    Die Stärke liegt in der Musikalität und Spontanität aller Bandmitglieder —
-                    das Programm wird kurzfristig auf der Bühne maßgeschneidert, damit der
-                    erste Song das Publikum sofort bewegt.
+                    Kraftvolle Stimmen, legendäre Gitarrenriffs und pure Rockenergie —
+                    für jeden Event, jede Bühne. Von intimen Club-Shows bis zur
+                    Full-Production-Show mit LED-Walls und professionellem Licht.
                   </p>
                 </>
               )}
@@ -59,6 +61,8 @@ export default function AboutPage({ content = {} }: Props) {
           </div>
         </div>
       </section>
+
+      <SingerCarousel />
     </>
   );
 }

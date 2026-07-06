@@ -1,9 +1,9 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();

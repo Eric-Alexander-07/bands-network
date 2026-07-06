@@ -11,20 +11,20 @@ import { fetchEvents } from "@/lib/data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
-  description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
-  keywords: ["Soulband Frankfurt", "Partyband Rhein-Main", "Soul Motown R&B Hiphop", "Band Hochzeit Frankfurt", "Liveband Firmenevent", "Spirit of Soul", "Hochzeit Eventband Partyband", "Black Music", "Schausteller Party", "Soul Musik Soulmusik"],
+  title: "WE ROCK – Die Classic Rock Tribute Show | Rockband Rhein-Main",
+  description: "WE ROCK – Die Classic Rock Tribute Show aus Groß-Umstadt. 7 Profimusiker, 4 Sänger, Classic Rock & Hardrock für Festivals, Firmenevents und private Feiern. Laut, authentisch, unvergesslich.",
+  keywords: ["Classic Rock Band", "Rockband buchen", "Tribute Show Classic Rock", "We Rock Band", "Liveband Firmenevent", "Rock Band Hochzeit", "Hard Rock Band", "Coverband Classic Rock", "Vivid Music Productions", "Rockband Rhein-Main"],
   alternates: { canonical: "https://we-rock.de" },
   openGraph: {
-    title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
-    description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+    title: "WE ROCK – Die Classic Rock Tribute Show",
+    description: "7 Profimusiker, 4 Sänger — Classic Rock & Hardrock live. Die authentische Tribute Show für Festivals, Firmenevents und private Feiern.",
     url: "https://we-rock.de",
     images: [{ url: "https://we-rock.de/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
-    description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+    title: "WE ROCK – Die Classic Rock Tribute Show",
+    description: "Classic Rock & Hardrock live. Rockband für Festivals, Firmenevents und private Feiern.",
   },
     robots: { index: true, follow: true },
 };

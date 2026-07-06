@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
@@ -7,7 +7,7 @@ import { MdDragIndicator, MdAdd, MdDelete, MdExpandMore, MdExpandLess } from "re
 import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminUpdate, adminDelete, adminDeleteWhere, adminUpdateMany } from "@/lib/adminDb";
 
-const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
 const TABS = [
   { slug: "about", label: "Über uns", fields: [

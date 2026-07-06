@@ -3,20 +3,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Services & Besetzung – Spirit of Soul | Soulband buchen",
-  description: "Vom Duo bis zur 12er Besetzung mit Bläsern. Individuelle Pakete für Ihren Event. Firmenfeiern, Hochzeiten, Incentives, Stadtfeste, High Class Events",
-  keywords: ["Soulband Hochzeit", "Liveband Firmenevent", "Partyband mieten Frankfurt", "Galaband", "Soulband Besetzung", "Livemusik", "Musik Duo", "Hochzeitsband", "Eventband", "Partyband"],
+  title: "Services & Besetzung – WE ROCK | Rockshow buchen",
+  description: "Vom Trio bis zur 7-köpfigen Full-Band. Individuelle Rock-Shows für Festivals, Firmenevents, Hochzeiten und private Feiern. WE ROCK — Classic Rock & Hardrock live.",
+  keywords: ["Rockband Hochzeit", "Liveband Firmenevent", "Classic Rock Band mieten", "Rockshow Besetzung", "Livemusik Rock", "Rock Tribute Band", "Rockband buchen", "Eventband Rock"],
   alternates: { canonical: "https://we-rock.de/services" },
   openGraph: {
-    title: "Services & Besetzung – Spirit of Soul | Soulband buchen",
-    description: "Vom Duo bis zur 12er Besetzung mit Bläsern. Individuelle Pakete für Ihren Event. Firmenfeiern, Hochzeiten, Incentives, Stadtfeste, High Class Events",
+    title: "Services & Besetzung – WE ROCK | Rockshow buchen",
+    description: "Vom Trio bis zur 7-köpfigen Full-Band — individuelle Rock-Shows für jeden Event.",
     url: "https://we-rock.de/services",
     images: [{ url: "https://we-rock.de/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Services & Besetzung – Spirit of Soul | Soulband buchen",
-    description: "Vom Duo bis zur 12er Besetzung mit Bläsern. Individuelle Pakete für Ihren Event. Firmenfeiern, Hochzeiten, Incentives, Stadtfeste, High Class Events",
+    title: "Services & Besetzung – WE ROCK | Rockshow buchen",
+    description: "Vom Trio bis zur 7-köpfigen Full-Band — individuelle Rock-Shows für jeden Event.",
   },
     robots: { index: true, follow: true },
 };

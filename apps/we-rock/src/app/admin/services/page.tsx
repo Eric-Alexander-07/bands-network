@@ -1,4 +1,4 @@
-﻿// @ts-nocheck
+// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
@@ -8,7 +8,7 @@ import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminUpdate, adminDelete, adminDeleteWhere, adminUpdateMany } from "@/lib/adminDb";
 import ImgUploadField from "@/components/admin/ImgUploadField";
 
-const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
+const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 const PAGE_SLUG = "services";
 
 interface Group { id: string; site_id: string | null; name: string; beschreibung: string | null; position: number | null; }

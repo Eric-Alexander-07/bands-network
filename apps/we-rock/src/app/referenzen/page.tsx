@@ -3,20 +3,20 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Referenzen – Spirit of Soul | Kunden & Events",
-  description: "Vertrauen uns BMW, Siemens AG, Alte Oper Frankfurt und viele mehr. Hochzeiten, Galas und Firmenevents europaweit.",
-  keywords: ["Spirit of Soul Referenzen", "Soulband Firmenevent", "Liveband Hochzeit Referenzen", "Festivals", "Incentives", "High Class Events", "Stadtfeste", "Clubs Diskotheken"],
+  title: "Referenzen – WE ROCK | Events & Auftritte",
+  description: "WE ROCK begeistert auf Festivals, Firmenevents, Stadtfesten und privaten Feiern europaweit. Laut, authentisch, unvergesslich.",
+  keywords: ["WE ROCK Referenzen", "Classic Rock Firmenevent", "Rockband Festival", "Rockshow Referenzen", "Rock Tribute Hochzeit", "Stadtfest Rockband"],
   alternates: { canonical: "https://we-rock.de/referenzen" },
   openGraph: {
-    title: "Referenzen – Spirit of Soul | Kunden & Events",
-    description: "Vertrauen uns BMW, Siemens AG, Alte Oper Frankfurt und viele mehr. Hochzeiten, Galas und Firmenevents europaweit.",
+    title: "Referenzen – WE ROCK | Events & Auftritte",
+    description: "WE ROCK begeistert auf Festivals, Firmenevents und privaten Feiern europaweit.",
     url: "https://we-rock.de/referenzen",
     images: [{ url: "https://we-rock.de/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Referenzen – Spirit of Soul | Kunden & Events",
-    description: "Vertrauen uns BMW, Siemens AG, Alte Oper Frankfurt und viele mehr. Hochzeiten, Galas und Firmenevents europaweit.",
+    title: "Referenzen – WE ROCK | Events & Auftritte",
+    description: "WE ROCK begeistert auf Festivals, Firmenevents und privaten Feiern europaweit.",
   },
     robots: { index: true, follow: true },
 };

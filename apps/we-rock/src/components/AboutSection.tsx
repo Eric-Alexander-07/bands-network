@@ -12,7 +12,7 @@ export default function AboutSection() {
           <div className="about-image-wrap" data-animate="fade-right">
             <LightboxImage
               src="/images/about.webp"
-              alt="Spirit of Soul — Die Band"
+              alt="WE ROCK — Die Band"
               className="about-img"
               overlayContent="⊕"
               wrapperClassName="about-img-wrap-inner"
