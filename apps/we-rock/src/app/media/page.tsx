@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Media & News – WE ROCK | Videos & Konzerttermine",
     description: "Aktuelle Spieltermine, Videos und News von WE ROCK. Classic Rock & Hardrock live.",
     url: "https://we-rock.de/media",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

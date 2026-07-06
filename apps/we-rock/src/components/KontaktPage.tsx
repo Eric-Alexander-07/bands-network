@@ -30,7 +30,7 @@ export default function KontaktPage() {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-vocalist-hat.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/1778996767042-12piy.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Schreib uns</span>
           <h1>Kontakt</h1>

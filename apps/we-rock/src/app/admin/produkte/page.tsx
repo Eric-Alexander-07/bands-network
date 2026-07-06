@@ -8,7 +8,7 @@ import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminDelete, adminUpdate, adminUpdateMany } from "@/lib/adminDb";
 import ImgUploadField from "@/components/admin/ImgUploadField";
 
-const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
 const PAGE_SLUG = "shop";
 
 interface Product {

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
@@ -7,7 +7,7 @@ import { MdDragIndicator, MdAdd, MdDelete } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
-const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
 const PLATFORMS = ["instagram", "facebook", "youtube", "spotify", "tiktok"] as const;
 interface Social { id: string; site_id: string | null; platform: string; url: string; position: number | null; }
 
@@ -24,7 +24,7 @@ export default function SocialAdmin() {
   useEffect(() => {
     (async () => {
       const { data: site } = await supabase.from("sites").select("id").eq("slug", SLUG).single();
-      if (!site) return;
+      if (!site) { setLoading(false); return; }
       setSiteId(site.id);
       const { data } = await supabase.from("social_links").select("*").eq("site_id", site.id).order("position");
       setLinks(data ?? []); setLoading(false);

@@ -90,7 +90,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
             </h1>
             <p className="hero-claim">{band.claim}</p>
             <p className="hero-sub">
-              {band.tagline} — 7 Profimusiker, 4 Sänger, unzählige Bühnen.
+              Laut. Authentisch. Unvergesslich. Classic Rock & Hardrock live auf jeder Bühne.
             </p>
             <div className="hero-actions">
               <Link href="/booking" className="btn btn-primary">

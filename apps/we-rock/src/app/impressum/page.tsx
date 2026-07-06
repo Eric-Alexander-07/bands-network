@@ -1,22 +1,22 @@
 ﻿import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Impressum – Spirit of Soul",
-  description: "Impressum von Spirit of Soul – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+  title: "Impressum – WE ROCK",
+  description: "Impressum von WE ROCK – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
 
   alternates: { canonical: "https://we-rock.de/impressum" },
   openGraph: {
-    title: "Impressum – Spirit of Soul",
-    description: "Impressum von Spirit of Soul – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+    title: "Impressum – WE ROCK",
+    description: "Impressum von WE ROCK – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
     url: "https://we-rock.de/impressum",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Impressum – Spirit of Soul",
-    description: "Impressum von Spirit of Soul – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+    title: "Impressum – WE ROCK",
+    description: "Impressum von WE ROCK – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
   },
-    robots: { index: false, follow: false },
+  robots: { index: false, follow: false },
 };
 
 export default function ImpressumPage() {

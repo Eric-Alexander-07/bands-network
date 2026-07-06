@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import { createClient } from "@bands/supabase/client";
@@ -6,7 +6,7 @@ import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminUpdate } from "@/lib/adminDb";
 import ImgUploadField from "@/components/admin/ImgUploadField";
 
-const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
 const PAGE_SLUG = "about";
 
 const FIELDS = [
@@ -27,7 +27,7 @@ export default function AboutAdmin() {
   useEffect(() => {
     (async () => {
       const { data: site } = await supabase.from("sites").select("id").eq("slug", SLUG).single();
-      if (!site) return;
+      if (!site) { setLoading(false); return; }
       setSiteId(site.id);
       const { data: page } = await supabase.from("pages").select("id,content").eq("site_id", site.id).eq("slug", PAGE_SLUG).single();
       setPageId(page?.id ?? null);

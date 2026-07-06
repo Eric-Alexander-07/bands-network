@@ -257,11 +257,11 @@ h3, h4 {
 }
 .nav-links a {
   font-family: var(--font-ui);
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(226,217,200,0.9);
+  color: rgba(226,217,200,0.95);
   transition: color 0.2s ease;
   white-space: nowrap;
 }
@@ -277,14 +277,14 @@ h3, h4 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   padding: 9px 20px;
-  background: var(--text-light);
-  color: var(--text);
+  background: var(--wr-bone);
+  color: #0a0a0a;
   border-radius: var(--radius);
   transition: all 0.2s ease;
   flex-shrink: 0;
   white-space: nowrap;
 }
-.nav-cta:hover { background: rgba(226,217,200,0.85); }
+.nav-cta:hover { background: rgba(226,217,200,0.85); color: #0a0a0a; }
 .nav.scrolled .nav-cta { background: var(--wr-red); color: var(--wr-bone); border-color: var(--wr-red); }
 .nav.scrolled .nav-cta:hover { background: var(--wr-red-dim); border-color: var(--wr-red-dim); }
 .nav-toggle {
@@ -429,13 +429,9 @@ h3, h4 {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0px,
-    transparent 22px,
-    rgba(200,21,26,0.075) 22px,
-    rgba(200,21,26,0.075) 23px
-  );
+  background-image:
+    repeating-linear-gradient(45deg,  rgba(200,21,26,0.045) 0px, rgba(200,21,26,0.045) 1px, transparent 1px, transparent 4px),
+    repeating-linear-gradient(-45deg, rgba(200,21,26,0.045) 0px, rgba(200,21,26,0.045) 1px, transparent 1px, transparent 4px);
   pointer-events: none;
   z-index: 0;
 }
@@ -769,6 +765,7 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   transition: transform 0.4s ease;
   display: block;
 }
@@ -1018,19 +1015,15 @@ h3, h4 {
   color: var(--text-muted);
 }
 
-/* ─── Shared dark diagonal pattern ─────────────────────────── */
+/* ─── Shared carbon fiber pattern ──────────────────────────── */
 .video-section,
 .gallery-section,
 .booking-cta,
 .page-hero,
 .footer {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    transparent 0px,
-    transparent 22px,
-    rgba(200,21,26,0.06) 22px,
-    rgba(200,21,26,0.06) 23px
-  );
+  background-image:
+    repeating-linear-gradient(45deg,  rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px),
+    repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px);
 }
 
 /* ─── Video Section ─────────────────────────────────────────── */
@@ -1115,6 +1108,7 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
   border: 3px solid var(--bg);
   box-shadow: 0 8px 32px rgba(25,23,20,0.18);
@@ -1123,17 +1117,18 @@ h3, h4 {
 .carousel-btn {
   width: 40px;
   height: 40px;
-  background: var(--text);
-  color: var(--text-light);
-  border: none;
+  background: rgba(12,10,8,0.88);
+  color: #ffffff;
+  border: 1.5px solid rgba(226,217,200,0.5);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.2s, border-color 0.2s;
   flex-shrink: 0;
 }
-.carousel-btn:hover { background: var(--bg-dark-3); }
+.carousel-btn:hover { background: var(--wr-red); border-color: var(--wr-red); }
 .carousel-counter {
   font-family: var(--font-ui);
   font-size: 11px;
@@ -1342,7 +1337,7 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   display: block;
   z-index: 0;
 }
@@ -2043,6 +2038,7 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
   display: block;
 }
 .services-split-img--tall {
@@ -2471,11 +2467,12 @@ h3, h4 {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(12,10,8,0.72);
-  border: 1px solid rgba(226,217,200,0.3);
+  background: rgba(12,10,8,0.88);
+  border: 1.5px solid rgba(226,217,200,0.55);
   color: #ffffff;
   width: 44px;
   height: 44px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2483,7 +2480,7 @@ h3, h4 {
   transition: background 0.2s, border-color 0.2s;
   z-index: 10;
 }
-.glb-nav:hover { background: rgba(200,21,26,0.85); border-color: var(--wr-red); }
+.glb-nav:hover { background: var(--wr-red); border-color: var(--wr-red); }
 .glb-nav--prev { left: 16px; }
 .glb-nav--next { right: 16px; }
 

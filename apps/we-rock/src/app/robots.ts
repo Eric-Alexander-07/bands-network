@@ -13,6 +13,7 @@ export default function robots(): MetadataRoute.Robots {
           "/impressum",    // rechtlich, kein SEO-Wert
           "/datenschutz",  // rechtlich, kein SEO-Wert
           "/kontakt",      // Duplikat von /booking (nav zeigt auf /booking)
+          "/admin",        // Admin-Bereich nicht indexieren
         ],
       },
     ],

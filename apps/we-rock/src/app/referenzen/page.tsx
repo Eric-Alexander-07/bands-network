@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Referenzen – WE ROCK | Events & Auftritte",
     description: "WE ROCK begeistert auf Festivals, Firmenevents und privaten Feiern europaweit.",
     url: "https://we-rock.de/referenzen",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

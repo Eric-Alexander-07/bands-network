@@ -17,7 +17,7 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/live-main.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/gallery/live-1.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 20%" }} />
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
           <h1>Services</h1>

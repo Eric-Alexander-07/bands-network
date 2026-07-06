@@ -10,7 +10,7 @@ export default function OccasionsSection() {
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="occasions-layout">
           <div data-animate="fade-right">
-            <PhotoCarousel photos={band.photos} />
+            <PhotoCarousel photos={band.photos.slice(0, 3)} />
           </div>
           <div className="occasions-text">
             <span className="eyebrow" data-animate="fade-up">Wir spielen zu</span>

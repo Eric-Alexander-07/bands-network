@@ -1,22 +1,22 @@
 ﻿import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Datenschutz – Spirit of Soul",
-  description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+  title: "Datenschutz – WE ROCK",
+  description: "Datenschutzerklärung von WE ROCK – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
 
   alternates: { canonical: "https://we-rock.de/datenschutz" },
   openGraph: {
-    title: "Datenschutz – Spirit of Soul",
-    description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+    title: "Datenschutz – WE ROCK",
+    description: "Datenschutzerklärung von WE ROCK – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
     url: "https://we-rock.de/datenschutz",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Datenschutz – Spirit of Soul",
-    description: "Datenschutzerklärung von Spirit of Soul – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+    title: "Datenschutz – WE ROCK",
+    description: "Datenschutzerklärung von WE ROCK – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
   },
-    robots: { index: false, follow: false },
+  robots: { index: false, follow: false },
 };
 
 export default function DatenschutzPage() {

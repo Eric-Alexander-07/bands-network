@@ -36,7 +36,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
   return (
     <>
       <section className="page-hero">
-        <img src="/images/live-main.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/gallery/live-2.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>
           <h1>Media &amp; News</h1>

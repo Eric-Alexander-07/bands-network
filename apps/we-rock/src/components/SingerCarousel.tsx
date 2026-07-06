@@ -2,15 +2,9 @@
 import { useRef } from "react";
 
 const SINGERS = [
-  { src: "/images/gallery/live-1.webp",  name: "WE ROCK Live" },
-  { src: "/images/gallery/live-3.webp",  name: "WE ROCK Live" },
   { src: "/images/gallery/live-5.webp",  name: "WE ROCK Live" },
-  { src: "/images/gallery/live-7.webp",  name: "WE ROCK Live" },
   { src: "/images/gallery/live-10.webp", name: "WE ROCK Live" },
-  { src: "/images/gallery/live-14.webp", name: "WE ROCK Live" },
   { src: "/images/gallery/live-18.webp", name: "WE ROCK Live" },
-  { src: "/images/gallery/live-22.webp", name: "WE ROCK Live" },
-  { src: "/images/gallery/live-26.webp", name: "WE ROCK Live" },
 ];
 
 export default function SingerCarousel() {

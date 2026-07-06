@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Galerie – WE ROCK | Live-Fotos Classic Rock",
     description: "Impressionen von WE ROCK Live-Auftritten — Classic Rock & Hardrock live.",
     url: "https://we-rock.de/galerie",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

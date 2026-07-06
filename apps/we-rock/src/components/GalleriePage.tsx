@@ -17,7 +17,7 @@ export default function GalleriePage({ dbImages = [] }: Props) {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/live-main.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/gallery/live-3.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Fotos</span>
           <h1>Galerie</h1>

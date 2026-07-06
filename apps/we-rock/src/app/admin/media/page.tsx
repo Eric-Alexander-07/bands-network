@@ -8,7 +8,7 @@ import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminUpdate, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 import ImgUploadField from "@/components/admin/ImgUploadField";
 
-const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SLUG      = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
 const PAGE_SLUG = "media";
 
 interface Evt   { id: string; site_id: string | null; name: string; date: string; location: string | null; link: string | null; visible: boolean | null; position: number | null; created_at: string | null; }

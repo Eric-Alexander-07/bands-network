@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: "WE ROCK – Die Classic Rock Tribute Show",
     description: "7 Profimusiker, 4 Sänger — Classic Rock & Hardrock live. Die authentische Tribute Show für Festivals, Firmenevents und private Feiern.",
     url: "https://we-rock.de",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

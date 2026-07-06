@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Services & Besetzung – WE ROCK | Rockshow buchen",
     description: "Vom Trio bis zur 7-köpfigen Full-Band — individuelle Rock-Shows für jeden Event.",
     url: "https://we-rock.de/services",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

@@ -99,8 +99,13 @@ export async function fetchProducts(): Promise<Product[]> {
 
 // ─── Referenzen ──────────────────────────────────────────────────
 export async function fetchReferenzen(): Promise<Referenz[]> {
-  if (!isSupabaseConfigured) return [];
-  return getReferenzen(SITE_SLUG);
+  const staticRefs: Referenz[] = band.references.map((r, i) => ({
+    id: String(i), site_id: "", name: r.client, type: r.type ?? null,
+    position: i, created_at: null,
+  }));
+  if (!isSupabaseConfigured) return staticRefs;
+  const db = await getReferenzen(SITE_SLUG);
+  return db.length > 0 ? db : staticRefs;
 }
 
 // ─── Besetzung ───────────────────────────────────────────────────

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Über uns – WE ROCK | Classic Rock Tribute Show",
     description: "7 Profimusiker, 4 Sänger — Classic Rock & Hardrock live aus der Rhein-Main-Region.",
     url: "https://we-rock.de/about",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

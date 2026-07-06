@@ -7,7 +7,7 @@ import { MdDelete, MdClose } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
-const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
 interface Img { id: string; site_id: string | null; url: string; caption: string | null; credit: string | null; position: number | null; created_at: string | null; }
 interface UploadItem { id: string; file: File; objectUrl: string; progress: "pending" | "uploading" | "done" | "error"; error?: string; }
 

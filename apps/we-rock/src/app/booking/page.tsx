@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: "Booking – WE ROCK | Classic Rock Band buchen",
     description: "WE ROCK für Ihr Event buchen. Persönliches Angebot innerhalb von 24 Stunden.",
     url: "https://we-rock.de/booking",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
@@ -28,7 +28,7 @@ export default function BookingPage() {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/live-main.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/gallery/live-4.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 0%" }} />
         <div className="container">
           <span className="eyebrow">Buchungsanfrage</span>
           <h1>Booking</h1>

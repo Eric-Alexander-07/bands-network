@@ -8,7 +8,7 @@ export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-festival-singer.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/live-main.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 20%" }} />
         <div className="container">
           <span className="eyebrow">Unsere Kunden</span>
           <h1>Referenzen</h1>

@@ -1,4 +1,4 @@
-// @ts-nocheck
+﻿// @ts-nocheck
 "use client";
 import { useEffect, useState } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
@@ -7,7 +7,7 @@ import { MdDragIndicator, MdAdd, MdDelete } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
 
-const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "we-rock";
 interface Ref { id: string; site_id: string | null; name: string; type: string | null; position: number | null; created_at: string | null; }
 
 export default function ReferenzenAdmin() {
@@ -23,7 +23,7 @@ export default function ReferenzenAdmin() {
   useEffect(() => {
     (async () => {
       const { data: site } = await supabase.from("sites").select("id").eq("slug", SLUG).single();
-      if (!site) return;
+      if (!site) { setLoading(false); return; }
       setSiteId(site.id);
       const { data } = await supabase.from("referenzen").select("*").eq("site_id", site.id).order("position");
       setRefs(data ?? []);
