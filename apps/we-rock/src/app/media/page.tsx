@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Media & News – WE ROCK | Videos & Konzerttermine",
-  description: "Aktuelle Spieltermine, Videos und News von WE ROCK. Classic Rock & Hardrock live erleben.",
-  keywords: ["WE ROCK Videos", "Classic Rock Konzerttermine", "Rockband Live-Videos", "WE ROCK Tourdates", "Rock Tribute Show Termine", "Classic Rock YouTube"],
+  description: "WE ROCK Live-Videos und aktuelle Konzerttermine. Informieren Sie sich über aktuelle Tourdaten.",
+  keywords: ["WE ROCK Live Video", "Classic Rock Konzert", "Konzerttermine", "Tour Daten", "Tribute Show Video", "News"],
   alternates: { canonical: "https://we-rock.de/media" },
   openGraph: {
     title: "Media & News – WE ROCK | Videos & Konzerttermine",

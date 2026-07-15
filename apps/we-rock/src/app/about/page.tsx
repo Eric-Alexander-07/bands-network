@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Über uns – WE ROCK | Classic Rock Tribute Show",
-  description: "WE ROCK – 7 Profimusiker, 4 Sänger aus der Rhein-Main-Region. Emmo Acar, Jessica Conte und das WE ROCK Ensemble bringen Classic Rock und Hardrock authentisch auf die Bühne.",
-  keywords: ["WE ROCK Band", "Classic Rock Tribute", "Emmo Acar", "Jessica Conte", "Rockband Rhein-Main", "Profimusiker Rock", "Hard Rock Band", "Rockshow Groß-Umstadt"],
+  description: "WE ROCK – Die Rock Coverband aus der Rhein-Main-Region bringt die größten Rock Hymnen authentisch auf die Bühne.",
+  keywords: ["WE ROCK Band", "Classic Rock Tribute", "Emmo Acar", "Jessica Conte", "Bobby Stöcker", "Rockband Rhein-Main", "Profimusiker", "Rock", "Hard Rock Band", "Rockshow", "Liveband", "Hochzeitsband", "Darmstadt", "Aschaffenburg", "Frankfurt am Main"],
   alternates: { canonical: "https://we-rock.de/about" },
   openGraph: {
     title: "Über uns – WE ROCK | Classic Rock Tribute Show",

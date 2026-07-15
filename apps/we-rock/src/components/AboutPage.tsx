@@ -7,7 +7,7 @@ type PC = Record<string, string>;
 interface Props { content?: PC; }
 
 export default function AboutPage({ content = {} }: Props) {
-  const heroText  = content.text_top   || "7 Profimusiker. 4 Sänger. Pure Rockenergie auf jeder Bühne.";
+  const heroText  = content.text_top   || "Wenn kraftvolle Stimmen, legendäre Gitarrenriffs und pure Rock-Energie aufeinandertreffen, dann heißt es: WE ROCK – The Classic Rock Tribute Show. Die Band bringt das Beste aus Classic Rock, Hard Rock und Melodic Rock der 70er- und 80er-Jahre bis in die Gegenwart auf die Bühne – authentisch, energiegeladen und mit jeder Menge Leidenschaft. Frontmann Emmo Acar und Sängerin Jessica Conte sorgen dabei gemeinsam mit einer hochkarätig besetzten Band aus Ausnahme-Musikern für ein mitreißendes Live-Erlebnis voller Power, Emotionen und echter Rock'n'Roll-Momente.";
   const mainImage = content.image_main || "/images/about.webp";
   const mainText  = content.text_bottom;
   const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
@@ -34,28 +34,17 @@ export default function AboutPage({ content = {} }: Props) {
             </div>
             <div className="about-simple-text" data-animate="fade-left">
               <span className="eyebrow">Die Classic Rock Tribute Show</span>
-              <h2>Seit 2001.<br />Unzählige Bühnen.</h2>
+              <h2>Rock Hymnen für Euren Event!</h2>
               {mainParas ? (
                 mainParas.map((p, i) => <p key={i}>{p}</p>)
               ) : (
-                <>
-                  <p>
-                    WE ROCK ist ein 7-köpfiges Profi-Ensemble aus der Rhein-Main-Region.
-                    Mit vier wechselnden Frontsängern — darunter Emmo Acar und Jessica Conte —
-                    und einem außergewöhnlich vielseitigen Sound bringen sie die Helden des Rock
-                    authentisch auf die Bühne: Led Zeppelin, Deep Purple, AC/DC, Queen, Van Halen,
-                    Bon Jovi und viele mehr.
-                  </p>
-                  <p>
-                    Kraftvolle Stimmen, legendäre Gitarrenriffs und pure Rockenergie —
-                    für jeden Event, jede Bühne. Von intimen Club-Shows bis zur
-                    Full-Production-Show mit LED-Walls und professionellem Licht.
-                  </p>
-                </>
+                <p>
+                  WE ROCK stehen für ehrliche Livemusik, Spielfreude und einen Abend voller unvergesslicher Rockklassiker. Mit maximaler Leidenschaft, musikalischer Klasse und viel Liebe zum Detail entführt die Band ihr Publikum auf eine Reise durch die größten Rock-Dekaden aller Zeiten. WE ROCK – die ultimative Classic Rock Party. Rockig - Leidenschaftlich - Handgemacht.
+                </p>
               )}
               <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
                 <Link href="/booking" className="btn btn-primary">Jetzt anfragen</Link>
-                <Link href="/services" className="btn btn-outline">Unsere Services</Link>
+                <Link href="/services" className="btn btn-outline">Programm & Besetzung</Link>
               </div>
             </div>
           </div>

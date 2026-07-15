@@ -24,7 +24,7 @@ const NAV: NavEntry[] = [
   { href: "/admin/media",      label: "Media & News", Icon: MdPlayCircle },
   { href: "/admin/galerie",    label: "Galerie",      Icon: MdImage      },
 { href: "/admin/about",      label: "Über uns",     Icon: MdPerson     },
-  { href: "/admin/services",   label: "Services",     Icon: MdGroups     },
+  { href: "/admin/services",   label: "Programm & Besetzung", Icon: MdGroups },
   { href: "/admin/referenzen", label: "Referenzen",   Icon: MdStar       },
 ];
 

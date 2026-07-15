@@ -82,15 +82,15 @@ export default function HeroSection({ dbEvents = [] }: Props) {
 
           <div className="hero-content">
             <p className="hero-eyebrow">
-              {band.genre} · {band.location} · Seit 2001
+              Classic Rock / Melodic Rock / Hard &amp; Heavy Rock
             </p>
             <h1 className="hero-title">
               <span className="hero-title-line">WE</span>
               <span className="hero-title-line hero-title-italic">ROCK</span>
             </h1>
-            <p className="hero-claim">{band.claim}</p>
+            <p className="hero-claim">Die Classic Rock Tribute Show</p>
             <p className="hero-sub">
-              Laut. Authentisch. Unvergesslich. Classic Rock & Hardrock live auf jeder Bühne.
+              Die größten Rock Hymnen aus 5 Jahrzehnten
             </p>
             <div className="hero-actions">
               <Link href="/booking" className="btn btn-primary">

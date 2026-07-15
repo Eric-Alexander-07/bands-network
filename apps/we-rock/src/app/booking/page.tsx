@@ -5,8 +5,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Booking – WE ROCK | Classic Rock Band buchen",
-  description: "WE ROCK für Ihr Event buchen. Classic Rock & Hardrock live für Festivals, Firmenevents und private Feiern. Persönliches Angebot innerhalb von 24 Stunden.",
-  keywords: ["Rockband buchen", "Classic Rock Band buchen", "WE ROCK Booking", "Liveband Firmenevent", "Rock Band Hochzeit", "Rockshow buchen", "Tribute Band anfragen", "Rockband Rhein-Main"],
+  description: "WE ROCK für Ihr Event buchen. Engagieren Sie die Classic Rock Tributeband live für Ihr Konzert, Ihren Event oder Ihre private Feiern. Wir garantieren Ihnen ein persönliches Angebot innerhalb von 24 Stunden.",
+  keywords: ["Rockband buchen", "Rock Cover Booking", "Classic Rock Band buchen", "WE ROCK Booking", "Rockband Live", "Firmenevent", "Rock Band für Hochzeit", "Rockshow buchen", "Tribute Band anfragen", "Rockband Rhein-Main"],
   alternates: { canonical: "https://we-rock.de/booking" },
   openGraph: {
     title: "Booking – WE ROCK | Classic Rock Band buchen",

@@ -3,9 +3,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Referenzen – WE ROCK | Events & Auftritte",
-  description: "WE ROCK begeistert auf Festivals, Firmenevents, Stadtfesten und privaten Feiern europaweit. Laut, authentisch, unvergesslich.",
-  keywords: ["WE ROCK Referenzen", "Classic Rock Firmenevent", "Rockband Festival", "Rockshow Referenzen", "Rock Tribute Hochzeit", "Stadtfest Rockband"],
+  title: "Referenzen – WE ROCK",
+  description: "Informieren Sie sich, in welchen Clubs, Festivals, Stadtfesten und Events WE ROCK bisher aufgetreten ist, und in welchen namhaften Bands die Musiker bisher gespielt haben.",
+  keywords: ["WE ROCK Referenzen", "Clubs", "Festivals", "Stadtfeste", "Band Lineup", "Bandbesetzung"],
   alternates: { canonical: "https://we-rock.de/referenzen" },
   openGraph: {
     title: "Referenzen – WE ROCK | Events & Auftritte",

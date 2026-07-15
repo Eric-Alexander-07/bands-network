@@ -5,8 +5,8 @@
   --wr-surface:  #161616;
   --wr-surface2: #1e1e1e;
   --wr-faint:    #2a2a2a;
-  --wr-muted:    #7a7a7a;
-  --wr-bone:     #E2D9C8;
+  --wr-muted:    #a0a0a0;
+  --wr-bone:     #f0ece4;
   --wr-red:      #C8151A;
   --wr-red-dim:  #8b0f13;
   --wr-ember:    #E84118;
@@ -1534,6 +1534,15 @@ h3, h4 {
 .member-info { padding: 16px; }
 .member-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 4px; color: var(--text); }
 .member-role { font-family: var(--font-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* ─── Besetzung Text ─────────────────────────────────────────── */
+.besetzung-text p {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.8;
+  max-width: 800px;
+  margin-bottom: 1.25rem;
+}
 
 /* ─── Formations (Besetzung) ────────────────────────────────── */
 .formations-intro {

@@ -12,18 +12,13 @@ export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
         <div className="container">
           <span className="eyebrow">Unsere Kunden</span>
           <h1>Referenzen</h1>
-          <p>
-            {band.name} hat bei Hunderten von Events gespielt — von
-            exklusiven Galas über Firmenfeiern bis zu internationalen
-            Hochzeiten.
-          </p>
         </div>
       </section>
 
       <section className="section refs-section section-has-rings">
         <ConcentricRings className="rings-lower-right" />
         <div className="container">
-          <span className="eyebrow" data-animate="fade-up">Vertrauen uns</span>
+          <span className="eyebrow" data-animate="fade-up">Referenzen</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">
             Unsere Kunden
           </h2>

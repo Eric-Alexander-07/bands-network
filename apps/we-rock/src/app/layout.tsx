@@ -66,10 +66,10 @@ export const metadata: Metadata = {
       "20+ Jahre Classic Rock & Hardrock live. Die authentische Tribute Show für Festivals, Firmenevents und private Feiern.",
     images: [
       {
-        url: `${BASE_URL}/images/about.webp`,
+        url: `${BASE_URL}/images/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "We Rock – Live Performance",
+        alt: "We Rock – Die Classic Rock Tribute Show",
       },
     ],
   },
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     title: "We Rock – Die Classic Rock Tribute Show",
     description:
       "20+ Jahre Classic Rock live. Rockband für Festivals, Firmenevents und private Feiern.",
-    images: [`${BASE_URL}/images/about.webp`],
+    images: [`${BASE_URL}/images/og-image.jpg`],
   },
   alternates: {
     canonical: BASE_URL,

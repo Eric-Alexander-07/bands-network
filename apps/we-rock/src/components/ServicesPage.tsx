@@ -1,68 +1,80 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
-import type { BesetzungGruppeWithEintraege } from "@/lib/data";
 
 type PC = Record<string, string>;
-interface Props { dbBesetzung?: BesetzungGruppeWithEintraege[]; content?: PC; }
+interface Props { content?: PC; }
 
-export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
-  const formations: Array<{ name: string; beschreibung: string | null; eintraege: Array<{ id: string; name: string; beschreibung: string | null }> }> =
-    dbBesetzung && dbBesetzung.length > 0
-      ? dbBesetzung.map(g => ({ name: g.name, beschreibung: g.beschreibung ?? null, eintraege: g.besetzung_eintraege ?? [] }))
-      : [
-          { name: "Kleine Besetzungen", beschreibung: "Für private Events und kleinere Veranstaltungen (mit Halbplaybacks)", eintraege: band.formations.small.map((f, i) => ({ id: String(i), name: f.name, beschreibung: f.lineup })) },
-          { name: "Komplette Liveband",  beschreibung: "Größere Besetzungen mit kompletter Live-Begleitung",               eintraege: band.formations.full.map((f, i) => ({ id: String(i), name: f.name, beschreibung: f.lineup })) },
-        ];
+export default function ServicesPage({ content = {} }: Props) {
   return (
     <>
       <section className="page-hero">
         <img src="/images/gallery/live-1.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 20%" }} />
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
-          <h1>Services</h1>
-          <p>{content.text_top || `Vom intimen Dinner bis zur 12-köpfigen Full-Band mit Multimedia-Show — ${band.name} bringt die passende Musik und Technik für jeden Anlass.`}</p>
+          <h1>Programm & Besetzung</h1>
+          <p>{content.text_top || `Vom intimen Dinner bis zur 9-köpfigen Full-Band mit Multimedia-Show — ${band.name} bringt die passende Musik und Energie für jeden Anlass.`}</p>
         </div>
       </section>
 
-      {/* Besetzung — volle Breite */}
-      <section className="section section-has-rings" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      {/* Besetzung — Text */}
+      <section className="section section-has-rings" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative", overflow: "hidden" }}>
         <ConcentricRings className="rings-far-right" />
-        <div className="container">
-          <span className="eyebrow" data-animate="fade-up">Flexibel buchbar</span>
+        <img
+          src="/images/logo_tansparent.png"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            right: "160px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "680px",
+            opacity: 0.52,
+            pointerEvents: "none",
+            userSelect: "none",
+            filter: "none",
+            zIndex: 0,
+          }}
+        />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <span className="eyebrow" data-animate="fade-up">Was wir anbieten</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">Besetzung</h2>
-          <p className="formations-intro" data-animate="fade-up" data-delay="200">
-            {content.besetzung_text || `${band.name} ist für verschiedene Events in verschiedenen Besetzungen buchbar — von der eleganten kleinen Formation bis zur 12-köpfigen Full-Band mit Bläser Sektion.`}
-          </p>
-          <div className="formations-grid" data-animate="fade-up">
-            {(() => {
-              const left  = formations[0];
-              const right = formations[1];
-              const rows  = Math.max(left?.eintraege.length ?? 0, right?.eintraege.length ?? 0);
-              const cells = [
-                <div key="hl" className="formations-col-header">
-                  <h3 className="formations-col-title">{left?.name}</h3>
-                  {left?.beschreibung && <p className="formations-col-sub">{left.beschreibung}</p>}
-                </div>,
-                <div key="hr" className="formations-col-header">
-                  <h3 className="formations-col-title">{right?.name}</h3>
-                  {right?.beschreibung && <p className="formations-col-sub">{right.beschreibung}</p>}
-                </div>,
-              ];
-              for (let i = 0; i < rows; i++) {
-                const l = left?.eintraege[i];
-                const r = right?.eintraege[i];
-                cells.push(
-                  <div key={`l${i}`} className="formation-cell">
-                    {l && <><span className="formation-name">{l.name}</span><span className="formation-lineup">{l.beschreibung}</span></>}
-                  </div>,
-                  <div key={`r${i}`} className="formation-cell">
-                    {r && <><span className="formation-name">{r.name}</span><span className="formation-lineup">{r.beschreibung}</span></>}
-                  </div>
-                );
-              }
-              return cells;
-            })()}
+          <div className="besetzung-text" data-animate="fade-up" data-delay="200">
+            {content.besetzung_text ? (
+              content.besetzung_text.split("\n\n").filter(Boolean).map((para, i) => (
+                <p key={i}>{para.split("\n").map((line, j, arr) => (
+                  <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                ))}</p>
+              ))
+            ) : (
+              <>
+                <p>
+                  Insgesamt sind wir in der Ausgangsbesetzung 7 Musiker und ein Techniker.
+                  2 Sänger bilden die Frontstimmen, und fünf Profimusiker aus dem Rhein-Main-Gebiet die Begleitband.
+                </p>
+                <p>
+                  Das besondere Highlight von WE ROCK: Fast alle Musiker der Band übernehmen zusätzlich Gesangsparts.
+                  Dadurch gibt es auch bei der 7er Besetzung alleine 4 Lead-Stimmen und es entsteht ein außergewöhnlich
+                  vielseitiger und authentischer Sound mit einem breitgefächerten Programm – perfekt für die großen
+                  Rockklassiker & Hymnen unterschiedlichster Dekaden und Stilrichtungen. Je nach Event und Verfügbarkeit
+                  kann es sein, dass auch die Frontsänger einmal wechseln, oder bei großen Events und Bühnen weitere
+                  hinzugenommen werden. So kann die Band sogar auf bis zu 9 Akteure ausgebaut werden.
+                </p>
+              </>
+            )}
+          </div>
+
+          <h3 className="section-title" style={{ marginTop: "2.5rem" }} data-animate="fade-up">Programm</h3>
+          <div className="besetzung-text" data-animate="fade-up" data-delay="100">
+            <p>
+              Musikalisch spannt die Band den Bogen von den legendären Hymnen von Led Zeppelin, Deep Purple und
+              Whitesnake über Hardrock-Ikonen wie Queen, Bon Jovi, Dio, Rainbow, AC/DC, Van Halen, Ozzy Osbourne
+              und Guns N&apos; Roses bis hin zu melodischem Arena Rock von Journey und Foreigner. Auch Bluesrock-Perlen
+              von Gary Moore, Billy Idol, ZZ-Top, Toto oder The Black Crowes dürfen dabei natürlich nicht fehlen.
+              Auf Wunsch kann die Band sogar einzelne kleine Tribute Blocks von 4–5 Songs einzelner Bands wie
+              Whitesnake, Deep Purple, Bryan Adams oder Journey mit ins Programm einbauen.
+            </p>
           </div>
         </div>
       </section>

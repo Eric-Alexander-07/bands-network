@@ -12,8 +12,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "WE ROCK – Die Classic Rock Tribute Show | Rockband Rhein-Main",
-  description: "WE ROCK – Die Classic Rock Tribute Show aus Groß-Umstadt. 7 Profimusiker, 4 Sänger, Classic Rock & Hardrock für Festivals, Firmenevents und private Feiern. Laut, authentisch, unvergesslich.",
-  keywords: ["Classic Rock Band", "Rockband buchen", "Tribute Show Classic Rock", "We Rock Band", "Liveband Firmenevent", "Rock Band Hochzeit", "Hard Rock Band", "Coverband Classic Rock", "Vivid Music Productions", "Rockband Rhein-Main"],
+  description: "WE ROCK – Die Classic Rock Tribute Show aus Darmstadt präsentiert die größten Rock Hymnen aus fünf Jahrzehnten, mit Schwerpunkt 70er & 80er Jahre.",
+  keywords: ["Classic Rock", "Rockband", "Rock Cover", "Tributeband", "Tribute Band", "Tribute Show", "Rock and Roll", "Hard Rock", "Melodic Rock", "Blues Rock", "Hair Metal", "Heavy Metal", "We Rock Band", "Rock Hymnen", "Hard Rock Band", "Coverband", "Rockband Rhein-Main"],
   alternates: { canonical: "https://we-rock.de" },
   openGraph: {
     title: "WE ROCK – Die Classic Rock Tribute Show",

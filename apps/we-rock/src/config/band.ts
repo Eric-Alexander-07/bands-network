@@ -10,7 +10,7 @@ export const band = {
   nav: [
     { label: "Home", href: "/" },
     { label: "Über uns", href: "/about" },
-    { label: "Services", href: "/services" },
+    { label: "Programm & Besetzung", href: "/services" },
     { label: "Media & News", href: "/media" },
     { label: "Galerie", href: "/galerie" },
 { label: "Referenzen", href: "/referenzen" },
@@ -20,10 +20,10 @@ export const band = {
   dates: [],
 
   facts: [
-    { value: "20+", label: "Jahre auf der Bühne" },
-    { value: "800+", label: "Live-Auftritte" },
+    { value: "4", label: "Sänger" },
     { value: "7", label: "Bandmitglieder" },
-    { value: "300+", label: "Songs im Repertoire" },
+    { value: "Songs", label: "aus 5 Jahrzehnten" },
+    { value: "Breites", label: "Repertoire & Tribute Blocks" },
   ],
 
   occasions: [
@@ -111,23 +111,23 @@ export const band = {
   },
 
   clients: [
-    "Hamburg Stadtpark",
-    "Airbus",
-    "Hafen Hamburg",
-    "Reeperbahn Festival",
-    "Hamburger DOM",
-    "Beiersdorf AG",
+    "Pullman City – die Westernstadt",
+    "Frankfurt Südbahnhof",
+    "Harley Davidson",
+    "SW-Motech / Open House",
+    "Stadtfeste",
+    "Tribute Festivals",
   ],
 
   socials: {
     instagram: "https://instagram.com/werock_rockband",
-    facebook: "https://facebook.com/werockband",
-    youtube: "https://youtube.com/@werockband",
+    facebook: "https://www.facebook.com/We.Rock.Rockband/",
+    youtube: "https://www.youtube.com/@VividMusicProductions",
     spotify: "https://open.spotify.com/artist/werockband",
   },
 
   about: {
-    bio: "WE ROCK – Die Classic Rock Tribute Show ist ein 7-köpfiges Profi-Ensemble aus der Rhein-Main-Region. Mit vier wechselnden Frontsängern — darunter Emmo Acar und Jessica Conte — und einem außergewöhnlich vielseitigen Sound bringen sie die Helden des Rock authentisch auf die Bühne: Led Zeppelin, Deep Purple, AC/DC, Queen, Van Halen, Bon Jovi und viele mehr. Kraftvolle Stimmen, legendäre Gitarrenriffs und pure Rockenergie — für jeden Event, jede Bühne.",
+    bio: "WE ROCK – Die Classic Rock Tribute Show ist ein 7-köpfiges Profi-Ensemble aus der Rhein-Main-Region um Darmstadt / Frankfurt a. Main und Aschaffenburg. Mit vier sich abwechselnden Sängern und einem vielseitigen Repertoire, bringen sie die größten Rock Hymnen aus 5 Jahrzehnten authentisch auf die Bühne. Kraftvolle Stimmen, legendäre Gitarrenriffs und pure Rockenergie.",
     shows: [
       "Classic Rock Party — Hits aus fünf Jahrzehnten, von den 70ern bis heute",
       "Dedizierte Tribute-Blöcke: AC/DC, Queen, Led Zeppelin, Guns N' Roses",
@@ -177,12 +177,12 @@ export const band = {
   },
 
   references: [
-    { client: "Airbus SE",               type: "Firmenevent" },
-    { client: "Beiersdorf AG",           type: "Firmenevent" },
-    { client: "Hamburg Stadtpark",       type: "Festival"    },
-    { client: "Reeperbahn Festival",     type: "Festival"    },
-    { client: "Hamburger DOM",           type: "Festival"    },
-    { client: "Hamburger Fischauktionshalle", type: "Gala"   },
+    { client: "Pullman City – die Westernstadt", type: "Festival"    },
+    { client: "Frankfurt Südbahnhof",            type: "Club"        },
+    { client: "Harley Davidson",                 type: "Firmenevent" },
+    { client: "SW-Motech / Open House",          type: "Firmenevent" },
+    { client: "Stadtfeste im Bundesgebiet",      type: "Stadtfest"   },
+    { client: "Tribute Festivals",               type: "Festival"    },
   ],
 
   technik: {

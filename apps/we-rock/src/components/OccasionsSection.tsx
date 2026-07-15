@@ -13,16 +13,14 @@ export default function OccasionsSection() {
             <PhotoCarousel photos={band.photos.slice(0, 3)} />
           </div>
           <div className="occasions-text">
-            <span className="eyebrow" data-animate="fade-up">Wir spielen zu</span>
-            <h2 className="section-title" data-animate="fade-up" data-delay="100">Jedem Anlass</h2>
+            <span className="eyebrow" data-animate="fade-up">Die Bühne gehört Euch – der Sound gehört uns!</span>
+            <h2 className="section-title" data-animate="fade-up" data-delay="100">Bucht uns für Euren Rock-Tribute Event</h2>
             <p className="occasions-desc" data-animate="fade-up" data-delay="200">
-              Ob Hochzeit, Firmen-Event, Stadtfest oder exklusive Feier —{" "}
-              {band.name} passt sich jedem Rahmen an und sorgt für den richtigen
-              Sound zur richtigen Zeit.
+              Egal ob Club-Gig, Stadtfest, großes Tribute-Festival oder Ihr exklusives Firmen- und Privatevent: We Rock passt sich jedem Rahmen flexibel an. Mit maßgeschneiderter Besetzung und flexiblem Sound-Setup liefern wir genau die richtige Energie zur richtigen Zeit. Wir bringen Eure Location zum Kochen und garantieren ein unvergessliches Live-Erlebnis!
             </p>
             <div data-animate="fade-up" data-delay="300">
               <Link href="/services" className="btn btn-primary">
-                Unsere Services
+                Unser Programm & Besetzung
               </Link>
             </div>
           </div>
