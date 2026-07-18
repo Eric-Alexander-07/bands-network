@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Shop – Spirit of Soul | Merchandise - Unser Shop mit Fan Artikeln",
   description: "20 Years Live CD und T-Shirts – Jubiläumsedition zum 25-jährigen Bestehen.",
   keywords: ["Spirit of Soul CD", "Soulband Merchandise", "20 Years Live", "Spirit of Soul Kühlschrank Magneten", "Spirit of Soul T-Shirts", "Spirit of Soul Buttons", "Spirit of Soul Hoodies", "Spirit of Soul Tassen"],
-  alternates: { canonical: "https://we-rock.de/shop" },
+  alternates: { canonical: "https://werock-rockband.de/shop" },
   openGraph: {
     title: "Shop – Spirit of Soul | Merchandise - Unser Shop mit Fan Artikeln",
     description: "20 Years Live CD und T-Shirts – Jubiläumsedition zum 25-jährigen Bestehen.",
-    url: "https://we-rock.de/shop",
-    images: [{ url: "https://we-rock.de/images/about.webp" }],
+    url: "https://werock-rockband.de/shop",
+    images: [{ url: "https://werock-rockband.de/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",

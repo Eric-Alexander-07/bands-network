@@ -4,12 +4,12 @@ export const metadata: Metadata = {
   title: "Impressum – WE ROCK",
   description: "Impressum von WE ROCK – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
 
-  alternates: { canonical: "https://we-rock.de/impressum" },
+  alternates: { canonical: "https://werock-rockband.de/impressum" },
   openGraph: {
     title: "Impressum – WE ROCK",
     description: "Impressum von WE ROCK – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
-    url: "https://we-rock.de/impressum",
-    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
+    url: "https://werock-rockband.de/impressum",
+    images: [{ url: "https://werock-rockband.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

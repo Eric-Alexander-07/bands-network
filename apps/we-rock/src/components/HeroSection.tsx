@@ -5,11 +5,9 @@ import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
 import type { Event } from "@/lib/data";
 
-const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
-
 function formatGigDate(dateStr: string) {
-  const [, month, day] = dateStr.split("-").map(Number);
-  return `${day}. ${MONTHS_SHORT[month - 1]}`;
+  const [year, month, day] = dateStr.split("-").map(Number);
+  return `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.${year}`;
 }
 
 interface Props {
@@ -88,7 +86,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
               <img
                 src="/images/logo_tansparent.png"
                 alt="WE ROCK"
-                style={{ height: "460px", width: "auto", display: "block" }}
+                className="hero-logo"
               />
             </h1>
             <p className="hero-claim">Die Classic Rock Tribute Show</p>
@@ -132,14 +130,12 @@ export default function HeroSection({ dbEvents = [] }: Props) {
           </div>
         </div>
         <div className="hero-right">
-          <div ref={parallaxRef} className="hero-right-inner hero-right-inner--duo">
-            <div className="hero-duo-card hero-duo-card--back">
-              <img src="/images/saenger/saenger-3.jpeg" alt="WE ROCK Sängerin" />
-            </div>
-            <div className="hero-duo-card hero-duo-card--front">
-              <img src="/images/hero.webp" alt="WE ROCK — Live Performance" />
-            </div>
-            <div className="hero-duo-divider" aria-hidden="true" />
+          <div ref={parallaxRef} className="hero-right-inner">
+            <img
+              src="/images/hero.webp"
+              alt="WE ROCK — Live Performance"
+              className="hero-right-img"
+            />
           </div>
         </div>
       </div>

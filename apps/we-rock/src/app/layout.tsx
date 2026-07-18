@@ -31,7 +31,7 @@ const barlow = Barlow_Condensed({
   display: "swap",
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://we-rock.de";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://werock-rockband.de";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

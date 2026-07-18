@@ -4,11 +4,8 @@ import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 import LightboxImage from "@/components/LightboxImage";
 import type { Event, MediaVideo, SocialLink } from "@/lib/data";
 
-const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
-
-function fmtDay(d: string)   { const [,, day] = d.split("-").map(Number); return String(day).padStart(2, "0"); }
-function fmtMonth(d: string) { const [, m]    = d.split("-").map(Number); return MONTHS_SHORT[m - 1].toUpperCase(); }
-function fmtYear(d: string)  { const [year]   = d.split("-").map(Number); return year; }
+function fmtDayMonth(d: string) { const [, m, day] = d.split("-").map(Number); return `${String(day).padStart(2, "0")}.${String(m).padStart(2, "0")}.`; }
+function fmtYear(d: string)     { const [year]      = d.split("-").map(Number); return year; }
 
 const PLATFORMS = [
   { key: "instagram" as const, label: "Instagram", handle: "@werock_rockband" },
@@ -94,8 +91,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
                       const inner = (
                         <>
                           <div className="media-date-badge">
-                            <span className="media-date-day">{fmtDay(d.date)}</span>
-                            <span className="media-date-month">{fmtMonth(d.date)}</span>
+                            <span className="media-date-day">{fmtDayMonth(d.date)}</span>
                             <span className="media-date-year">{fmtYear(d.date)}</span>
                           </div>
                           <div className="media-date-info">
@@ -115,18 +111,6 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
                   </div>
                 </>
               )}
-
-              {/* Facebook Page Plugin */}
-              <div className="media-fb-inline" data-animate="fade-up">
-                <iframe
-                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(socialMap.facebook || band.socials.facebook)}&tabs=timeline&width=400&height=2000&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
-                  style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
-                  scrolling="no"
-                  allowFullScreen
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-                  title="WE ROCK Facebook"
-                />
-              </div>
             </div>
 
           </div>
@@ -167,6 +151,18 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
                     <span className="media-platform-arrow">↗</span>
                   </a>
                 ))}
+              </div>
+
+              {/* Facebook Page Plugin */}
+              <div className="media-fb-inline" data-animate="fade-up">
+                <iframe
+                  src={`https://www.facebook.com/plugins/page.php?href=${encodeURIComponent(socialMap.facebook || band.socials.facebook)}&tabs=timeline&width=400&height=2000&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false`}
+                  style={{ border: "none", overflow: "hidden", display: "block", width: "100%" }}
+                  scrolling="no"
+                  allowFullScreen
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                  title="WE ROCK Facebook"
+                />
               </div>
 
             </div>

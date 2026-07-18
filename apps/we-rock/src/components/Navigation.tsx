@@ -32,7 +32,11 @@ export default function Navigation() {
         <div className="nav-glass-bg" />
         <div className="container nav-inner">
           <Link href="/" className="nav-logo">
-            <img src="/images/logo_tansparent.png" alt={band.name} style={{ height: "72px", width: "auto" }} />
+            {pathname === "/" ? (
+              band.name
+            ) : (
+              <img src="/images/logo_tansparent.png" alt={band.name} style={{ height: "72px", width: "auto" }} />
+            )}
           </Link>
           <ul className="nav-links">
             {band.nav.map((item) => (

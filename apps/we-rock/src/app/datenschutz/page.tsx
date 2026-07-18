@@ -4,12 +4,12 @@ export const metadata: Metadata = {
   title: "Datenschutz – WE ROCK",
   description: "Datenschutzerklärung von WE ROCK – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
 
-  alternates: { canonical: "https://we-rock.de/datenschutz" },
+  alternates: { canonical: "https://werock-rockband.de/datenschutz" },
   openGraph: {
     title: "Datenschutz – WE ROCK",
     description: "Datenschutzerklärung von WE ROCK – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
-    url: "https://we-rock.de/datenschutz",
-    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
+    url: "https://werock-rockband.de/datenschutz",
+    images: [{ url: "https://werock-rockband.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

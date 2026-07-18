@@ -6,12 +6,12 @@ export const metadata: Metadata = {
   title: "Referenzen – WE ROCK",
   description: "Informieren Sie sich, in welchen Clubs, Festivals, Stadtfesten und Events WE ROCK bisher aufgetreten ist, und in welchen namhaften Bands die Musiker bisher gespielt haben.",
   keywords: ["WE ROCK Referenzen", "Clubs", "Festivals", "Stadtfeste", "Band Lineup", "Bandbesetzung"],
-  alternates: { canonical: "https://we-rock.de/referenzen" },
+  alternates: { canonical: "https://werock-rockband.de/referenzen" },
   openGraph: {
     title: "Referenzen – WE ROCK | Events & Auftritte",
     description: "WE ROCK begeistert auf Festivals, Firmenevents und privaten Feiern europaweit.",
-    url: "https://we-rock.de/referenzen",
-    images: [{ url: "https://we-rock.de/images/about.webp", width: 1200, height: 630 }],
+    url: "https://werock-rockband.de/referenzen",
+    images: [{ url: "https://werock-rockband.de/images/about.webp", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
