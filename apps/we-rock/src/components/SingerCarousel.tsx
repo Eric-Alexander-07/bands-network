@@ -2,9 +2,10 @@
 import { useRef } from "react";
 
 const SINGERS = [
-  { src: "/images/gallery/live-5.webp",  name: "WE ROCK Live" },
-  { src: "/images/gallery/live-10.webp", name: "WE ROCK Live" },
-  { src: "/images/gallery/live-18.webp", name: "WE ROCK Live" },
+  { src: "/images/saenger/saenger-1.jpeg", name: "Emmo Acar" },
+  { src: "/images/saenger/saenger-2.jpeg", name: "Jessica Conte" },
+  { src: "/images/saenger/saenger-3.jpeg", name: "Sängerin" },
+  { src: "/images/saenger/saenger-4.jpeg", name: "Sänger" },
 ];
 
 export default function SingerCarousel() {
@@ -19,8 +20,8 @@ export default function SingerCarousel() {
   return (
     <section className="section singer-carousel-section">
       <div className="container">
-        <span className="eyebrow" data-animate="fade-up">Die Stimmen</span>
-        <h2 className="section-title" data-animate="fade-up" data-delay="100">Unsere Sänger</h2>
+        <span className="eyebrow" data-animate="fade-up">Die Musiker</span>
+        <h2 className="section-title" data-animate="fade-up" data-delay="100">Die Band</h2>
 
         <div className="singer-carousel-wrap" data-animate="fade-up" data-delay="200">
           <button
