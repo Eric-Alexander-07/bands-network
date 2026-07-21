@@ -408,7 +408,7 @@ h3, h4 {
 .hero-split {
   flex: 1 0 0%;               /* flex-basis:0 lets Safari resolve height from flex */
   display: grid;
-  grid-template-columns: 48fr 52fr;
+  grid-template-columns: 38fr 62fr;
   grid-template-rows: 1fr;    /* explicit row forces definite height in Safari */
   overflow: hidden;
   min-height: 0;
@@ -478,9 +478,9 @@ h3, h4 {
   position: absolute;
   top: 0;
   left: 0;
-  width: 25%;
+  width: 45%;
   height: 100%;
-  background: linear-gradient(to right, var(--bg-dark) 0%, transparent 100%);
+  background: linear-gradient(to right, var(--bg-dark) 0%, rgba(25, 23, 20, 0.55) 45%, transparent 100%);
   z-index: 1;
   pointer-events: none;
 }
@@ -586,7 +586,7 @@ h3, h4 {
 }
 .hero-sub {
   font-size: 0.9375rem;
-  color: rgba(226,217,200,0.82);
+  color: var(--text-light);
   margin-bottom: 28px;
   line-height: 1.6;
   max-width: 360px;
@@ -719,7 +719,7 @@ h3, h4 {
 }
 .social-media-desc {
   font-size: 1rem;
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1.8;
   margin-bottom: 32px;
   max-width: 400px;
@@ -1002,7 +1002,7 @@ h3, h4 {
   line-height: 1.05;
 }
 .about-text p {
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 32px;
@@ -1084,7 +1084,7 @@ h3, h4 {
 }
 .occasions-text { display: flex; flex-direction: column; align-items: flex-start; }
 .occasions-desc {
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 32px;
@@ -1264,7 +1264,7 @@ h3, h4 {
   margin-bottom: 20px;
 }
 .booking-cta-inner p {
-  color: var(--text-light-muted);
+  color: var(--text-light);
   font-size: 1.0625rem;
   margin-bottom: 48px;
   max-width: 480px;
@@ -1423,7 +1423,7 @@ h3, h4 {
   line-height: 1.1;
 }
 .about-simple-text p {
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 16px;
@@ -1974,7 +1974,7 @@ h3, h4 {
   align-items: start;
 }
 .media-social-desc {
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 1rem;
   line-height: 1.8;
   margin-bottom: 36px;
@@ -2068,13 +2068,13 @@ h3, h4 {
   object-position: center top;
   display: block;
 }
-.services-split-img--tall {
-  aspect-ratio: 3 / 4;
+.services-split-img--wide {
+  aspect-ratio: 4 / 3;
 }
 @media (max-width: 900px) {
   .services-split,
   .services-split--imgfirst { grid-template-columns: 1fr; }
-  .services-split-img--tall { aspect-ratio: 4 / 3; }
+  .services-split-img--wide { aspect-ratio: 4 / 3; }
 }
 
 /* ─── Services Band Intro ───────────────────────────────────── */
@@ -2127,7 +2127,7 @@ h3, h4 {
 /* ─── Technik Section ───────────────────────────────────────── */
 .technik-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .technik-intro {
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 1rem;
   line-height: 1.8;
   max-width: 680px;
@@ -2178,7 +2178,7 @@ h3, h4 {
 }
 .technik-note {
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: var(--text);
   line-height: 1.75;
   padding: 20px 24px;
   border-left: 2px solid var(--gold);
@@ -2198,7 +2198,7 @@ h3, h4 {
 .refs-section { overflow: hidden; }
 
 .refs-intro {
-  color: var(--text-muted);
+  color: var(--text);
   font-size: 1rem;
   line-height: 1.8;
   max-width: 560px;
@@ -2340,7 +2340,7 @@ h3, h4 {
   align-items: start;
 }
 .booking-info h2 { font-size: clamp(1.35rem,2.7vw,2.025rem); margin-bottom: 20px; color: var(--text-light); }
-.booking-info p { color: var(--text-light-muted); font-size: 1rem; line-height: 1.75; margin-bottom: 32px; }
+.booking-info p { color: var(--text-light); font-size: 1rem; line-height: 1.75; margin-bottom: 32px; }
 .booking-contact { display: flex; flex-direction: column; gap: 16px; }
 .booking-contact-label { font-family: var(--font-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); display: block; margin-bottom: 2px; }
 .booking-contact-value { font-size: 0.9375rem; color: var(--text-light); }

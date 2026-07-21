@@ -30,10 +30,10 @@ export default function ServicesPage({ content = {} }: Props) {
             top: "50%",
             transform: "translateY(-50%)",
             width: "680px",
-            opacity: 0.52,
+            opacity: 0.28,
             pointerEvents: "none",
             userSelect: "none",
-            filter: "none",
+            filter: "brightness(0.5)",
             zIndex: 0,
           }}
         />
@@ -83,7 +83,7 @@ export default function ServicesPage({ content = {} }: Props) {
       <section className="section technik-section">
         <div className="container">
           <div className="services-split services-split--imgfirst">
-            <div className="services-split-img services-split-img--tall" data-animate="fade-up">
+            <div className="services-split-img services-split-img--wide" data-animate="fade-up">
               <img src={content.image_main || "/images/gallery/live-8.webp"} alt="WE ROCK auf der Bühne" />
             </div>
             <div>

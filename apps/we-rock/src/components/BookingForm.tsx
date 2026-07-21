@@ -69,6 +69,7 @@ export default function BookingForm() {
             <li>Wie lange soll die Band in etwa spielen?</li>
             <li>Treten noch andere Künstler an dem Abend auf?</li>
             <li>Wünschen Sie Pausenmusik oder einen DJ-Service der Band?</li>
+            <li>Bitte nutzen Sie die vorausgefüllte E-Mail-Vorlage und löschen Sie nichts daraus – so können wir sicherstellen, für welche Band Ihre Anfrage ist.</li>
             <li>Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
           </ul>
         </div>
