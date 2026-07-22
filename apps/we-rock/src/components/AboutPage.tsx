@@ -15,7 +15,7 @@ export default function AboutPage({ content = {} }: Props) {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/about.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/about-hero.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 28%" }} />
         <div className="container">
           <div className="page-hero-text-narrow">
             <span className="eyebrow">Über die Band</span>

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { band } from "@/config/band";
-import ConcentricRings from "@/components/ConcentricRings";
 
 type PC = Record<string, string>;
 interface Props { content?: PC; }
@@ -18,24 +17,12 @@ export default function ServicesPage({ content = {} }: Props) {
       </section>
 
       {/* Besetzung — Text */}
-      <section className="section section-has-rings" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative", overflow: "hidden" }}>
-        <ConcentricRings className="rings-far-right" />
+      <section className="section" style={{ background: "var(--bg-card)", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)", position: "relative", overflow: "hidden" }}>
         <img
           src="/images/logo_tansparent.png"
           alt=""
           aria-hidden="true"
-          style={{
-            position: "absolute",
-            right: "160px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            width: "680px",
-            opacity: 0.28,
-            pointerEvents: "none",
-            userSelect: "none",
-            filter: "brightness(0.5)",
-            zIndex: 0,
-          }}
+          className="besetzung-bg-logo"
         />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <span className="eyebrow" data-animate="fade-up">Was wir anbieten</span>

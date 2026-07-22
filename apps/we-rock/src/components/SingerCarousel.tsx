@@ -1,11 +1,17 @@
 "use client";
 import { useRef } from "react";
 
+/* Namen dienen nur als alt-Text (SEO) und werden auf der Seite nicht sichtbar angezeigt. */
 const SINGERS = [
-  { src: "/images/saenger/saenger-1.jpeg", name: "Emmo Acar" },
-  { src: "/images/saenger/saenger-2.jpeg", name: "Jessica Conte" },
-  { src: "/images/saenger/saenger-3.jpeg", name: "Sängerin" },
-  { src: "/images/saenger/saenger-4.jpeg", name: "Sänger" },
+  { src: "/images/saenger/jessica-conte.webp",   name: "Jessica Conte" },
+  { src: "/images/saenger/emmo-acar.webp",       name: "Emmo Acar" },
+  { src: "/images/saenger/bobby-stoecker.webp",  name: "Bobby Stöcker" },
+  { src: "/images/saenger/juergen-lucas.webp",   name: "Jürgen Lucki Lucas" },
+  { src: "/images/saenger/heiko-elger.webp",     name: "Heiko Elger" },
+  { src: "/images/saenger/axel-balke.webp",      name: "Axel Balke" },
+  { src: "/images/saenger/armin-donderer.webp",  name: "Armin Donderer" },
+  { src: "/images/saenger/jake-voth.webp",       name: "Jake Voth" },
+  { src: "/images/saenger/david-readman.webp",   name: "David Readman" },
 ];
 
 export default function SingerCarousel() {

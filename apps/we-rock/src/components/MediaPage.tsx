@@ -33,7 +33,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-2.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src="/images/media-header.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 25%" }} />
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>
           <h1>Media &amp; News</h1>
@@ -124,7 +124,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
             {/* Bild links */}
             <div className="media-social-img-col" data-animate="fade-right">
               <LightboxImage
-                src={content.image_main || "/images/gallery/live-1.webp"}
+                src={content.image_main || "/images/media-social.webp"}
                 alt="WE ROCK Live"
                 className="media-social-img"
                 wrapperClassName="media-social-img-lb"

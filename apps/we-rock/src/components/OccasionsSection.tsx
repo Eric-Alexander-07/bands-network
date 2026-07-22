@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { band } from "@/config/band";
 import PhotoCarousel from "@/components/PhotoCarousel";
 import ConcentricRings from "@/components/ConcentricRings";
+
+const TRIBUTE_PHOTOS = [
+  { src: "/images/tribute-1.webp", alt: "WE ROCK – Tribute Show live" },
+  { src: "/images/tribute-2.webp", alt: "WE ROCK – Tribute Show live" },
+  { src: "/images/tribute-3.webp", alt: "WE ROCK – Tribute Show live" },
+];
 
 export default function OccasionsSection() {
   return (
@@ -10,7 +15,7 @@ export default function OccasionsSection() {
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="occasions-layout">
           <div data-animate="fade-right">
-            <PhotoCarousel photos={band.photos.slice(0, 3)} />
+            <PhotoCarousel photos={TRIBUTE_PHOTOS} />
           </div>
           <div className="occasions-text">
             <span className="eyebrow" data-animate="fade-up">Die Bühne gehört Euch – der Sound gehört uns!</span>

@@ -28,7 +28,7 @@ export default function BookingPage() {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-4.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 0%" }} />
+        <img src="/images/kontakt-hero.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 35%" }} />
         <div className="container">
           <span className="eyebrow">Buchungsanfrage</span>
           <h1>Booking</h1>

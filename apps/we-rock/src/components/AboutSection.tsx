@@ -11,7 +11,7 @@ export default function AboutSection() {
         <div className="about-grid">
           <div className="about-image-wrap" data-animate="fade-right">
             <LightboxImage
-              src="/images/about.webp"
+              src="/images/about-band.webp"
               alt="WE ROCK — Die Band"
               className="about-img"
               overlayContent="⊕"

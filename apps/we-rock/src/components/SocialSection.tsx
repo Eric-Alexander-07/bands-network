@@ -9,7 +9,7 @@ const GRID_PHOTOS = [
   { src: "/images/gallery/live-12.webp", alt: "WE ROCK auf der Bühne" },
   { src: "/images/gallery/live-16.webp", alt: "WE ROCK Festival" },
   { src: "/images/gallery/live-20.webp", alt: "WE ROCK Vocalist" },
-  { src: "/images/hero.webp",            alt: "WE ROCK Live" },
+  { src: "/images/social-news.webp",     alt: "WE ROCK Live" },
 ];
 
 const PLATFORMS = [
