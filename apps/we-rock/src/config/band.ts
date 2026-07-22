@@ -22,8 +22,10 @@ export const band = {
   facts: [
     { value: "4", label: "Sänger" },
     { value: "7", label: "Bandmitglieder" },
-    { value: "Songs", label: "aus 5 Jahrzehnten" },
-    { value: "Breites", label: "Repertoire & Tribute Blocks" },
+  ],
+  highlights: [
+    { text: "Songs aus 5 Jahrzehnten" },
+    { text: "Breites Repertoire & Tribute Blocks" },
   ],
 
   occasions: [
