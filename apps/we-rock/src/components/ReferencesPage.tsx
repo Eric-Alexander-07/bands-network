@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { band } from "@/config/band";
-import ConcentricRings from "@/components/ConcentricRings";
 import ReferencesMarquee from "@/components/ReferencesMarquee";
 import type { Referenz } from "@/lib/data";
+
+/* Below this count, the scrolling 4-column marquee looks repetitive (too few
+   unique items per column) — show a plain static grid instead. */
+const MARQUEE_MIN_COUNT = 12;
 
 export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
   return (
@@ -15,8 +18,7 @@ export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
         </div>
       </section>
 
-      <section className="section refs-section section-has-rings">
-        <ConcentricRings className="rings-lower-right" />
+      <section className="section refs-section">
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Referenzen</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">
@@ -27,7 +29,20 @@ export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
             die {band.name} für ihre Events gebucht haben.
           </p>
         </div>
-        <ReferencesMarquee refs={refs} />
+        {refs.length >= MARQUEE_MIN_COUNT ? (
+          <ReferencesMarquee refs={refs} />
+        ) : (
+          <div className="container">
+            <div className="refs-simple-grid" data-animate="stagger">
+              {refs.map((r, i) => (
+                <div key={i} className="ref-chip">
+                  {r.type && <span className="ref-chip-type">{r.type}</span>}
+                  <span className="ref-chip-name">{r.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <section className="booking-cta">

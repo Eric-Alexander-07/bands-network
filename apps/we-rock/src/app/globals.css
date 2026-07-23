@@ -2250,6 +2250,14 @@ h3, h4 {
   margin-bottom: 60px;
 }
 
+/* Plain fallback grid for a small number of references — the scrolling
+   marquee below needs enough unique items per column to not look repetitive. */
+.refs-simple-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 .refs-scene {
   position: relative;
   /* Full viewport width */
@@ -2452,7 +2460,7 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  object-position: center 20%;
   display: block;
 }
 
@@ -2480,20 +2488,14 @@ h3, h4 {
 }
 @media (max-width: 640px) {
   .gallery-editorial { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
-  /* Repeating 11-item pattern. Half-tiles always come in even-sized runs (2 or 4)
-     between full-width tiles — in a 2-column grid, an odd run leaves one tile
-     stranded alone in its row, which leaves the neighboring cell blank. */
-  .gallery-editorial-item:nth-child(11n+1) { grid-column: span 2; grid-row: span 2; }
-  .gallery-editorial-item:nth-child(11n+2),
-  .gallery-editorial-item:nth-child(11n+3) { grid-column: span 1; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(11n+4) { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(11n+5),
-  .gallery-editorial-item:nth-child(11n+6),
-  .gallery-editorial-item:nth-child(11n+7),
-  .gallery-editorial-item:nth-child(11n+8) { grid-column: span 1; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(11n+9) { grid-column: span 2; grid-row: span 2; }
-  .gallery-editorial-item:nth-child(11n+10),
-  .gallery-editorial-item:nth-child(11n)   { grid-column: span 1; grid-row: span 1; }
+  /* Repeating 7-item pattern, matching Spirit of Soul's mobile gallery layout. */
+  .gallery-editorial-item:nth-child(7n+1),
+  .gallery-editorial-item:nth-child(7n+6),
+  .gallery-editorial-item:nth-child(7n)   { grid-column: span 2; grid-row: span 1; }
+  .gallery-editorial-item:nth-child(7n+2),
+  .gallery-editorial-item:nth-child(7n+3),
+  .gallery-editorial-item:nth-child(7n+4),
+  .gallery-editorial-item:nth-child(7n+5) { grid-column: span 1; grid-row: span 1; }
 }
 
 /* ─── Gallery Lightbox (full-screen with nav + thumbs) ──────── */

@@ -60,17 +60,16 @@ export default function BookingForm() {
         <div className="booking-checklist">
           <p className="booking-checklist-title">Hilfreiche Angaben für Ihre Anfrage</p>
           <ul className="booking-checklist-list">
-            <li>In welcher Stadt findet Ihre Veranstaltung statt?</li>
-            <li>In welcher Location feiern Sie?</li>
-            <li>Wie viele Gäste werden in etwa erwartet?</li>
-            <li>Gibt es dort Technik oder soll die Band diese mitbringen?</li>
-            <li>Gibt es eine Bühne?</li>
-            <li>Haben Sie einen Budgetrahmen oder welche Besetzung wünschen Sie?</li>
+            <li>In welcher Stadt findet Eure Veranstaltung statt?</li>
+            <li>In welcher Location feiert Ihr?</li>
+            <li>Wie viele Gäste / Zuschauer werden in etwa erwartet?</li>
+            <li>Gibt es in Eurer Location Technik, oder soll die Band diese mitbringen?</li>
+            <li>Gibt es eine Bühne? Wie groß ist sie?</li>
+            <li>Nehmt Ihr Eintritt, und wenn ja wie hoch ist er in der Regel?</li>
             <li>Wie lange soll die Band in etwa spielen?</li>
-            <li>Treten noch andere Künstler an dem Abend auf?</li>
-            <li>Wünschen Sie Pausenmusik oder einen DJ-Service der Band?</li>
-            <li>Bitte nutzen Sie die vorausgefüllte E-Mail-Vorlage und löschen Sie nichts daraus – so können wir sicherstellen, für welche Band Ihre Anfrage ist.</li>
-            <li>Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
+            <li>Treten noch andere Künstler / Bands an dem Abend auf?</li>
+            <li>Bitte nutzt Sie die vorausgefüllte E-Mail-Vorlage und bitte nichts heraus löschen.</li>
+            <li><strong>WICHTIG!</strong> Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
           </ul>
         </div>
       </div>
