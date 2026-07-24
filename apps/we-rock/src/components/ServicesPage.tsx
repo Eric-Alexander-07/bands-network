@@ -55,12 +55,13 @@ export default function ServicesPage({ content = {} }: Props) {
           <h3 className="section-title" style={{ marginTop: "2.5rem" }} data-animate="fade-up">Programm</h3>
           <div className="besetzung-text" data-animate="fade-up" data-delay="100">
             <p>
-              Musikalisch spannt die Band den Bogen von den legendären Hymnen von Led Zeppelin, Deep Purple und
-              Whitesnake über Hardrock-Ikonen wie Queen, Bon Jovi, Dio, Rainbow, AC/DC, Van Halen, Ozzy Osbourne
-              und Guns N&apos; Roses bis hin zu melodischem Arena Rock von Journey und Foreigner. Auch Bluesrock-Perlen
-              von Gary Moore, Billy Idol, ZZ-Top, Toto oder The Black Crowes dürfen dabei natürlich nicht fehlen.
-              Auf Wunsch kann die Band sogar einzelne kleine Tribute Blocks von 4–5 Songs einzelner Bands wie
-              Whitesnake, Deep Purple, Bryan Adams oder Journey mit ins Programm einbauen.
+              Musikalisch spannt die Band einen weiten Bogen in Sachen Classic Rock. Legendäre Hymnen von Led Zeppelin,
+              Queen, AC/DC und Guns N&apos; Roses sind natürlich gesetzt. Ebenso wie Songs der Hardrock Ikonen Deep Purple,
+              Whitesnake, Dio, Rainbow, Van Halen und Ozzy Osbourne. Auch melodischer Arena Rock von Def Leppard, TOTO,
+              Journey und Foreigner werden im variablen Repertoire genauso berücksichtigt, wie Bluesrock-Perlen von Gary
+              Moore, ZZ-Top, oder den Black Crowes. Auf Wunsch und in Absprache mit der Band können sogar einzelne
+              Schwerpunkte auf kleine Tribute Blocks von 4–5 Songs einzelner Bands, wie Whitesnake, Deep Purple, Bryan
+              Adams oder Journey mit ins Programm einbaut werden.
             </p>
           </div>
         </div>

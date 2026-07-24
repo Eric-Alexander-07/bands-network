@@ -976,7 +976,7 @@ h3, h4 {
 }
 .about-img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: center top;
   display: block;
@@ -3380,6 +3380,9 @@ select::-ms-expand { display: none; }
 
 /* ─── Tablets (520–1024px): hero dates as compact inline bar ─── */
 @media (min-width: 520px) and (max-width: 1024px) {
+  /* The compact date bar frees up a lot of vertical space in this range,
+     leaving a large empty gap below the content if top-anchored — bottom-align instead. */
+  .hero-left { justify-content: flex-end; }
   .hero-dates {
     display: flex;
     flex-direction: row;

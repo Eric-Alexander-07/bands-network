@@ -1,9 +1,9 @@
 export const band = {
   name: "We Rock",
-  claim: "Classic Rock & Hardrock – laut, authentisch, unvergesslich",
+  claim: "Classic Rock / Hardrock / Melodic Rock – druckvoll, authentisch, unvergesslich!",
   tagline: "Die Classic Rock Tribute Show",
-  genre: "Classic Rock / Hard Rock / Tribute",
-  location: "Groß-Umstadt",
+  genre: "Classic Rock Tribute",
+  location: "Darmstadt",
   email: "info@v-m-p.com",
   accentColor: "#7c3aed",
 
@@ -94,7 +94,6 @@ export const band = {
     instagram: "https://instagram.com/werock_rockband",
     facebook: "https://www.facebook.com/We.Rock.Rockband/",
     youtube: "https://www.youtube.com/@VividMusicProductions",
-    spotify: "https://open.spotify.com/artist/werockband",
   },
 
   about: {
