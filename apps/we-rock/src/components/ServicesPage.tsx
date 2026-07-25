@@ -58,10 +58,10 @@ export default function ServicesPage({ content = {} }: Props) {
               Musikalisch spannt die Band einen weiten Bogen in Sachen Classic Rock. Legendäre Hymnen von Led Zeppelin,
               Queen, AC/DC und Guns N&apos; Roses sind natürlich gesetzt. Ebenso wie Songs der Hardrock Ikonen Deep Purple,
               Whitesnake, Dio, Rainbow, Van Halen und Ozzy Osbourne. Auch melodischer Arena Rock von Def Leppard, TOTO,
-              Journey und Foreigner werden im variablen Repertoire genauso berücksichtigt, wie Bluesrock-Perlen von Gary
-              Moore, ZZ-Top, oder den Black Crowes. Auf Wunsch und in Absprache mit der Band können sogar einzelne
-              Schwerpunkte auf kleine Tribute Blocks von 4–5 Songs einzelner Bands, wie Whitesnake, Deep Purple, Bryan
-              Adams oder Journey mit ins Programm einbaut werden.
+              Journey und Foreigner wird im variablen Repertoire ebenso berücksichtigt wie Bluesrock-Perlen von Gary
+              Moore, ZZ-Top oder den Black Crowes. Auf Wunsch und in Absprache mit der Band können einzelne
+              Schwerpunkte auf kleine Tribute Blocks von 4–5 Songs einzelner Bands wie Whitesnake, Deep Purple, Bryan
+              Adams oder ins Programm einfließen.
             </p>
           </div>
         </div>

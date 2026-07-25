@@ -518,7 +518,9 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+  /* New home hero: singers sit in the lower-center, with lots of headroom.
+     Anchor toward the lower portion so both singers stay in frame. */
+  object-position: center 60%;
   filter: grayscale(8%) contrast(1.05);
 }
 .hero-content {
@@ -2399,7 +2401,8 @@ h3, h4 {
 .booking-contact-value { font-size: 0.9375rem; color: var(--text-light); }
 
 /* Booking checklist */
-.booking-checklist { margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(200,21,26,0.2); }
+.booking-checklist-intro { margin-top: 36px; font-size: 0.9375rem; color: var(--text-light); line-height: 1.7; }
+.booking-checklist { margin-top: 24px; padding-top: 28px; border-top: 1px solid rgba(200,21,26,0.2); }
 .booking-checklist-title { font-family: var(--font-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff !important; margin-bottom: 14px; }
 .booking-checklist-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
 .booking-checklist-list li { font-size: 0.875rem; color: var(--text-light); line-height: 1.55; padding-left: 18px; position: relative; }
@@ -2440,12 +2443,16 @@ h3, h4 {
 .form-success-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--text-light); margin-bottom: 12px; }
 .form-success-sub { color: var(--text-light-muted); font-size: 1rem; }
 
-/* ─── Gallery Page — Editorial Grid ────────────────────────── */
+/* ─── Gallery Page — Editorial Masonry (VMP layout) ────────────
+   4-column dense grid on desktop, 2-column on mobile. Per-item
+   col/row spans are set inline in GalleryGrid.tsx (SPAN_PATTERN);
+   grid-auto-flow:dense backfills the gaps for a tight masonry. */
 .gallery-editorial {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-auto-rows: 260px;
-  gap: 4px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 200px;
+  grid-auto-flow: dense;
+  gap: 8px;
   margin-top: 48px;
 }
 
@@ -2454,6 +2461,7 @@ h3, h4 {
   background: var(--bg-elevated);
   cursor: zoom-in;
   transition: opacity 0.2s;
+  /* square corners (no border-radius) — unlike VMP's rounded tiles */
 }
 .gallery-editorial-item:hover { opacity: 0.9; }
 .gallery-editorial-item img {
@@ -2464,38 +2472,11 @@ h3, h4 {
   display: block;
 }
 
-/* Layout: repeating 7-item editorial pattern (works for any number of images) */
-.gallery-editorial-item:nth-child(7n+1) { grid-column: span 4; grid-row: span 2; }
-.gallery-editorial-item:nth-child(7n+2) { grid-column: span 2; }
-.gallery-editorial-item:nth-child(7n+3) { grid-column: span 2; }
-.gallery-editorial-item:nth-child(7n+4) { grid-column: span 3; }
-.gallery-editorial-item:nth-child(7n+5) { grid-column: span 3; }
-.gallery-editorial-item:nth-child(7n+6) { grid-column: span 4; grid-row: span 2; }
-.gallery-editorial-item:nth-child(7n)   { grid-column: span 2; grid-row: span 2; }
-
-@media (max-width: 900px) {
+@media (max-width: 767px) {
   .gallery-editorial {
-    grid-template-columns: repeat(4, 1fr);
-    grid-auto-rows: 200px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 160px;
   }
-  .gallery-editorial-item:nth-child(7n+1) { grid-column: span 4; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(7n+2),
-  .gallery-editorial-item:nth-child(7n+3) { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(7n+4),
-  .gallery-editorial-item:nth-child(7n+5) { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(7n+6) { grid-column: span 4; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(7n)   { grid-column: span 4; grid-row: span 1; }
-}
-@media (max-width: 640px) {
-  .gallery-editorial { grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; }
-  /* Repeating 7-item pattern, matching Spirit of Soul's mobile gallery layout. */
-  .gallery-editorial-item:nth-child(7n+1),
-  .gallery-editorial-item:nth-child(7n+6),
-  .gallery-editorial-item:nth-child(7n)   { grid-column: span 2; grid-row: span 1; }
-  .gallery-editorial-item:nth-child(7n+2),
-  .gallery-editorial-item:nth-child(7n+3),
-  .gallery-editorial-item:nth-child(7n+4),
-  .gallery-editorial-item:nth-child(7n+5) { grid-column: span 1; grid-row: span 1; }
 }
 
 /* ─── Gallery Lightbox (full-screen with nav + thumbs) ──────── */
@@ -3369,27 +3350,51 @@ select::-ms-expand { display: none; }
     z-index: 1;
     background: transparent;
     justify-content: flex-start;
+    align-items: center;
+    text-align: center;
     padding: calc(var(--nav-height) + 40px) 40px 56px;
   }
   /* On mobile, content anchors from top — prevent overflow under nav */
   .hero-content { margin-top: 0; }
+  /* Center everything on the collapsed full-bleed hero. The logo and the
+     white sub-line are block elements, so they need auto margins (text-align
+     alone doesn't center block boxes) to sit truly centered. */
+  .hero-eyebrow { justify-content: center; }
+  .hero-actions { justify-content: center; }
+  .hero-logo { margin-left: auto; margin-right: auto; }
+  .hero-sub { margin-left: auto; margin-right: auto; }
   /* Nav: hide links, show toggle (nav has 8 items — needs toggle early) */
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
+
+  /* Spotlights are sized for the desktop dark panel only — once the hero
+     collapses to a single full-bleed photo background, they show as a
+     reddish light overlay across the whole image. */
+  .hero-spotlights { display: none; }
+
+  /* On the collapsed full-bleed hero the square photo is scaled hard by
+     `cover`. Drop the parallax overscan here (parallax is disabled on
+     mobile anyway) so the image sits at its natural cover scale — a touch
+     more zoomed-out, showing more of the two singers. */
+  .hero-right-inner { top: 0; bottom: 0; }
 }
 
 /* ─── Tablets (520–1024px): hero dates as compact inline bar ─── */
 @media (min-width: 520px) and (max-width: 1024px) {
   /* The compact date bar frees up a lot of vertical space in this range,
      leaving a large empty gap below the content if top-anchored — bottom-align instead. */
-  .hero-left { justify-content: flex-end; }
+  .hero-left { justify-content: flex-end; align-items: center; text-align: center; }
+  .hero-eyebrow { justify-content: center; }
+  .hero-actions { justify-content: center; }
   .hero-dates {
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 14px;
     flex-wrap: nowrap;
     overflow: hidden;
+    width: 100%;
   }
   .hero-dates-label {
     margin-bottom: 0;
@@ -3399,7 +3404,7 @@ select::-ms-expand { display: none; }
   .hero-date-list {
     display: flex;
     flex-direction: row;
-    flex: 1;
+    flex: 0 1 auto;
     min-width: 0;
     max-height: none;
     overflow: visible;

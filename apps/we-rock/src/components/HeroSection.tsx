@@ -24,13 +24,26 @@ export default function HeroSection({ dbEvents = [] }: Props) {
     .slice(0, 3);
 
   useEffect(() => {
-    const onScroll = () => {
+    // Parallax only on the desktop split layout. On the collapsed mobile/tablet
+    // hero the image sits flush (no overscan), so translating it would reveal a
+    // gap — keep it static there.
+    const mq = window.matchMedia("(max-width: 1024px)");
+    const update = () => {
       if (!parallaxRef.current) return;
+      if (mq.matches) {
+        parallaxRef.current.style.transform = "";
+        return;
+      }
       const y = Math.min(window.scrollY * 0.22, 100);
       parallaxRef.current.style.transform = `translateY(${y}px) translateZ(0)`;
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   return (
@@ -132,7 +145,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
         <div className="hero-right">
           <div ref={parallaxRef} className="hero-right-inner">
             <img
-              src="/images/hero.webp"
+              src="/images/hero-home.webp"
               alt="WE ROCK — Live Performance"
               className="hero-right-img"
             />

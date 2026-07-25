@@ -3,6 +3,43 @@
 import { useState, type FormEvent } from "react";
 import { band } from "@/config/band";
 
+// Fragen aus den "Hilfreichen Angaben" — sie werden in das Nachrichtenfeld
+// und in die E-Mail-Vorlage übernommen, jeweils mit Platz zum Antworten.
+const EVENT_QUESTIONS = [
+  "In welcher Stadt findet Eure Veranstaltung statt?",
+  "In welcher Location feiert Ihr?",
+  "Wie viele Gäste / Zuschauer werden in etwa erwartet?",
+  "Gibt es in Eurer Location Technik, oder soll die Band diese mitbringen?",
+  "Gibt es eine Bühne? Wie groß ist sie?",
+  "Nehmt Ihr Eintritt, und wenn ja wie hoch ist er in der Regel?",
+  "Wie lange soll die Band in etwa spielen?",
+  "Treten noch andere Künstler / Bands an dem Abend auf?",
+];
+
+// Jede Frage mit einer leeren Antwortzeile darunter.
+const QUESTION_TEMPLATE = EVENT_QUESTIONS.map(q => `${q}\n: `).join("\n\n");
+
+// Vollständige Vorlage für den direkten Klick auf die E-Mail-Adresse
+// (dort liegen noch keine Formulardaten vor).
+const DIRECT_MAIL_SUBJECT = `Anfrage für ${band.name}`;
+const DIRECT_MAIL_BODY = [
+  `Hallo ${band.name}-Team,`,
+  "",
+  "ich interessiere mich für eine Buchung. Hier meine Angaben:",
+  "",
+  "Name: ",
+  "Telefon: ",
+  "Veranstaltungsdatum: ",
+  "Anlass: ",
+  "",
+  QUESTION_TEMPLATE,
+  "",
+  "--",
+  `Diese Anfrage betrifft die Band ${band.name}.`,
+].join("\n");
+
+const DIRECT_MAIL_HREF = `mailto:${band.email}?subject=${encodeURIComponent(DIRECT_MAIL_SUBJECT)}&body=${encodeURIComponent(DIRECT_MAIL_BODY)}`;
+
 export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
 
@@ -24,14 +61,14 @@ export default function BookingForm() {
       date ? `Veranstaltungsdatum: ${date}` : "",
       occasion ? `Anlass: ${occasion}` : "",
       "",
-      `Nachricht:`,
+      `Angaben zur Veranstaltung:`,
       message,
       "",
       "--",
       `Diese Anfrage wurde über die ${band.name} Website gesendet.`,
     ].filter(line => line !== undefined).join("\n");
 
-    window.location.href = `mailto:info@v-m-p.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+    window.location.href = `mailto:${band.email}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
     setSubmitted(true);
   }
 
@@ -47,7 +84,7 @@ export default function BookingForm() {
         <div className="booking-contact">
           <div>
             <span className="booking-contact-label">E-Mail</span>
-            <a href={`mailto:${band.email}`} className="booking-contact-value">
+            <a href={DIRECT_MAIL_HREF} className="booking-contact-value">
               {band.email}
             </a>
           </div>
@@ -57,9 +94,16 @@ export default function BookingForm() {
           </div>
         </div>
 
+        <p className="booking-checklist-intro">
+          Schickt uns einfach eine E-Mail. Am schnellsten geht das über das
+          Kontaktformular rechts – es enthält bereits alle wichtigen Fragen und
+          öffnet automatisch euer E-Mail-Programm mit einer fertigen Vorlage.
+        </p>
+
         <div className="booking-checklist">
           <p className="booking-checklist-title">Hilfreiche Angaben für Ihre Anfrage</p>
           <ul className="booking-checklist-list">
+            <li>Bitte gebt im Betreff den Namen der Band an: <strong>{band.name}</strong>.</li>
             <li>In welcher Stadt findet Eure Veranstaltung statt?</li>
             <li>In welcher Location feiert Ihr?</li>
             <li>Wie viele Gäste / Zuschauer werden in etwa erwartet?</li>
@@ -68,7 +112,7 @@ export default function BookingForm() {
             <li>Nehmt Ihr Eintritt, und wenn ja wie hoch ist er in der Regel?</li>
             <li>Wie lange soll die Band in etwa spielen?</li>
             <li>Treten noch andere Künstler / Bands an dem Abend auf?</li>
-            <li>Bitte nutzt Sie die vorausgefüllte E-Mail-Vorlage und bitte nichts heraus löschen.</li>
+            <li>Bitte nutzt die vorausgefüllte E-Mail-Vorlage und bitte nichts heraus löschen.</li>
             <li><strong>WICHTIG!</strong> Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
           </ul>
         </div>
@@ -158,7 +202,8 @@ export default function BookingForm() {
               id="message"
               name="message"
               className="form-textarea"
-              placeholder="Erzählt uns von eurer Veranstaltung ..."
+              rows={18}
+              defaultValue={QUESTION_TEMPLATE}
             />
           </div>
           <div>
