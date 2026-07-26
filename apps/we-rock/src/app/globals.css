@@ -3435,6 +3435,34 @@ select::-ms-expand { display: none; }
   }
 }
 
+/* ─── iPad / tablets (641–1024px): split hero ─────────────────
+   Eyebrow + logo pinned to the top, everything from the claim down
+   (claim → sub → buttons → dates) pinned to the bottom — so the two
+   singers' faces stay clearly visible in the gap between. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 auto;
+    width: 100%;
+  }
+  /* margin-top:auto absorbs the free space above the claim, pushing it and
+     all following siblings to the bottom of the hero. */
+  .hero-claim { margin-top: auto; }
+  /* Top + bottom scrim: keeps the logo (top) and text (bottom) legible while
+     the middle band — the faces — stays clear. */
+  .hero-right::before {
+    background: linear-gradient(to bottom,
+      rgba(18,16,14,0.72) 0%,
+      rgba(18,16,14,0.18) 20%,
+      transparent 42%,
+      transparent 56%,
+      rgba(18,16,14,0.50) 80%,
+      rgba(18,16,14,0.92) 100%);
+  }
+}
+
 /* ─── Phones (<520px): hero dates fade-out list ──────────────── */
 @media (max-width: 519px) {
   .hero-date-list {
