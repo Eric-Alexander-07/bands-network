@@ -144,11 +144,19 @@ export default function HeroSection({ dbEvents = [] }: Props) {
         </div>
         <div className="hero-right">
           <div ref={parallaxRef} className="hero-right-inner">
-            <img
-              src="/images/hero-home.webp"
-              alt="WE ROCK — Live Performance"
-              className="hero-right-img"
-            />
+            <picture>
+              {/* Phones: taller portrait crop so the two singers stay large and
+                  clearly framed instead of being cropped small by the square. */}
+              <source
+                media="(max-width: 640px)"
+                srcSet="/images/hero-home-mobile.webp"
+              />
+              <img
+                src="/images/hero-home.webp"
+                alt="WE ROCK — Live Performance"
+                className="hero-right-img"
+              />
+            </picture>
           </div>
         </div>
       </div>

@@ -808,6 +808,11 @@ h3, h4 {
 }
 .social-photo-item:hover .social-photo-overlay { opacity: 1; }
 
+/* Single-image variant — one photo fills the whole right column (3:2, the
+   image's native ratio, so it shows in full without cropping). */
+.social-photo-single { display: block; }
+.social-photo-single .social-photo-item { aspect-ratio: 3 / 2; }
+
 /* ─── Dates List (Media Page) ───────────────────────────────── */
 .dates-list {
   display: flex;
@@ -3500,12 +3505,18 @@ select::-ms-expand { display: none; }
   /* Page hero */
   .page-hero { min-height: 340px; padding-top: calc(var(--nav-height) + 40px); padding-bottom: 48px; }
 
-  /* Hero */
-  .hero-left { padding: calc(var(--nav-height) + 16px) 20px 40px; }
+  /* Hero — bottom-anchored on phones so the buttons sit low and the two
+     singers (portrait crop) stay clearly visible in the upper area. */
+  .hero-left { justify-content: flex-end; padding: calc(var(--nav-height) + 16px) 20px 32px; }
+  /* Bottom scrim instead of the left→right one: darkens where the text now
+     sits (bottom) and keeps the singers' faces (upper area) clear. */
+  .hero-right::before {
+    background: linear-gradient(to top, rgba(18,16,14,0.90) 0%, rgba(18,16,14,0.45) 38%, rgba(18,16,14,0.05) 68%, transparent 100%);
+  }
   .hero-title { font-size: clamp(3rem, 14vw, 5.5rem); }
-  .hero-logo { height: 270px; }
+  .hero-logo { height: 210px; }
   .hero-claim { font-size: clamp(1.125rem, 4.5vw, 1.5rem); }
-  .hero-sub { font-size: 0.875rem; margin-bottom: 28px; max-width: 100%; }
+  .hero-sub { font-size: 0.875rem; margin-bottom: 24px; max-width: 100%; }
   .hero-actions { flex-direction: column; gap: 10px; }
   .hero-actions .btn { width: 100%; justify-content: center; text-align: center; }
   .hero-dates { margin-top: 28px; }

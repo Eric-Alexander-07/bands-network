@@ -3,14 +3,7 @@ import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
 import LightboxImage from "@/components/LightboxImage";
 
-const GRID_PHOTOS = [
-  { src: "/images/gallery/live-4.webp",  alt: "WE ROCK Live" },
-  { src: "/images/gallery/live-8.webp",  alt: "WE ROCK Gitarrist" },
-  { src: "/images/gallery/live-12.webp", alt: "WE ROCK auf der Bühne" },
-  { src: "/images/gallery/live-16.webp", alt: "WE ROCK Festival" },
-  { src: "/images/gallery/live-20.webp", alt: "WE ROCK Vocalist" },
-  { src: "/images/social-news.webp",     alt: "WE ROCK Live" },
-];
+const SOCIAL_PHOTO = { src: "/images/social-news.webp", alt: "WE ROCK Live — Publikum" };
 
 const PLATFORMS = [
   { key: "instagram" as const, label: "Instagram" },
@@ -57,16 +50,13 @@ export default function SocialSection() {
             </div>
           </div>
 
-          <div className="social-photo-grid" data-animate="fade-left">
-            {GRID_PHOTOS.map((photo, i) => (
-              <LightboxImage
-                key={i}
-                src={photo.src}
-                alt={photo.alt}
-                wrapperClassName="social-photo-item"
-                overlayContent="⊕"
-              />
-            ))}
+          <div className="social-photo-single" data-animate="fade-left">
+            <LightboxImage
+              src={SOCIAL_PHOTO.src}
+              alt={SOCIAL_PHOTO.alt}
+              wrapperClassName="social-photo-item"
+              overlayContent="⊕"
+            />
           </div>
 
         </div>
