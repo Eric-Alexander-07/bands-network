@@ -2,6 +2,7 @@ import Link from "next/link";
 import { band } from "@/config/band";
 import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 import ConcentricRings from "@/components/ConcentricRings";
+import PartnerSection from "@/components/PartnerSection";
 import ReferencesMarquee from "@/components/ReferencesMarquee";
 import type { Referenz } from "@/lib/data";
 
@@ -35,6 +36,8 @@ export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
         </div>
         <ReferencesMarquee refs={refs} />
       </section>
+
+      <PartnerSection />
 
       <section className="booking-cta">
         <div className="container booking-cta-inner">
