@@ -6,7 +6,7 @@ import SocialSection from "@/components/SocialSection";
 import OccasionsSection from "@/components/OccasionsSection";
 import ClientsStrip from "@/components/ClientsStrip";
 import BookingCTA from "@/components/BookingCTA";
-import { fetchEvents } from "@/lib/data";
+import { fetchEvents, fetchReferenzen } from "@/lib/data";
 
 import type { Metadata } from "next";
 
@@ -32,8 +32,10 @@ export const metadata: Metadata = {
 
 
 export default async function HomePage() {
-  // Fetch events from DB — only show in hero if entries exist
-  const dbEvents = await fetchEvents();
+  // Events + Referenzen parallel laden. Die Referenzen speisen die
+  // "Bekannte Veranstalter"-Leiste aus derselben Quelle wie /referenzen,
+  // damit Startseite und Referenzseite nicht auseinanderlaufen.
+  const [dbEvents, dbRefs] = await Promise.all([fetchEvents(), fetchReferenzen()]);
 
   return (
     <>
@@ -41,7 +43,7 @@ export default async function HomePage() {
       <AboutSection />
       <SocialSection />
       <OccasionsSection />
-      <ClientsStrip />
+      <ClientsStrip dbRefs={dbRefs} />
       <BookingCTA />
     </>
   );

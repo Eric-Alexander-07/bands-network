@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Galerie – WE ROCK | Konzert Fotos Live",
-  description: "Fotogalerie von WE ROCK – Eindrücke von Konzerten, Festivals, Stadtfesten, Clubs, und Tribute-Shows.",
+  description: "Fotogalerie von WE ROCK – Eindrücke von Konzerten, Festivals, Stadtfesten, Clubs und Tribute-Shows.",
   keywords: ["WE ROCK Fotos", "Classic Rock Live Fotos", "Rockband Galerie", "Hard Rock Bühnenfotos", "Tribute Show Bilder"],
   alternates: { canonical: "https://werock-rockband.de/galerie" },
   openGraph: {

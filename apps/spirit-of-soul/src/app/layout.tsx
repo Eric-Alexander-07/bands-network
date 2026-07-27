@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Spirit of Soul",
   },
   description:
-    "Spirit of Soul – Soulband aus Frankfurt am Main seit 2000. The Finest Of Black Music für Hochzeiten, Firmenevents und Festivals. Entertainment der Extraklasse. Jetzt buchen.",
+    "Soulband, Eventband und Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events.",
   keywords: [
     "Soulband Frankfurt",
     "Partyband Rhein-Main",
@@ -91,7 +91,7 @@ const musicGroupSchema = {
   name: "Spirit of Soul",
   alternateName: "Spirit of Soul – The Finest Of Black Music",
   description:
-    "Spirit of Soul ist eine professionelle Soulband aus Frankfurt am Main. Seit 2000 steht die Band für Entertainment der Extraklasse – Soul, R&B und Funk für Hochzeiten, Firmenevents und Festivals.",
+    "Soulband, Eventband und Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events.",
   url: BASE_URL,
   email: "info@v-m-p.com",
   foundingDate: "2000",
@@ -110,7 +110,7 @@ const musicGroupSchema = {
   },
   sameAs: [
     "https://www.facebook.com/spiritofsoulband/",
-    "https://instagram.com/bobbystoecker",
+    "https://instagram.com/spiritofsoul",
     "https://youtube.com/@spiritofsoul",
   ],
 };

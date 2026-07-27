@@ -37,7 +37,8 @@ const PATH_MAP: Record<string, string[]> = {
   media_videos:        ["/media"],
   media_images:        ["/galerie"],
   products:            ["/shop"],
-  referenzen:          ["/referenzen"],
+  // "/": die Referenzen speisen auch die "Bekannte Veranstalter"-Leiste der Startseite
+  referenzen:          ["/", "/referenzen"],
   besetzung_gruppen:   ["/services"],
   besetzung_eintraege: ["/services"],
   social_links:        ["/", "/media"],

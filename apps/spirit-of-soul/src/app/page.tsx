@@ -6,34 +6,51 @@ import SocialSection from "@/components/SocialSection";
 import OccasionsSection from "@/components/OccasionsSection";
 import ClientsStrip from "@/components/ClientsStrip";
 import BookingCTA from "@/components/BookingCTA";
-import { fetchEvents } from "@/lib/data";
+import { fetchEvents, fetchReferenzen } from "@/lib/data";
 
 import type { Metadata } from "next";
 
+// Ein einziger, natürlich lesbarer Beschreibungssatz — bewusst als vollständiger
+// Satz formuliert und < 160 Zeichen, damit Google ihn als Snippet übernimmt
+// statt ihn durch Seitentext zu ersetzen.
+const HOME_DESCRIPTION =
+  "Soulband, Eventband und Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events.";
+
 export const metadata: Metadata = {
   title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
-  description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
-  keywords: ["Soulband Frankfurt", "Partyband Rhein-Main", "Soul Motown R&B Hiphop", "Band Hochzeit Frankfurt", "Liveband Firmenevent", "Spirit of Soul", "Hochzeit Eventband Partyband", "Black Music", "Schausteller Party", "Soul Musik Soulmusik"],
+  description: HOME_DESCRIPTION,
+  keywords: ["Soulband Frankfurt", "Spirit of Soul", "Liveband Frankfurt", "Band buchen Hochzeit", "Partyband Rhein-Main"],
   alternates: { canonical: "https://spiritofsoul.com" },
   openGraph: {
     title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
-    description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+    description: HOME_DESCRIPTION,
     url: "https://spiritofsoul.com",
     images: [{ url: "https://spiritofsoul.com/images/about.webp" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Spirit of Soul – The Finest Of Black Music | Soulband Frankfurt",
-    description: "Spirit of Soul – Soulband, Eventband, Partyband aus Frankfurt am Main. Livemusik höchster Qualität für Hochzeiten, Firmenevents, Galas, Stadtfeste und High Class Events aller Art",
+    description: HOME_DESCRIPTION,
   },
-    robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 
 
 export default async function HomePage() {
-  // Fetch events from DB — only show in hero if entries exist
-  const dbEvents = await fetchEvents();
+  // Events + Referenzen parallel laden. Die Referenzen speisen die
+  // "Bekannte Veranstalter"-Leiste aus derselben Quelle wie /referenzen,
+  // damit Startseite und Referenzseite nicht auseinanderlaufen.
+  const [dbEvents, dbRefs] = await Promise.all([fetchEvents(), fetchReferenzen()]);
 
   return (
     <>
@@ -41,7 +58,7 @@ export default async function HomePage() {
       <AboutSection />
       <SocialSection />
       <OccasionsSection />
-      <ClientsStrip />
+      <ClientsStrip dbRefs={dbRefs} />
       <BookingCTA />
     </>
   );

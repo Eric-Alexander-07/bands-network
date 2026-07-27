@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Programm & Besetzung – WE ROCK | Rockshow buchen",
-  description: "Buchbar von einer 7-köpfigen bis zur 9-köpfigen Band mit bis zu 4 Front Sängern und Multimedia-Show. WE ROCK - die Classic Rock Tributeshow für Festivals, Stadtfeste, Clubs, Firmenevents und größere private Feiern buchbar.",
+  description: "Von der 7- bis zur 9-köpfigen Band mit bis zu 4 Front Sängern und Multimedia-Show. Die Classic Rock Tributeshow für Festivals, Stadtfeste und Clubs.",
   keywords: ["Rockshow buchen", "Classic Rock", "Band Besetzung", "Liveband", "Firmenevent", "Tribute Band Booking", "Rock Band", "Melodic Rock", "WE ROCK Besetzung", "Hard Rock Band engagieren"],
   alternates: { canonical: "https://werock-rockband.de/services" },
   openGraph: {
