@@ -2,43 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { band } from "@/config/band";
-
-// Fragen aus den "Hilfreichen Angaben" — sie werden in das Nachrichtenfeld
-// und in die E-Mail-Vorlage übernommen, jeweils mit Platz zum Antworten.
-const EVENT_QUESTIONS = [
-  "In welcher Stadt findet Eure Veranstaltung statt?",
-  "In welcher Location feiert Ihr?",
-  "Wie viele Gäste / Zuschauer werden in etwa erwartet?",
-  "Gibt es in Eurer Location Technik, oder soll die Band diese mitbringen?",
-  "Gibt es eine Bühne? Wie groß ist sie?",
-  "Nehmt Ihr Eintritt, und wenn ja wie hoch ist er in der Regel?",
-  "Wie lange soll die Band in etwa spielen?",
-  "Treten noch andere Künstler / Bands an dem Abend auf?",
-];
-
-// Jede Frage mit einer leeren Antwortzeile darunter.
-const QUESTION_TEMPLATE = EVENT_QUESTIONS.map(q => `${q}\n: `).join("\n\n");
-
-// Vollständige Vorlage für den direkten Klick auf die E-Mail-Adresse
-// (dort liegen noch keine Formulardaten vor).
-const DIRECT_MAIL_SUBJECT = `Anfrage für ${band.name}`;
-const DIRECT_MAIL_BODY = [
-  `Hallo ${band.name}-Team,`,
-  "",
-  "ich interessiere mich für eine Buchung. Hier meine Angaben:",
-  "",
-  "Name: ",
-  "Telefon: ",
-  "Veranstaltungsdatum: ",
-  "Anlass: ",
-  "",
-  QUESTION_TEMPLATE,
-  "",
-  "--",
-  `Diese Anfrage betrifft die Band ${band.name}.`,
-].join("\n");
-
-const DIRECT_MAIL_HREF = `mailto:${band.email}?subject=${encodeURIComponent(DIRECT_MAIL_SUBJECT)}&body=${encodeURIComponent(DIRECT_MAIL_BODY)}`;
+import { QUESTION_TEMPLATE, INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 
 export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -84,7 +48,7 @@ export default function BookingForm() {
         <div className="booking-contact">
           <div>
             <span className="booking-contact-label">E-Mail</span>
-            <a href={DIRECT_MAIL_HREF} className="booking-contact-value">
+            <a href={INQUIRY_MAIL_HREF} className="booking-contact-value">
               {band.email}
             </a>
           </div>

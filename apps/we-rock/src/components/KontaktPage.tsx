@@ -2,6 +2,7 @@
 
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
+import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 import { type FormEvent } from "react";
 
 export default function KontaktPage() {
@@ -49,7 +50,7 @@ export default function KontaktPage() {
               <h2>Kontaktdaten</h2>
               <p>
                 <strong>E-Mail</strong>
-                <a href={`mailto:${band.email}`}>{band.email}</a>
+                <a href={INQUIRY_MAIL_HREF}>{band.email}</a>
               </p>
               <p>
                 <strong>Standort</strong>
