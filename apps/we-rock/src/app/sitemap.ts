@@ -47,6 +47,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.9,    // Buchungsseite = wichtigste Conversion-Seite
     },
+    {
+      url: `${BASE_URL}/partner`,
+      lastModified: new Date("2026-06-01"),
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
     // Impressum, Datenschutz, Kontakt: noindex → nicht in Sitemap
   ];
 }

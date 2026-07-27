@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { band } from "@/config/band";
+import { QUESTION_TEMPLATE, INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 
 export default function BookingForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -24,14 +25,14 @@ export default function BookingForm() {
       date ? `Veranstaltungsdatum: ${date}` : "",
       occasion ? `Anlass: ${occasion}` : "",
       "",
-      `Nachricht:`,
+      `Angaben zur Veranstaltung:`,
       message,
       "",
       "--",
       `Diese Anfrage wurde über die ${band.name} Website gesendet.`,
     ].filter(line => line !== undefined).join("\n");
 
-    window.location.href = `mailto:info@v-m-p.com?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
+    window.location.href = `mailto:${band.email}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
     setSubmitted(true);
   }
 
@@ -47,7 +48,7 @@ export default function BookingForm() {
         <div className="booking-contact">
           <div>
             <span className="booking-contact-label">E-Mail</span>
-            <a href={`mailto:${band.email}`} className="booking-contact-value">
+            <a href={INQUIRY_MAIL_HREF} className="booking-contact-value">
               {band.email}
             </a>
           </div>
@@ -57,9 +58,16 @@ export default function BookingForm() {
           </div>
         </div>
 
+        <p className="booking-checklist-intro">
+          Schicken Sie uns einfach eine E-Mail. Am schnellsten geht das über das
+          Kontaktformular rechts – es enthält bereits alle wichtigen Fragen und
+          öffnet automatisch Ihr E-Mail-Programm mit einer fertigen Vorlage.
+        </p>
+
         <div className="booking-checklist">
           <p className="booking-checklist-title">Hilfreiche Angaben für Ihre Anfrage</p>
           <ul className="booking-checklist-list">
+            <li>Bitte geben Sie im Betreff den Namen der Band an: <strong>{band.name}</strong>.</li>
             <li>In welcher Stadt findet Ihre Veranstaltung statt?</li>
             <li>In welcher Location feiern Sie?</li>
             <li>Wie viele Gäste werden in etwa erwartet?</li>
@@ -69,6 +77,7 @@ export default function BookingForm() {
             <li>Wie lange soll die Band in etwa spielen?</li>
             <li>Treten noch andere Künstler an dem Abend auf?</li>
             <li>Wünschen Sie Pausenmusik oder einen DJ-Service der Band?</li>
+            <li>Bitte nutzen Sie die vorausgefüllte E-Mail-Vorlage und löschen Sie nichts heraus.</li>
             <li>Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
           </ul>
         </div>
@@ -158,7 +167,8 @@ export default function BookingForm() {
               id="message"
               name="message"
               className="form-textarea"
-              placeholder="Erzählt uns von eurer Veranstaltung ..."
+              rows={18}
+              defaultValue={QUESTION_TEMPLATE}
             />
           </div>
           <div>

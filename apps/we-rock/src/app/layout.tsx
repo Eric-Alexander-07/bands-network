@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: "%s | We Rock",
   },
   description:
-    "We Rock – Die Classic Rock Tribute Show aus Groß-Umstadt. Classic Rock & Hardrock für Festivals, Firmenevents und private Feiern. Laut, authentisch, unvergesslich.",
+    "We Rock – Die Classic Rock Tribute Show aus Groß-Umstadt. Classic Rock & Hardrock für Festivals, Firmenevents und private Feiern. Laut und authentisch.",
   keywords: [
     "Classic Rock Band",
     "Rockband buchen",

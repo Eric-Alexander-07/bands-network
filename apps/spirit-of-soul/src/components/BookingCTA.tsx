@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { band } from "@/config/band";
+import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 
 export default function BookingCTA() {
   return (
@@ -16,7 +17,7 @@ export default function BookingCTA() {
           <Link href="/booking" className="btn btn-gold">
             Buchung anfragen
           </Link>
-          <a href={`mailto:${band.email}`} className="btn btn-outline-light">
+          <a href={INQUIRY_MAIL_HREF} className="btn btn-outline-light">
             {band.email}
           </a>
         </div>

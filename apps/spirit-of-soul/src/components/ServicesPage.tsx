@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { band } from "@/config/band";
+import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 import ConcentricRings from "@/components/ConcentricRings";
 import type { BesetzungGruppeWithEintraege } from "@/lib/data";
 
@@ -99,7 +100,7 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
           </p>
           <div className="booking-cta-actions">
             <Link href="/booking" className="btn btn-gold">Anfrage senden</Link>
-            <a href={`mailto:${band.email}`} className="btn btn-outline-light">{band.email}</a>
+            <a href={INQUIRY_MAIL_HREF} className="btn btn-outline-light">{band.email}</a>
           </div>
         </div>
       </section>
