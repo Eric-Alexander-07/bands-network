@@ -3640,7 +3640,10 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
 .partner-card--current .partner-card-meta { color: var(--gold); }
 
 @media (max-width: 520px) {
-  .partner-vmp-note { flex-direction: column; align-items: flex-start; padding: 22px 20px; }
+  .partner-vmp-note { flex-direction: column; align-items: flex-start; gap: 16px; padding: 22px 20px; }
+  /* In the column layout the p's 340px flex-basis becomes a HEIGHT — reset it
+     so the box hugs the text and the button sits right below. */
+  .partner-vmp-note p { flex: 0 0 auto; }
   .partner-grid { grid-template-columns: 1fr; }
 }
 
