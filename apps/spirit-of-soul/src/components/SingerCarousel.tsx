@@ -1,7 +1,8 @@
 "use client";
 import { useRef } from "react";
+import type { BandMember } from "@/lib/data";
 
-const SINGERS = [
+const FALLBACK_SINGERS = [
   { src: "/images/sanger1.webp", name: "Sänger 1" },
   { src: "/images/sanger2.webp", name: "Sängerin 2" },
   { src: "/images/sanger3.webp", name: "Sänger 3" },
@@ -13,7 +14,17 @@ const SINGERS = [
   { src: "/images/sanger9.webp", name: "Sängerin 9" },
 ];
 
-export default function SingerCarousel() {
+interface Props {
+  /** Ueberschrift; leer = Standardtext. */
+  title?: string;
+  /** Saenger aus der Datenbank; leer = Rueckfall auf FALLBACK_SINGERS. */
+  members?: BandMember[];
+}
+
+export default function SingerCarousel({ title, members = [] }: Props) {
+  const singers = members.length
+    ? members.map(m => ({ src: m.image_url ?? "", name: m.name }))
+    : FALLBACK_SINGERS;
   const trackRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: 1 | -1) => {
@@ -40,7 +51,7 @@ export default function SingerCarousel() {
           </button>
 
           <div className="singer-carousel-track" ref={trackRef}>
-            {SINGERS.map((singer, i) => (
+            {singers.map((singer, i) => (
               <div key={i} className="singer-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={singer.src} alt={singer.name} />

@@ -22,11 +22,15 @@ export const metadata: Metadata = {
 };
 
 import MediaPage from "@/components/MediaPage";
-import { fetchEvents, fetchVideos, fetchPageContent, fetchSocialLinks } from "@/lib/data";
+import { fetchBundle, events, videosWithTitles, socialLinks as pickSocial } from "@/lib/data";
+import { resolve } from "@/lib/content";
 
 export default async function Media() {
-  const [dbEvents, dbVideos, content, socialLinks] = await Promise.all([
-    fetchEvents(), fetchVideos(), fetchPageContent("media"), fetchSocialLinks(),
-  ]);
-  return <MediaPage dbEvents={dbEvents} dbVideos={dbVideos} content={content} socialLinks={socialLinks} />;
+  const bundle = await fetchBundle();
+  const dbEvents = events(bundle);
+  const c = resolve(bundle, "media");
+  const socialLinks = pickSocial(bundle);
+  // Einziger zusaetzlicher Aufruf: YouTube-Titel (externes oEmbed, 24 h gecached)
+  const dbVideos = await videosWithTitles(bundle);
+  return <MediaPage dbEvents={dbEvents} dbVideos={dbVideos} c={c} socialLinks={socialLinks} />;
 }

@@ -24,23 +24,27 @@ export const metadata: Metadata = {
 
 
 
-export default function BookingPage() {
+import { fetchBundle, occasions, inquiryQuestions } from "@/lib/data";
+import { resolve } from "@/lib/content";
+
+export default async function BookingPage() {
+  const bundle = await fetchBundle();
+  const c = resolve(bundle, "booking");
   return (
     <>
       <section className="page-hero">
-        <img src="/images/kontakt-hero.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 35%" }} />
+        <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 35%" }} />
         <div className="container">
           <span className="eyebrow">Buchungsanfrage</span>
-          <h1>Booking</h1>
+          <h1>{c.page_hero_title}</h1>
           <p>
-            Jetzt euer Datum anfragen und ein maßgeschneidertes Angebot
-            erhalten. Wir melden uns innerhalb von 24 Stunden.
+            {c.page_hero_text}
           </p>
         </div>
       </section>
       <section className="section booking-page-section">
         <div className="container">
-          <BookingForm />
+          <BookingForm c={c} occasions={occasions(bundle)} questions={inquiryQuestions(bundle)} />
         </div>
       </section>
     </>

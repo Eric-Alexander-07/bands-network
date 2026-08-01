@@ -5,8 +5,12 @@ Turborepo-Monorepo mit einer Next.js-App (App Router) pro Band. Inhalte kommen a
 - `apps/spirit-of-soul` — Soulband Frankfurt, Domain `https://spiritofsoul.com`
 - `apps/we-rock` — Classic Rock Tribute Show, Domain `https://werock-rockband.de`
 - `apps/docs`, `apps/web` — unbenutztes Turborepo-Boilerplate, ignorieren
-- `packages/band-data` — Supabase-Abfragen mit `unstable_cache`
+- `packages/band-data` — Supabase-Abfragen, `getSiteBundle()` (eine Abfrage für den kompletten Seiteninhalt)
 - `packages/db-types` — generierte Datenbanktypen
+- `packages/content` — Typen und Hilfsfunktionen für `contentSchema.ts` (`resolve()`, `defaultsOf()`, …)
+- `packages/admin-ui` — generische Admin-Bausteine (`ContentForm`, `ListEditor`, `ImageField`, Toast)
+- `scripts/seed-content.ts` — befüllt `pages.content` aus dem Schema einer Band (idempotent)
+- `scripts/diff-pages.sh` + `scripts/page-text.js` — Vorher/Nachher-Vergleich des sichtbaren Textes aller Seiten
 
 Alle Kommentare, Dokumentation und Commit-Nachrichten auf **Deutsch**. Nutzertexte im Sie-Format, ausser die bestehende Seite verwendet Du.
 
@@ -59,11 +63,73 @@ Referenzen kommen aus der Datenbank (`fetchReferenzen`), nicht aus dem Code. Kon
 
 ## Datenbank und Caching
 
-Inhalte werden über `packages/band-data` mit `unstable_cache` geladen (`revalidate: 3600`, Tags pro Tabelle). Admin-Mutationen invalidieren über `src/app/api/admin/db/route.ts`.
+**Der komplette Seiteninhalt wird in GENAU EINER Abfrage geladen.** `getSiteBundle()` in `packages/band-data/src/bundle.ts` holt Site, alle `pages`, alle Listen und alle Bilder in einem einzigen PostgREST-Request mit eingebetteten Relationen. Ergebnis: ein `unstable_cache`-Eintrag unter dem einen Tag `site-bundle` (`revalidate: 3600`).
 
-**Wenn eine Komponente neu aus der Datenbank liest, muss ihre Route in `PATH_MAP` in `src/app/api/admin/db/route.ts` eingetragen werden.** Sonst zeigt sie nach einer Admin-Änderung bis zu eine Stunde alte Daten. Beispiel: die Referenzen speisen sowohl `/referenzen` als auch die „Bekannte Veranstalter"-Leiste der Startseite, daher `referenzen: ["/", "/referenzen"]`.
+In den Apps ruft jede Route `fetchBundle()` auf und liest danach nur noch synchron daraus (`pageContent(bundle, "home")`, `events(bundle)`, …). **Niemals neue Einzelabfragen pro Tabelle einführen** — das war der alte Zustand (Startseite = 3 Roundtrips) und ist bewusst entfernt.
 
-Komponenten, die Datenbankinhalte anzeigen, brauchen einen Fallback auf `src/config/band.ts` — ohne Supabase-Konfiguration (lokal) liefern die `fetch*`-Funktionen leere Arrays.
+Nach jeder Admin-Mutation invalidiert `src/app/api/admin/db/route.ts` den Tag `site-bundle` und alle Routen aus `PUBLIC_PATHS`. Eine Tabelle-zu-Pfad-Zuordnung gibt es nicht mehr; eine neue Tabelle kann also nicht mehr vergessen werden. Schreibbare Tabellen stehen in `WRITABLE_TABLES` — neue Tabellen dort eintragen, sonst antwortet die Route mit 403.
+
+## Inhalte und Admin-Bereich
+
+Jede Band beschreibt ihre Inhalte in **einer** Datei: `src/config/contentSchema.ts`. Dort steht pro Feld Schlüssel, Beschriftung, Typ und der **aktuelle Text als `default`**. Dieser Standardwert ist gleichzeitig Code-Fallback und Seed-Wert — dadurch können DB und Code nicht auseinanderlaufen.
+
+Daraus entsteht automatisch:
+- die Admin-Navigation und je Seite ein Formular (`/admin/inhalte/[slug]`, generisch),
+- die Listen-Editoren (`ListEditor` aus `@bands/admin-ui`),
+- der Seed (`node --experimental-strip-types scripts/seed-content.ts <app>`).
+
+**Neue Felder oder Seiten erfordern nur eine Änderung am Schema, keinen neuen Admin-Code.** Für eine neue Band: `contentSchema.ts` kopieren, Texte anpassen, Seed laufen lassen.
+
+Der Seed ist idempotent: vorhandene Werte bleiben unangetastet, es werden nur fehlende Schlüssel ergänzt. Er überschreibt also keine Kundenänderungen.
+
+Komponenten, die Datenbankinhalte anzeigen, brauchen einen Fallback (`contentReader()` aus `@bands/content` bzw. `src/config/band.ts`) — ohne Supabase-Konfiguration liefert `fetchBundle()` ein leeres Bundle.
+
+**Typen:** `packages/db-types/src/database.types.ts` ist generiert, nicht von Hand ändern. Fehlt dort je Tabelle `Relationships` oder der Block `__InternalSupabase`, fällt supabase-js still auf `never` zurück. `@supabase/ssr` 0.5.x verliert den `Database`-Generic, deshalb haben `createClient()`/`createServerSupabaseClient()` eine explizite Rückgabe-Annotation.
+
+---
+
+## Neue Band anlegen — Checkliste
+
+Diese Reihenfolge einhalten. Jeder Punkt korrigiert einen Fehler, der beim Umbau von We Rock und Spirit of Soul tatsächlich passiert ist — nicht optional.
+
+### 1. App-Grundgerüst
+
+- Bestehende App als Vorlage kopieren (die, deren Seitenstruktur der neuen Band näher ist).
+- `package.json`: Name und Dev-Port anpassen.
+- `.env.local`: Supabase-Zugangsdaten (gemeinsames Projekt `VMP-Bands`) plus eigenes `NEXT_PUBLIC_SITE_SLUG`.
+- `BASE_URL` in `layout.tsx`, `robots.ts`, `sitemap.ts` auf die eigene Domain — **niemals** den Wert der kopierten Vorlage stehen lassen (genau das war monatelang bei `werock-rockband.de/shop` der Fall, siehe SEO-Abschnitt oben).
+
+### 2. Supabase
+
+- Eine Zeile in `sites` (slug, name, domain) und mindestens eine Zeile in `site_admins` für die Redaktion anlegen.
+- **Keine neue Tabelle ohne triftigen Grund.** Die bestehenden 15 Tabellen (`sites`, `pages`, `events`, `media_images`, `media_videos`, `products`, `referenzen`, `besetzung_gruppen`/`_eintraege`, `social_links`, `band_members`, `partner_gruppen`/`_eintraege`, `occasions`, `inquiry_questions`, `section_images`) decken praktisch jeden Seitentyp ab.
+- Falls doch eine neue Tabelle nötig ist: RLS exakt im bestehenden Muster (`public_read_*` mit `using (true)` bzw. `visible = true`, `admin_all_*` über einen `site_admins`-Join). Und in `packages/db-types/src/database.types.ts` ergänzen — **inklusive `Relationships: [...]` pro Tabelle und dem `__InternalSupabase`-Block**. Fehlt eines davon, liefert supabase-js `never` und jede Abfrage über diese Tabelle wird zum Typfehler (siehe oben).
+
+### 3. `contentSchema.ts` — die größte Fehlerquelle
+
+- **Niemals das Schema einer anderen Band unbesehen kopieren.** Für jedes Feld und jede Liste prüfen: liest die tatsächliche Komponente *dieser* Band diesen Wert überhaupt? (Realer Fehler: We Rocks Admin bekam eine zweistufige „Besetzungen“-Liste, weil das Schema von Spirit of Soul kopiert wurde — We Rocks `ServicesPage.tsx` zeigt an der Stelle aber nur ein Freitextfeld. Ergebnis: ein Editor ohne jede Wirkung auf die Seite.)
+- `default` muss **bytegenau** der aktuell im Code stehende Text sein — kein Umformulieren, Kürzen oder versehentliches Glätten von Zeilenumbrüchen. Der Wert ist gleichzeitig Code-Fallback und DB-Seed; jede Abweichung lässt beide auseinanderlaufen.
+- Enum-Werte (z. B. `partner_gruppen.kind`) exakt gegen den DB-`CHECK`-Constraint prüfen, nicht neu erfinden (`"media" | "band"`, nicht z. B. `"pool"`/`"artist"`).
+- Ton der Band beachten: manche Bands duzen/„Ihr“-en, manche siezen förmlich. Beim Kopieren von `inquiryMail.ts`, `BookingForm.tsx`-Checklisten o. Ä. den Ton der *neuen* Band übernehmen, nicht den der Vorlage.
+
+### 4. Komponenten anbinden
+
+- Inhalte werden als **fertig aufgelöstes Objekt** übergeben (`const c = resolve(bundle, "slug")` aus `@/lib/content`), **niemals als Funktion**. Client Components (`"use client"`) können keine Funktionen als Prop von einer Server Component erhalten — React bricht mit „Functions cannot be passed directly to Client Components“ ab.
+- Mehrzeiliger oder ausgezeichneter Text: `<Lines text={c.foo} />` für Zeilenumbrüche (ersetzt `<br/>`), `<Rich text={c.foo} />` für `**fett**` (ersetzt `<strong>`). Nicht roh interpolieren, wenn das Original Markup enthielt.
+- Bildreihen mit fester Slotzahl im Layout (Karussell, Social-Grid) bekommen `maxItems` im Schema. Galerie, Sänger-Karussell, Termine bleiben unbegrenzt.
+
+### 5. Verifikation — vor jedem „fertig“
+
+1. Vor dem Anbinden: `bash scripts/diff-pages.sh snapshot` sichert den sichtbaren Text aller Seiten der neuen Band im Ist-Zustand.
+2. Nach jeder angebundenen Seite: `npx tsc --noEmit` (Zeilen mit `.next/types` ignorieren) und `bash scripts/diff-pages.sh check`. Jede Seite muss `OK` melden — eine `ABWEICHUNG` ist ein echter Fehler, nicht wegdiskutieren.
+3. Seed **immer erst mit `--dry` prüfen**, dann ausführen: `node --experimental-strip-types scripts/seed-content.ts <app>`.
+
+### 6. Betrieb
+
+- Nach Anlage eines neuen Workspace-Pakets: `npm install` im Repo-Root, **danach** alle Dev-Server neu starten — Next.js übernimmt neu verlinkte Pakete sonst nicht.
+- „Der Server startet nicht/reagiert nicht“ zuerst mit einem Port-Check klären (alter Prozess blockiert den Port), bevor im Code gesucht wird.
+- Neue Tabelle in `WRITABLE_TABLES` in `src/app/api/admin/db/route.ts` eintragen, sonst antwortet die Route mit 403. Neue Route in `PUBLIC_PATHS` ergänzen, damit sie nach Admin-Änderungen mit revalidiert wird.
+- `src/app/api/revalidate/route.ts` invalidiert bereits generisch den `site-bundle`-Tag — hier ist für eine neue Band nichts anzupassen.
 
 ---
 

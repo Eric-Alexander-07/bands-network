@@ -1,8 +1,10 @@
 "use client";
 import { useRef } from "react";
+import type { BandMember } from "@/lib/data";
 
-/* Namen dienen nur als alt-Text (SEO) und werden auf der Seite nicht sichtbar angezeigt. */
-const SINGERS = [
+/* Namen dienen nur als alt-Text (SEO) und werden auf der Seite nicht sichtbar angezeigt.
+   Diese Liste greift nur, solange die Datenbank keine Musiker liefert. */
+const FALLBACK_SINGERS = [
   { src: "/images/saenger/jessica-conte.webp",   name: "Jessica Conte" },
   { src: "/images/saenger/emmo-acar.webp",       name: "Emmo Acar" },
   { src: "/images/saenger/bobby-stoecker.webp",  name: "Bobby Stöcker" },
@@ -14,8 +16,18 @@ const SINGERS = [
   { src: "/images/saenger/david-readman.webp",   name: "David Readman" },
 ];
 
-export default function SingerCarousel() {
+interface Props {
+  /** Ueberschrift; leer = Standardtext aus dem Schema. */
+  title?: string;
+  /** Musiker aus der Datenbank; leer = Rueckfall auf FALLBACK_SINGERS. */
+  members?: BandMember[];
+}
+
+export default function SingerCarousel({ title, members = [] }: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const singers = members.length
+    ? members.map(m => ({ src: m.image_url ?? "", name: m.name }))
+    : FALLBACK_SINGERS;
 
   const scroll = (dir: 1 | -1) => {
     if (!trackRef.current) return;
@@ -27,7 +39,7 @@ export default function SingerCarousel() {
     <section className="section singer-carousel-section">
       <div className="container">
         <span className="eyebrow" data-animate="fade-up">Die Musiker</span>
-        <h2 className="section-title" data-animate="fade-up" data-delay="100">Die Band</h2>
+        <h2 className="section-title" data-animate="fade-up" data-delay="100">{title || "Die Band"}</h2>
 
         <div className="singer-carousel-wrap" data-animate="fade-up" data-delay="200">
           <button
@@ -41,7 +53,7 @@ export default function SingerCarousel() {
           </button>
 
           <div className="singer-carousel-track" ref={trackRef}>
-            {SINGERS.map((singer, i) => (
+            {singers.map((singer, i) => (
               <div key={i} className="singer-card">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={singer.src} alt={singer.name} />

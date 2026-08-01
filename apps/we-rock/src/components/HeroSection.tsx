@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
 import type { Event } from "@/lib/data";
+import type { Content } from "@/lib/content";
 
 function formatGigDate(dateStr: string) {
   const [year, month, day] = dateStr.split("-").map(Number);
@@ -13,9 +14,11 @@ function formatGigDate(dateStr: string) {
 interface Props {
   /** Events from Supabase DB. Empty array = hide dates section entirely. */
   dbEvents?: Event[];
+  /** Seitentexte: Datenbankwert mit Rueckfall auf den Schema-Standard. */
+  c: Content;
 }
 
-export default function HeroSection({ dbEvents = [] }: Props) {
+export default function HeroSection({ dbEvents = [], c }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
 
   // Only show dates that come from the DB (visible ones, max 3)
@@ -102,10 +105,8 @@ export default function HeroSection({ dbEvents = [] }: Props) {
                 className="hero-logo"
               />
             </h1>
-            <p className="hero-claim">Die Classic Rock Tribute Show</p>
-            <p className="hero-sub">
-              Die größten Rock Hymnen aus 5 Jahrzehnten
-            </p>
+            <p className="hero-claim">{c.hero_claim}</p>
+            <p className="hero-sub">{c.hero_sub}</p>
             <div className="hero-actions">
               <Link href="/booking" className="btn btn-primary">
                 Jetzt buchen
@@ -118,7 +119,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
             {/* Only show dates section if DB has visible events */}
             {nextDates.length > 0 && (
               <div className="hero-dates">
-                <span className="hero-dates-label">Nächste öffentliche Auftritte</span>
+                <span className="hero-dates-label">{c.hero_dates_label}</span>
                 <ul className="hero-date-list">
                   {nextDates.map((d, i) => (
                     <li key={d.id ?? i} className="hero-date-item">
@@ -149,10 +150,10 @@ export default function HeroSection({ dbEvents = [] }: Props) {
                   clearly framed instead of being cropped small by the square. */}
               <source
                 media="(max-width: 640px)"
-                srcSet="/images/hero-home-mobile.webp"
+                srcSet={c.hero_image_mobile}
               />
               <img
-                src="/images/hero-home.webp"
+                src={c.hero_image}
                 alt="WE ROCK — Live Performance"
                 className="hero-right-img"
               />

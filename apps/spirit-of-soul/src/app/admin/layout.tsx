@@ -6,11 +6,9 @@ import Link from "next/link";
 import { createClient } from "@bands/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import "./admin.css";
-import { ToastProvider } from "@/components/admin/Toast";
-import {
-  MdDashboard, MdImage, MdPlayCircle,
-  MdShoppingBag, MdStar, MdPerson, MdGroups, MdLogout,
-} from "react-icons/md";
+import { ToastProvider } from "@bands/admin-ui";
+import { contentSchema } from "@/config/contentSchema";
+import { MdDashboard, MdImage, MdArticle, MdLogout } from "react-icons/md";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
 
@@ -18,15 +16,21 @@ type NavSection = { section: string };
 type NavItem    = { href: string; label: string; Icon: React.ComponentType<{ size?: number }> };
 type NavEntry   = NavSection | NavItem;
 
+/**
+ * Die Navigation entsteht aus dem Content-Schema: jede dort deklarierte Seite
+ * bekommt automatisch ihren Eintrag. Eine neue Seite erfordert daher keine
+ * Aenderung an diesem Layout.
+ */
 const NAV: NavEntry[] = [
-  { href: "/admin",            label: "Dashboard",    Icon: MdDashboard  },
-  { section: "Seiten" },
-  { href: "/admin/media",      label: "Media & News", Icon: MdPlayCircle },
-  { href: "/admin/galerie",    label: "Galerie",      Icon: MdImage      },
-  { href: "/admin/produkte",   label: "Shop",         Icon: MdShoppingBag},
-  { href: "/admin/about",      label: "Über uns",     Icon: MdPerson     },
-  { href: "/admin/services",   label: "Services",     Icon: MdGroups     },
-  { href: "/admin/referenzen", label: "Referenzen",   Icon: MdStar       },
+  { href: "/admin", label: "Dashboard", Icon: MdDashboard },
+  { section: "Inhalte" },
+  ...contentSchema.pages.map(p => ({
+    href: `/admin/inhalte/${p.slug}`,
+    label: p.title,
+    Icon: MdArticle,
+  })),
+  { section: "Medien" },
+  { href: "/admin/galerie", label: "Galerie (Upload)", Icon: MdImage },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -35,6 +39,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const isLogin  = pathname === "/admin/login" || pathname === "/admin/invite";
   const [user, setUser]     = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
     // Login page handles itself — no auth check needed
@@ -42,6 +47,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
     const supabase = createClient();
     (async () => {
+     try {
       const { data: { user: u } } = await supabase.auth.getUser();
       if (!u) { router.replace("/admin/login"); return; }
 
@@ -68,6 +74,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       }
       setUser(u);
       setLoading(false);
+     } catch (e) {
+      // Ohne diesen Zweig bliebe die Seite dauerhaft im Ladezustand haengen,
+      // ohne dass irgendwo ein Hinweis auf die Ursache auftaucht.
+      setAuthError(e instanceof Error ? e.message : String(e));
+      setLoading(false);
+     }
     })();
   }, [router, isLogin]);
 
@@ -85,6 +97,25 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <div className="admin-loading">
           <div className="admin-spinner" />
           Wird geladen …
+        </div>
+      </div>
+    );
+  }
+
+  // Sichtbare Fehlermeldung statt endlosem Spinner, wenn die Anmeldepruefung
+  // fehlschlaegt (z. B. Supabase nicht erreichbar).
+  if (authError) {
+    return (
+      <div className="admin-root">
+        <div className="admin-content">
+          <div className="a-card">
+            <p className="a-card-title">Anmeldung konnte nicht geprüft werden</p>
+            <p className="a-muted-text">{authError}</p>
+            <button className="a-btn a-btn-primary" style={{ marginTop: 14 }}
+                    onClick={() => window.location.reload()}>
+              Erneut versuchen
+            </button>
+          </div>
         </div>
       </div>
     );

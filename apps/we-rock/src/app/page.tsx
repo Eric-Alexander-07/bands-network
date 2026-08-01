@@ -6,7 +6,8 @@ import SocialSection from "@/components/SocialSection";
 import OccasionsSection from "@/components/OccasionsSection";
 import ClientsStrip from "@/components/ClientsStrip";
 import BookingCTA from "@/components/BookingCTA";
-import { fetchEvents, fetchReferenzen } from "@/lib/data";
+import { fetchBundle, events, referenzen, sectionImages } from "@/lib/data";
+import { resolve } from "@/lib/content";
 
 import type { Metadata } from "next";
 
@@ -35,16 +36,19 @@ export default async function HomePage() {
   // Events + Referenzen parallel laden. Die Referenzen speisen die
   // "Bekannte Veranstalter"-Leiste aus derselben Quelle wie /referenzen,
   // damit Startseite und Referenzseite nicht auseinanderlaufen.
-  const [dbEvents, dbRefs] = await Promise.all([fetchEvents(), fetchReferenzen()]);
+  const bundle = await fetchBundle();
+  const dbEvents = events(bundle);
+  const dbRefs = referenzen(bundle);
+  const c = resolve(bundle, "home");
 
   return (
     <>
-      <HeroSection dbEvents={dbEvents} />
-      <AboutSection />
-      <SocialSection />
-      <OccasionsSection />
+      <HeroSection dbEvents={dbEvents} c={c} />
+      <AboutSection c={c} />
+      <SocialSection c={c} />
+      <OccasionsSection c={c} photos={sectionImages(bundle, "tribute")} />
       <ClientsStrip dbRefs={dbRefs} />
-      <BookingCTA />
+      <BookingCTA c={c} />
     </>
   );
 }

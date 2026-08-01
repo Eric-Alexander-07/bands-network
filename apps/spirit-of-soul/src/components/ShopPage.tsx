@@ -3,6 +3,7 @@ import { band } from "@/config/band";
 import ShopProductImages from "@/components/ShopProductImages";
 import ConcentricRings from "@/components/ConcentricRings";
 import type { Product } from "@/lib/data";
+import type { Content } from "@/lib/content";
 
 // ─── Static fallback products ────────────────────────────────────
 const STATIC_PRODUCTS = [
@@ -43,9 +44,9 @@ const STATIC_PRODUCTS = [
 
 type DbProduct = Product;
 
-interface Props { dbProducts?: DbProduct[]; content?: Record<string, string>; }
+interface Props { dbProducts?: DbProduct[]; c: Content }
 
-function ShopProduct({ product }: { product: typeof STATIC_PRODUCTS[0] | DbProduct }) {
+function ShopProduct({ product, priceNote }: { product: typeof STATIC_PRODUCTS[0] | DbProduct; priceNote: string }) {
   const images = [
     product.image_url,
     product.image_url_back,
@@ -78,7 +79,7 @@ function ShopProduct({ product }: { product: typeof STATIC_PRODUCTS[0] | DbProdu
         </div>
         <div className="shop-product-price">
           <span className="shop-price-amount">{product.price}</span>
-          <span className="shop-price-note">zzgl. Versand</span>
+          <span className="shop-price-note">{priceNote}</span>
         </div>
         <a
           href={`mailto:${band.email}?subject=${encodeURIComponent(product.email_subject ?? `Bestellung: ${product.name}`)}`}
@@ -91,17 +92,17 @@ function ShopProduct({ product }: { product: typeof STATIC_PRODUCTS[0] | DbProdu
   );
 }
 
-export default function ShopPage({ dbProducts = [], content = {} }: Props) {
+export default function ShopPage({ dbProducts = [], c }: Props) {
   const products = dbProducts.length > 0 ? dbProducts : STATIC_PRODUCTS;
 
   return (
     <>
       <section className="page-hero">
-        <img src={content.image_main || "/images/hero.webp"} className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src={c.image_main} className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Merchandise</span>
-          <h1>Shop</h1>
-          <p>{content.text_top || "20 Jahre Spirit of Soul — jetzt feiern wir mit euch. CD und T-Shirts auf Anfrage bestellbar."}</p>
+          <h1>{c.page_hero_title}</h1>
+          <p>{c.text_top}</p>
         </div>
       </section>
 
@@ -109,19 +110,9 @@ export default function ShopPage({ dbProducts = [], content = {} }: Props) {
         <div className="container">
           <div className="shop-info-box" data-animate="fade-up">
             <span className="eyebrow">So bestellt ihr</span>
-            {content.text_body
-              ? content.text_body.split("\n").filter(Boolean).map((line, i) => <p key={i}>{line}</p>)
-              : (
-                <p>
-                  Alle Preise verstehen sich zzgl. Versand.
-                  Schreibt uns eine E-Mail an{" "}
-                  <a href={`mailto:${band.email}`}>{band.email}</a> mit eurem
-                  Namen, eurer Adresse sowie der gewünschten Anzahl der CDs bzw.
-                  Größe und Farbe des Shirts. Gegen Vorauskasse erhaltet ihr eure
-                  Merch-Produkte umgehend zugeschickt.
-                </p>
-              )
-            }
+            {c.text_body.split("\n").filter(Boolean).map((line, i) => (
+              <p key={i}>{line}</p>
+            ))}
             <a href={`mailto:${band.email}?subject=Shop-Bestellung`} className="btn btn-primary">
               Jetzt bestellen
             </a>
@@ -133,9 +124,9 @@ export default function ShopPage({ dbProducts = [], content = {} }: Props) {
         <ConcentricRings className="rings-right" />
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <span className="eyebrow" data-animate="fade-up">Unsere Produkte</span>
-          <h2 className="section-title" data-animate="fade-up" data-delay="100">Merchandise</h2>
+          <h2 className="section-title" data-animate="fade-up" data-delay="100">{c.shop_products_title}</h2>
           <div className="shop-products" data-animate="stagger">
-            {products.map(p => <ShopProduct key={p.id} product={p as any} />)}
+            {products.map(p => <ShopProduct key={p.id} product={p as any} priceNote={c.shop_price_note} />)}
           </div>
         </div>
       </section>

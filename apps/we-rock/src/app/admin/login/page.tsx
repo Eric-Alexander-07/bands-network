@@ -32,7 +32,7 @@ export default function AdminLogin() {
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <span className="a-dot" />
-            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--a-text)" }}>Spirit of Soul</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--a-text)" }}>WE ROCK</span>
           </div>
           <p style={{ color: "var(--a-muted)", fontSize: 13, margin: 0 }}>Admin-Bereich</p>
         </div>

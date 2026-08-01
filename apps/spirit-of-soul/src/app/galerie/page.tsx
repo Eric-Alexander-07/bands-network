@@ -22,9 +22,10 @@ export const metadata: Metadata = {
 };
 
 import GalleriePage from "@/components/GalleriePage";
-import { fetchImages } from "@/lib/data";
+import { fetchBundle, images } from "@/lib/data";
+import { resolve } from "@/lib/content";
 
 export default async function Galerie() {
-  const dbImages = await fetchImages();
-  return <GalleriePage dbImages={dbImages} />;
+  const bundle = await fetchBundle();
+  return <GalleriePage dbImages={images(bundle)} c={resolve(bundle, "galerie")} />;
 }

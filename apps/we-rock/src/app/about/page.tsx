@@ -22,9 +22,10 @@ export const metadata: Metadata = {
 };
 
 import AboutPage from "@/components/AboutPage";
-import { fetchPageContent } from "@/lib/data";
+import { fetchBundle, members } from "@/lib/data";
+import { resolve } from "@/lib/content";
 
 export default async function About() {
-  const content = await fetchPageContent("about");
-  return <AboutPage content={content} />;
+  const bundle = await fetchBundle();
+  return <AboutPage c={resolve(bundle, "about")} members={members(bundle)} />;
 }

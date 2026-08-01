@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
 import type { Event } from "@/lib/data";
+import type { Content } from "@/lib/content";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
@@ -15,9 +16,13 @@ function formatGigDate(dateStr: string) {
 interface Props {
   /** Events from Supabase DB. Empty array = hide dates section entirely. */
   dbEvents?: Event[];
+  /** Seitentexte: Datenbankwert mit Rueckfall auf den Schema-Standard. */
+  c: Content;
 }
 
-export default function HeroSection({ dbEvents = [] }: Props) {
+export default function HeroSection({ dbEvents = [], c }: Props) {
+  // Zeile 1 normal, Zeile 2 kursiv — wie bisher fest im Layout.
+  const [titleLine1 = "", titleLine2 = ""] = c.hero_title.split("\n");
   const parallaxRef = useRef<HTMLDivElement>(null);
 
   // Only show dates that come from the DB (visible ones, max 3)
@@ -85,12 +90,12 @@ export default function HeroSection({ dbEvents = [] }: Props) {
               {band.genre} · {band.location} · Seit 2000
             </p>
             <h1 className="hero-title">
-              <span className="hero-title-line">Spirit</span>
-              <span className="hero-title-line hero-title-italic">of Soul</span>
+              <span className="hero-title-line">{titleLine1}</span>
+              <span className="hero-title-line hero-title-italic">{titleLine2}</span>
             </h1>
-            <p className="hero-claim">{band.claim}</p>
+            <p className="hero-claim">{c.hero_claim}</p>
             <p className="hero-sub">
-              {band.tagline} — 25 Jahre Live-Erfahrung auf internationalen Bühnen.
+              {c.hero_sub}
             </p>
             <div className="hero-actions">
               <Link href="/booking" className="btn btn-light">
@@ -104,7 +109,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
             {/* Only show dates section if DB has visible events */}
             {nextDates.length > 0 && (
               <div className="hero-dates">
-                <span className="hero-dates-label">Nächste öffentliche Auftritte</span>
+                <span className="hero-dates-label">{c.hero_dates_label}</span>
                 <ul className="hero-date-list">
                   {nextDates.map((d, i) => (
                     <li key={d.id ?? i} className="hero-date-item">
@@ -131,7 +136,7 @@ export default function HeroSection({ dbEvents = [] }: Props) {
         <div className="hero-right">
           <div ref={parallaxRef} className="hero-right-inner">
             <img
-              src="/images/hero.webp"
+              src={c.hero_image}
               alt="Spirit of Soul — Live Performance"
               className="hero-right-img"
             />

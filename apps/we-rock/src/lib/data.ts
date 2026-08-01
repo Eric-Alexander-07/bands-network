@@ -1,23 +1,22 @@
 /**
- * Data layer for Spirit of Soul.
- * Fetches from Supabase via @bands/band-data.
- * Falls back to static band.ts data when Supabase is not configured or returns empty.
+ * Datenschicht fuer WE ROCK.
  *
- * Usage in Server Components:
- *   import { fetchEvents, fetchVideos } from "@/lib/data";
- *   const events = await fetchEvents();
+ * Alle Inhalte stammen aus GENAU EINER Datenbankabfrage: `getSiteBundle()`
+ * laedt Texte, Bilder und Listen gebuendelt und legt sie unter dem Cache-Tag
+ * `site-bundle` ab. Die `fetch*`-Funktionen unten lesen nur noch aus diesem
+ * Bundle — mehrere Aufrufe innerhalb eines Renders loesen daher keine
+ * zusaetzlichen Abfragen aus.
+ *
+ * Verwendung in Server Components:
+ *   import { fetchBundle } from "@/lib/data";
+ *   const bundle = await fetchBundle();
  */
 
 import {
-  getSite,
-  getPage,
-  getEvents,
-  getMediaVideos,
-  getMediaImages,
-  getProducts,
-  getReferenzen,
-  getBesetzung,
-  getSocialLinks,
+  getSiteBundle,
+  sectionImages as pickSectionImages,
+  EMPTY_BUNDLE,
+  type SiteBundle,
   type Event,
   type MediaVideo,
   type MediaImage,
@@ -25,6 +24,11 @@ import {
   type Referenz,
   type SocialLink,
   type BesetzungGruppeWithEintraege,
+  type BandMember,
+  type PartnerGruppeWithEintraege,
+  type Occasion,
+  type InquiryQuestion,
+  type SectionImage,
 } from "@bands/band-data";
 import { SITE_SLUG } from "./site";
 import { band } from "@/config/band";
@@ -33,6 +37,45 @@ const isSupabaseConfigured =
   !!process.env.NEXT_PUBLIC_SUPABASE_URL &&
   !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
   !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY.startsWith("<");
+
+/** Der komplette Seiteninhalt — eine Abfrage, danach aus dem Cache. */
+export async function fetchBundle(): Promise<SiteBundle> {
+  if (!isSupabaseConfigured) return EMPTY_BUNDLE;
+  return getSiteBundle(SITE_SLUG);
+}
+
+// ─── Zugriffe auf den Bundle ─────────────────────────────────────
+// Bewusst synchron: sie erhalten den bereits geladenen Bundle und
+// fuehren garantiert keine weitere Abfrage aus.
+
+export function pageContent(bundle: SiteBundle, slug: string): Record<string, string> {
+  return bundle.pages[slug] ?? {};
+}
+
+export const events        = (b: SiteBundle): Event[] => b.events;
+export const images        = (b: SiteBundle): MediaImage[] => b.images;
+export const products      = (b: SiteBundle): Product[] => b.products;
+export const socialLinks   = (b: SiteBundle): SocialLink[] => b.socialLinks;
+export const besetzung     = (b: SiteBundle): BesetzungGruppeWithEintraege[] => b.besetzung;
+export const members       = (b: SiteBundle): BandMember[] => b.members;
+export const partnerGruppen = (b: SiteBundle): PartnerGruppeWithEintraege[] => b.partnerGruppen;
+export const occasions     = (b: SiteBundle): Occasion[] => b.occasions;
+export const inquiryQuestions = (b: SiteBundle): InquiryQuestion[] => b.inquiryQuestions;
+export const sectionImages = (b: SiteBundle, key: string): SectionImage[] =>
+  pickSectionImages(b, key);
+
+/** Referenzen mit Rueckfall auf die statische Liste aus `band.ts`. */
+export function referenzen(bundle: SiteBundle): Referenz[] {
+  if (bundle.referenzen.length > 0) return bundle.referenzen;
+  return band.references.map((r, i) => ({
+    id: String(i), site_id: "", name: r.client, type: r.type ?? null,
+    position: i, created_at: null,
+  }));
+}
+
+// ─── Videos ──────────────────────────────────────────────────────
+// Einziger Sonderfall: fehlende Titel werden per YouTube-oEmbed ergaenzt.
+// Das ist ein externer HTTP-Aufruf (24 h gecached), keine Datenbankabfrage.
 
 function getYtId(input: string): string {
   const m = input?.match(/(?:v=|youtu\.be\/)([^&\s]+)/);
@@ -53,88 +96,22 @@ async function fetchYouTubeTitle(ytId: string): Promise<string> {
   }
 }
 
-// ─── Events / Spieltermine ───────────────────────────────────────
-export async function fetchEvents(): Promise<Event[]> {
-  if (!isSupabaseConfigured) return [];
-  // When Supabase is configured, always return DB data — empty = no events shown
-  return getEvents(SITE_SLUG);
-}
+export async function videosWithTitles(bundle: SiteBundle): Promise<MediaVideo[]> {
+  const fallback: MediaVideo[] = band.videos.map((v, i) => ({
+    id: String(i), site_id: "", youtube_url: v.id, title: v.title ?? null,
+    position: i, created_at: null,
+  }));
+  const list = bundle.videos.length > 0 ? bundle.videos : fallback;
 
-// ─── Videos ──────────────────────────────────────────────────────
-export async function fetchVideos(): Promise<MediaVideo[]> {
-  let videos: MediaVideo[];
-
-  if (!isSupabaseConfigured) {
-    videos = band.videos.map((v, i) => ({
-      id: String(i), site_id: "", youtube_url: v.id, title: v.title ?? null,
-      position: i, created_at: null,
-    }));
-  } else {
-    const db = await getMediaVideos(SITE_SLUG);
-    videos = db.length > 0 ? db : band.videos.map((v, i) => ({
-      id: String(i), site_id: "", youtube_url: v.id, title: v.title ?? null,
-      position: i, created_at: null,
-    }));
-  }
-
-  // Auto-fill empty titles from YouTube oEmbed (cached 24h)
-  return Promise.all(videos.map(async v => {
+  return Promise.all(list.map(async v => {
     if (v.title) return v;
     const title = await fetchYouTubeTitle(getYtId(v.youtube_url));
     return { ...v, title: title || null };
   }));
 }
 
-// ─── Images ──────────────────────────────────────────────────────
-export async function fetchImages(): Promise<MediaImage[]> {
-  if (!isSupabaseConfigured) return [];
-  return getMediaImages(SITE_SLUG);
-}
-
-// ─── Products ────────────────────────────────────────────────────
-export async function fetchProducts(): Promise<Product[]> {
-  if (!isSupabaseConfigured) return [];
-  return getProducts(SITE_SLUG);
-}
-
-// ─── Referenzen ──────────────────────────────────────────────────
-export async function fetchReferenzen(): Promise<Referenz[]> {
-  const staticRefs: Referenz[] = band.references.map((r, i) => ({
-    id: String(i), site_id: "", name: r.client, type: r.type ?? null,
-    position: i, created_at: null,
-  }));
-  if (!isSupabaseConfigured) return staticRefs;
-  const db = await getReferenzen(SITE_SLUG);
-  return db.length > 0 ? db : staticRefs;
-}
-
-// ─── Besetzung ───────────────────────────────────────────────────
-export async function fetchBesetzung(): Promise<BesetzungGruppeWithEintraege[]> {
-  if (!isSupabaseConfigured) return [];
-  return getBesetzung(SITE_SLUG);
-}
-
-// ─── Social Links ────────────────────────────────────────────────
-export async function fetchSocialLinks(): Promise<SocialLink[]> {
-  if (!isSupabaseConfigured) return [];
-  return getSocialLinks(SITE_SLUG);
-}
-
-// ─── Page content ────────────────────────────────────────────────
-export async function fetchPageContent(slug: string): Promise<Record<string, string>> {
-  if (!isSupabaseConfigured) return {};
-  const page = await getPage(SITE_SLUG, slug);
-  if (!page?.content) return {};
-  return Object.fromEntries(
-    Object.entries(page.content as Record<string, unknown>).map(([k, v]) => [k, String(v ?? "")])
-  );
-}
-
-// ─── Site info ───────────────────────────────────────────────────
-export async function fetchSite() {
-  if (!isSupabaseConfigured) return null;
-  return getSite(SITE_SLUG);
-}
-
-// Re-export types
-export type { Event, MediaVideo, MediaImage, Product, Referenz, SocialLink, BesetzungGruppeWithEintraege };
+export type {
+  SiteBundle, Event, MediaVideo, MediaImage, Product, Referenz, SocialLink,
+  BesetzungGruppeWithEintraege, BandMember, PartnerGruppeWithEintraege,
+  Occasion, InquiryQuestion, SectionImage,
+};

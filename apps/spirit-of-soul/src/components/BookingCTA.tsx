@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
+import Lines from "@/components/Lines";
+import type { Content } from "@/lib/content";
 
-export default function BookingCTA() {
+export default function BookingCTA({ c }: { c: Content }) {
   return (
     <section className="booking-cta">
       <div className="container booking-cta-inner">
         <span className="eyebrow" data-animate="fade-up">Jetzt anfragen</span>
         <h2 data-animate="fade-up" data-delay="100">
-          Unvergessliche Musik<br />für Ihr Event
+          <Lines text={c.cta_title} />
         </h2>
         <p data-animate="fade-up" data-delay="200">
-          Von der kleinen Dinner Besetzung bis zur 12-köpfigen Full-Band mit Bläser Sektion &amp; Percussions — wir erstellen ein maßgeschneidertes Angebot für Ihre Veranstaltung.
+          {c.cta_text}
         </p>
         <div className="booking-cta-actions" data-animate="fade-up" data-delay="300">
           <Link href="/booking" className="btn btn-gold">

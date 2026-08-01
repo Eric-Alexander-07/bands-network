@@ -2,6 +2,9 @@ import Link from "next/link";
 import { band } from "@/config/band";
 import ConcentricRings from "@/components/ConcentricRings";
 import LightboxImage from "@/components/LightboxImage";
+import Lines from "@/components/Lines";
+import type { Content } from "@/lib/content";
+import type { SectionImage } from "@/lib/data";
 
 const GRID_PHOTOS = [
   { src: "/images/gallery/live-vocalist-gold.webp", alt: "Live Performance" },
@@ -18,7 +21,10 @@ const PLATFORMS = [
   { key: "youtube"   as const, label: "YouTube"   },
 ];
 
-export default function SocialSection() {
+interface Props { c: Content; photos?: SectionImage[] }
+
+export default function SocialSection({ c, photos = [] }: Props) {
+  const grid = photos.length ? photos.map(p => ({ src: p.url, alt: p.alt ?? "" })) : GRID_PHOTOS;
   return (
     <section className="section social-media-section section-has-rings">
       <ConcentricRings className="rings-right" />
@@ -28,10 +34,10 @@ export default function SocialSection() {
           <div className="social-media-text">
             <span className="eyebrow" data-animate="fade-up">Folgt uns</span>
             <h2 className="social-media-heading" data-animate="fade-up" data-delay="100">
-              News auf Instagram<br />&amp; Facebook
+              <Lines text={c.social_title} />
             </h2>
             <p className="social-media-desc" data-animate="fade-up" data-delay="200">
-              Bleibt up to date — neue Auftritte, Behind-the-Scenes und direkte Einblicke in unser Bandleben.
+              {c.social_text}
             </p>
 
             <div className="social-platform-links" data-animate="stagger">
@@ -58,7 +64,7 @@ export default function SocialSection() {
           </div>
 
           <div className="social-photo-grid" data-animate="fade-left">
-            {GRID_PHOTOS.map((photo, i) => (
+            {grid.map((photo, i) => (
               <LightboxImage
                 key={i}
                 src={photo.src}

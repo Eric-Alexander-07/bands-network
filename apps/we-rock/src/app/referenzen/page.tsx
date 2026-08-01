@@ -22,9 +22,10 @@ export const metadata: Metadata = {
 };
 
 import ReferencesPage from "@/components/ReferencesPage";
-import { fetchReferenzen } from "@/lib/data";
+import { fetchBundle, referenzen, partnerGruppen } from "@/lib/data";
+import { resolve } from "@/lib/content";
 
 export default async function Referenzen() {
-  const refs = await fetchReferenzen();
-  return <ReferencesPage refs={refs} />;
+  const bundle = await fetchBundle();
+  return <ReferencesPage refs={referenzen(bundle)} c={resolve(bundle, "referenzen")} partnerGruppen={partnerGruppen(bundle)} />;
 }

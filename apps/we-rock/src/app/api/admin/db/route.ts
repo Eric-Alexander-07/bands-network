@@ -16,34 +16,43 @@ interface MutateBody {
   updates?: Array<{ id: string } & Record<string, unknown>>;
 }
 
-// Map DB table names to Next.js cache tags
-const TAG_MAP: Record<string, string> = {
-  sites:               "site",
-  pages:               "pages",
-  events:              "events",
-  media_images:        "media-images",
-  media_videos:        "media-videos",
-  products:            "products",
-  referenzen:          "referenzen",
-  besetzung_gruppen:   "besetzung",
-  besetzung_eintraege: "besetzung",
-  social_links:        "social-links",
-};
+/**
+ * Der gesamte Seiteninhalt haengt an EINEM Cache-Tag (`site-bundle`), weil er
+ * auch mit genau einer Abfrage geladen wird. Jede Mutation invalidiert diesen
+ * Tag — eine Tabelle-zu-Tag-Zuordnung ist damit hinfaellig und kann auch nicht
+ * mehr vergessen werden, wenn eine neue Tabelle dazukommt.
+ */
+const BUNDLE_TAG = "site-bundle";
 
-// Map DB table names to public page paths to revalidate (Full Route Cache)
-const PATH_MAP: Record<string, string[]> = {
-  pages:               ["/about", "/services", "/media"],
-  events:              ["/", "/media"],
-  media_videos:        ["/media"],
-  media_images:        ["/galerie"],
-  // products/"/shop": WE ROCK hat keine öffentliche Shop-Seite (Route entfernt)
-  products:            [],
-  // "/": die Referenzen speisen auch die "Bekannte Veranstalter"-Leiste der Startseite
-  referenzen:          ["/", "/referenzen"],
-  besetzung_gruppen:   ["/services"],
-  besetzung_eintraege: ["/services"],
-  social_links:        ["/", "/media"],
-};
+/**
+ * Alle oeffentlichen Routen dieser App. Sie werden nach jeder Aenderung
+ * revalidiert: da alle Seiten aus demselben Bundle lesen, kann jede Aenderung
+ * jede Seite betreffen (z. B. speisen die Referenzen auch die Startseite).
+ */
+const PUBLIC_PATHS = ["/", "/about", "/services", "/media", "/galerie", "/referenzen", "/booking"];
+
+/**
+ * Nur diese Tabellen duerfen ueber den Admin geschrieben werden. Ohne diese
+ * Liste koennte jeder angemeldete Supabase-Nutzer beliebige Tabellen des
+ * Projekts veraendern — der Service-Role-Key umgeht RLS.
+ */
+const WRITABLE_TABLES = new Set([
+  "pages",
+  "events",
+  "media_images",
+  "media_videos",
+  "products",
+  "referenzen",
+  "besetzung_gruppen",
+  "besetzung_eintraege",
+  "social_links",
+  "band_members",
+  "partner_gruppen",
+  "partner_eintraege",
+  "occasions",
+  "inquiry_questions",
+  "section_images",
+]);
 
 export async function POST(request: NextRequest) {
   // Verify authenticated user
@@ -67,6 +76,9 @@ export async function POST(request: NextRequest) {
 
   if (!table || !operation) {
     return NextResponse.json({ error: "Missing table or operation" }, { status: 400 });
+  }
+  if (!WRITABLE_TABLES.has(table)) {
+    return NextResponse.json({ error: `Table not writable: ${table}` }, { status: 403 });
   }
 
   try {
@@ -124,12 +136,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unknown operation" }, { status: 400 });
     }
 
-    // Invalidate Next.js Data Cache + Full Route Cache after successful mutation
-    const tag = TAG_MAP[table];
-    if (tag) revalidateTag(tag);
-
-    const paths = PATH_MAP[table];
-    if (paths) paths.forEach(p => revalidatePath(p));
+    // Ein Tag fuer den kompletten Inhalt + alle oeffentlichen Routen neu bauen.
+    revalidateTag(BUNDLE_TAG);
+    PUBLIC_PATHS.forEach(p => revalidatePath(p));
 
     return result;
   } catch (e) {

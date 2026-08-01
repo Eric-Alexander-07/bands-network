@@ -3,11 +3,11 @@ import { band } from "@/config/band";
 import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 import ConcentricRings from "@/components/ConcentricRings";
 import type { BesetzungGruppeWithEintraege } from "@/lib/data";
+import type { Content } from "@/lib/content";
 
-type PC = Record<string, string>;
-interface Props { dbBesetzung?: BesetzungGruppeWithEintraege[]; content?: PC; }
+interface Props { dbBesetzung?: BesetzungGruppeWithEintraege[]; c: Content }
 
-export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
+export default function ServicesPage({ dbBesetzung, c }: Props) {
   const formations: Array<{ name: string; beschreibung: string | null; eintraege: Array<{ id: string; name: string; beschreibung: string | null }> }> =
     dbBesetzung && dbBesetzung.length > 0
       ? dbBesetzung.map(g => ({ name: g.name, beschreibung: g.beschreibung ?? null, eintraege: g.besetzung_eintraege ?? [] }))
@@ -18,11 +18,11 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-vocalist-gold.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Was wir anbieten</span>
-          <h1>Services</h1>
-          <p>{content.text_top || `Vom intimen Dinner bis zur 12-köpfigen Full-Band mit Multimedia-Show — ${band.name} bringt die passende Musik und Technik für jeden Anlass.`}</p>
+          <h1>{c.page_hero_title}</h1>
+          <p>{c.text_top}</p>
         </div>
       </section>
 
@@ -31,9 +31,9 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
         <ConcentricRings className="rings-far-right" />
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Flexibel buchbar</span>
-          <h2 className="section-title" data-animate="fade-up" data-delay="100">Besetzung</h2>
+          <h2 className="section-title" data-animate="fade-up" data-delay="100">{c.besetzung_title}</h2>
           <p className="formations-intro" data-animate="fade-up" data-delay="200">
-            {content.besetzung_text || `${band.name} ist für verschiedene Events in verschiedenen Besetzungen buchbar — von der eleganten kleinen Formation bis zur 12-köpfigen Full-Band mit Bläser Sektion.`}
+            {c.besetzung_text}
           </p>
           <div className="formations-grid" data-animate="fade-up">
             {(() => {
@@ -73,16 +73,16 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
         <div className="container">
           <div className="services-split services-split--imgfirst">
             <div className="services-split-img services-split-img--tall" data-animate="fade-up">
-              <img src={content.image_main || "/images/gallery/live-stage-duo.webp"} alt="Spirit of Soul auf der Bühne" />
+              <img src={c.image_main} alt="Spirit of Soul auf der Bühne" />
             </div>
             <div>
               <span className="eyebrow" data-animate="fade-up">Ton · Licht · Bühne</span>
-              <h2 className="section-title" data-animate="fade-up" data-delay="100">Technik</h2>
+              <h2 className="section-title" data-animate="fade-up" data-delay="100">{c.technik_title}</h2>
               <p className="technik-intro" style={{ marginBottom: 24 }} data-animate="fade-up" data-delay="200">
-                {content.technik_text || band.technik.intro}
+                {c.technik_text}
               </p>
               <p className="technik-note" data-animate="fade-up">
-                {band.technik.note}
+                {c.technik_note}
               </p>
             </div>
           </div>
@@ -93,10 +93,9 @@ export default function ServicesPage({ dbBesetzung, content = {} }: Props) {
       <section className="booking-cta">
         <div className="container booking-cta-inner">
           <span className="eyebrow">Individuelles Angebot</span>
-          <h2>Interesse?</h2>
+          <h2>{c.cta_title}</h2>
           <p>
-            Wir erstellen gerne ein maßgeschneidertes Angebot
-            für Ihre Veranstaltung — inkl. Band, Bühne und Technik.
+            {c.cta_text}
           </p>
           <div className="booking-cta-actions">
             <Link href="/booking" className="btn btn-gold">Anfrage senden</Link>

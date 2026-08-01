@@ -3,6 +3,7 @@ import ConcentricRings from "@/components/ConcentricRings";
 import VideoPlaylistPlayer from "@/components/VideoPlaylistPlayer";
 import LightboxImage from "@/components/LightboxImage";
 import type { Event, MediaVideo, SocialLink } from "@/lib/data";
+import type { Content } from "@/lib/content";
 
 const MONTHS_SHORT = ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
 
@@ -21,9 +22,9 @@ function getYtId(input: string): string {
   return m?.[1] ?? input;
 }
 
-interface Props { dbEvents?: Event[]; dbVideos?: MediaVideo[]; content?: Record<string, string>; socialLinks?: SocialLink[]; }
+interface Props { dbEvents?: Event[]; dbVideos?: MediaVideo[]; c: Content; socialLinks?: SocialLink[]; }
 
-export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socialLinks = [] }: Props) {
+export default function MediaPage({ dbEvents = [], dbVideos, c, socialLinks = [] }: Props) {
   const socialMap: Record<string, string> = {};
   socialLinks.forEach(l => { if (l.url) socialMap[l.platform] = l.url; });
   const rawVideos = dbVideos && dbVideos.length > 0 ? dbVideos : null;
@@ -36,11 +37,11 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-guitarist.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Termine, News &amp; Videos</span>
-          <h1>Media &amp; News</h1>
-          <p>{content.text_top || `Aktuelle Spieltermine, Videos und Social Media von ${band.name}.`}</p>
+          <h1>{c.page_hero_title}</h1>
+          <p>{c.text_top}</p>
         </div>
       </section>
 
@@ -53,7 +54,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
             {/* Videos — links */}
             <div className="media-videos-col">
               <span className="eyebrow" data-animate="fade-up">Videos</span>
-              <h2 className="section-title" data-animate="fade-up" data-delay="100">Auf der Bühne</h2>
+              <h2 className="section-title" data-animate="fade-up" data-delay="100">{c.videos_title}</h2>
 
               {/* Featured — fest, immer sichtbar */}
               <div data-animate="fade-up" data-delay="200">
@@ -70,8 +71,8 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
                     <p className="media-video-title">{mainVideo.title}</p>
                   </div>
                 )}
-                {content.video_text && (
-                  <p className="media-video-desc">{content.video_text}</p>
+                {c.video_text && (
+                  <p className="media-video-desc">{c.video_text}</p>
                 )}
               </div>
 
@@ -88,7 +89,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
               {showEvents.length > 0 && (
                 <>
                   <span className="eyebrow" data-animate="fade-up">Öffentliche Auftritte</span>
-                  <h2 className="section-title" data-animate="fade-up" data-delay="100">Öffentliche Termine</h2>
+                  <h2 className="section-title" data-animate="fade-up" data-delay="100">{c.events_title}</h2>
                   <div className="media-dates-list" data-animate="stagger">
                     {showEvents.map((d) => {
                       const inner = (
@@ -140,7 +141,7 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
             {/* Bild links */}
             <div className="media-social-img-col" data-animate="fade-right">
               <LightboxImage
-                src={content.image_main || "/images/gallery/live-vocalist-gold.webp"}
+                src={c.image_main}
                 alt="Spirit of Soul Live"
                 className="media-social-img"
                 wrapperClassName="media-social-img-lb"
@@ -152,10 +153,9 @@ export default function MediaPage({ dbEvents = [], dbVideos, content = {}, socia
             <div className="media-social-content">
               <div data-animate="fade-up">
                 <span className="eyebrow">Folgt uns</span>
-                <h2 className="section-title">News auf Instagram &amp; Facebook</h2>
+                <h2 className="section-title">{c.social_title}</h2>
                 <p className="media-social-desc">
-                  Bleibt up to date — neue Auftritte, Fotos, Behind-the-Scenes
-                  und direkte Einblicke in unser Bandleben.
+                  {c.social_text}
                 </p>
               </div>
               <div className="media-social-platforms" data-animate="stagger">

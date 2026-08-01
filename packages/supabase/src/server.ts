@@ -1,8 +1,15 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@bands/db-types";
 
-export async function createServerSupabaseClient() {
+/**
+ * Server-Client mit Session/Cookie-Handling.
+ *
+ * Zum expliziten Rueckgabetyp siehe `client.ts`: `@supabase/ssr` 0.5.x
+ * verliert den `Database`-Generic gegenueber supabase-js 2.107.
+ */
+export async function createServerSupabaseClient(): Promise<SupabaseClient<Database>> {
   const cookieStore = await cookies();
 
   return createServerClient<Database>(
@@ -25,5 +32,5 @@ export async function createServerSupabaseClient() {
         },
       },
     }
-  );
+  ) as unknown as SupabaseClient<Database>;
 }

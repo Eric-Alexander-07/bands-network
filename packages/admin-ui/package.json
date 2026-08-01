@@ -1,0 +1,21 @@
+{
+  "name": "@bands/admin-ui",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@bands/content": "*",
+    "@bands/db-types": "*",
+    "@bands/supabase": "*"
+  },
+  "peerDependencies": {
+    "next": ">=15.0.0",
+    "react": ">=19.0.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "typescript": "^5.0.0"
+  }
+}

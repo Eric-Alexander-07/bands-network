@@ -2,23 +2,26 @@ import Link from "next/link";
 import { band } from "@/config/band";
 import PhotoCarousel from "@/components/PhotoCarousel";
 import ConcentricRings from "@/components/ConcentricRings";
+import type { Content } from "@/lib/content";
+import type { SectionImage } from "@/lib/data";
 
-export default function OccasionsSection() {
+interface Props { c: Content; photos?: SectionImage[] }
+
+export default function OccasionsSection({ c, photos = [] }: Props) {
+  const carousel = photos.length ? photos.map(p => ({ src: p.url, alt: p.alt ?? "" })) : band.photos;
   return (
     <section className="section occasions-section section-has-rings">
       <ConcentricRings className="rings-left" />
       <div className="container" style={{ position: "relative", zIndex: 1 }}>
         <div className="occasions-layout">
           <div data-animate="fade-right">
-            <PhotoCarousel photos={band.photos} />
+            <PhotoCarousel photos={carousel} />
           </div>
           <div className="occasions-text">
             <span className="eyebrow" data-animate="fade-up">Wir spielen zu</span>
-            <h2 className="section-title" data-animate="fade-up" data-delay="100">Jedem Anlass</h2>
+            <h2 className="section-title" data-animate="fade-up" data-delay="100">{c.occasions_title}</h2>
             <p className="occasions-desc" data-animate="fade-up" data-delay="200">
-              Ob Hochzeit, Firmen-Event, Stadtfest oder exklusive Feier —{" "}
-              {band.name} passt sich jedem Rahmen an und sorgt für den richtigen
-              Sound zur richtigen Zeit.
+              {c.occasions_text}
             </p>
             <div data-animate="fade-up" data-delay="300">
               <Link href="/services" className="btn btn-primary">

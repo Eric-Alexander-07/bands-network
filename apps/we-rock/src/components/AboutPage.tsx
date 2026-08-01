@@ -1,26 +1,28 @@
 import Link from "next/link";
 import ConcentricRings from "@/components/ConcentricRings";
 import SingerCarousel from "@/components/SingerCarousel";
+import type { Content } from "@/lib/content";
+import type { BandMember } from "@/lib/data";
 
-type PC = Record<string, string>;
+interface Props {
+  /** Seitentexte: Datenbankwert mit Rueckfall auf den Schema-Standard. */
+  c: Content;
+  /** Musiker fuer das Karussell; leer = Rueckfall auf die Liste im Code. */
+  members?: BandMember[];
+}
 
-interface Props { content?: PC; }
-
-export default function AboutPage({ content = {} }: Props) {
-  const heroText  = content.text_top   || "Wenn kraftvolle Stimmen, legendäre Gitarrenriffs und pure Rock-Energie aufeinandertreffen, dann heißt es: WE ROCK – The Classic Rock Tribute Show. Die Band bringt das Beste aus Classic Rock, Hard Rock und Melodic Rock der 70er- und 80er-Jahre bis in die Gegenwart auf die Bühne – authentisch, energiegeladen und mit jeder Menge Leidenschaft. Frontmann Emmo Acar und Sängerin Jessica Conte sorgen dabei gemeinsam mit einer hochkarätig besetzten Band aus Ausnahme-Musikern für ein mitreißendes Live-Erlebnis voller Power, Emotionen und echter Rock'n'Roll-Momente.";
-  const mainImage = content.image_main || "/images/about.webp";
-  const mainText  = content.text_bottom;
-  const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
+export default function AboutPage({ c, members = [] }: Props) {
+  const mainParas = c.text_bottom ? c.text_bottom.split("\n").filter(Boolean) : [];
 
   return (
     <>
       <section className="page-hero">
-        <img src="/images/about-hero.webp" className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 28%" }} />
+        <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 28%" }} />
         <div className="container">
           <div className="page-hero-text-narrow">
             <span className="eyebrow">Über die Band</span>
-            <h1>Über uns</h1>
-            <p>{heroText}</p>
+            <h1>{c.page_hero_title}</h1>
+            <p>{c.text_top}</p>
           </div>
         </div>
       </section>
@@ -30,18 +32,12 @@ export default function AboutPage({ content = {} }: Props) {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="about-simple-layout">
             <div className="about-simple-img" data-animate="fade-right">
-              <img src={mainImage} alt="WE ROCK — Live" />
+              <img src={c.image_main} alt="WE ROCK — Live" />
             </div>
             <div className="about-simple-text" data-animate="fade-left">
               <span className="eyebrow">Die Classic Rock Tribute Show</span>
-              <h2>Rock Hymnen für Euren Event!</h2>
-              {mainParas ? (
-                mainParas.map((p, i) => <p key={i}>{p}</p>)
-              ) : (
-                <p>
-                  WE ROCK stehen für ehrliche Livemusik, Spielfreude und einen Abend voller unvergesslicher Rockklassiker. Mit maximaler Leidenschaft, musikalischer Klasse und viel Liebe zum Detail entführt die Band ihr Publikum auf eine Reise durch die größten Rock-Dekaden aller Zeiten. WE ROCK – die ultimative Classic Rock Party. Rockig - Leidenschaftlich - Handgemacht.
-                </p>
-              )}
+              <h2>{c.about_title}</h2>
+              {mainParas.map((p, i) => <p key={i}>{p}</p>)}
               <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
                 <Link href="/booking" className="btn btn-primary">Jetzt anfragen</Link>
                 <Link href="/services" className="btn btn-outline">Programm & Besetzung</Link>
@@ -51,7 +47,7 @@ export default function AboutPage({ content = {} }: Props) {
         </div>
       </section>
 
-      <SingerCarousel />
+      <SingerCarousel title={c.members_title} members={members} />
     </>
   );
 }

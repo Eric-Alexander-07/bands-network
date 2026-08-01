@@ -4,20 +4,25 @@ import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 import ConcentricRings from "@/components/ConcentricRings";
 import PartnerSection from "@/components/PartnerSection";
 import ReferencesMarquee from "@/components/ReferencesMarquee";
-import type { Referenz } from "@/lib/data";
+import type { Referenz, PartnerGruppeWithEintraege } from "@/lib/data";
+import type { Content } from "@/lib/content";
 
-export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
+interface Props {
+  refs?: Referenz[];
+  c: Content;
+  partnerGruppen?: PartnerGruppeWithEintraege[];
+}
+
+export default function ReferencesPage({ refs = [], c, partnerGruppen = [] }: Props) {
   return (
     <>
       <section className="page-hero">
-        <img src="/images/gallery/live-festival-singer.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <span className="eyebrow">Unsere Kunden</span>
-          <h1>Referenzen</h1>
+          <h1>{c.page_hero_title}</h1>
           <p>
-            {band.name} hat bei Hunderten von Events gespielt — von
-            exklusiven Galas über Firmenfeiern bis zu internationalen
-            Hochzeiten.
+            {c.page_hero_text}
           </p>
         </div>
       </section>
@@ -27,24 +32,23 @@ export default function ReferencesPage({ refs = [] }: { refs?: Referenz[] }) {
         <div className="container">
           <span className="eyebrow" data-animate="fade-up">Vertrauen uns</span>
           <h2 className="section-title" data-animate="fade-up" data-delay="100">
-            Unsere Kunden
+            {c.referenzen_title}
           </h2>
           <p className="refs-intro" data-animate="fade-up" data-delay="200">
-            Eine Auswahl der Unternehmen, Veranstalter und Privatkunden,
-            die {band.name} für ihre Events gebucht haben.
+            {c.referenzen_text}
           </p>
         </div>
         <ReferencesMarquee refs={refs} />
       </section>
 
-      <PartnerSection />
+      <PartnerSection c={c} gruppen={partnerGruppen} />
 
       <section className="booking-cta">
         <div className="container booking-cta-inner">
           <span className="eyebrow">Nächstes Event</span>
-          <h2>Auch dabei sein?</h2>
+          <h2>{c.cta_title}</h2>
           <p>
-            Schreib uns für Verfügbarkeiten und ein persönliches Angebot.
+            {c.cta_text}
           </p>
           <div className="booking-cta-actions">
             <Link href="/booking" className="btn btn-gold">Buchung anfragen</Link>

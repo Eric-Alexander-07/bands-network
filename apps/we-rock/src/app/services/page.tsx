@@ -22,9 +22,10 @@ export const metadata: Metadata = {
 };
 
 import ServicesPage from "@/components/ServicesPage";
-import { fetchPageContent } from "@/lib/data";
+import { fetchBundle } from "@/lib/data";
+import { resolve } from "@/lib/content";
 
 export default async function Services() {
-  const content = await fetchPageContent("services");
-  return <ServicesPage content={content} />;
+  const bundle = await fetchBundle();
+  return <ServicesPage c={resolve(bundle, "services")} />;
 }

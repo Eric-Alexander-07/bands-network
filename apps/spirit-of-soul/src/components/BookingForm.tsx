@@ -3,9 +3,27 @@
 import { useState, type FormEvent } from "react";
 import { band } from "@/config/band";
 import { QUESTION_TEMPLATE, INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
+import Rich from "@/components/Rich";
+import type { Content } from "@/lib/content";
+import type { Occasion, InquiryQuestion } from "@/lib/data";
 
-export default function BookingForm() {
+interface Props {
+  c: Content;
+  /** Anlaesse fuer die Auswahlliste; leer = Rueckfall auf band.ts. */
+  occasions?: Occasion[];
+  /** Fragen fuer Checkliste und Mailvorlage; leer = Rueckfall auf den Code. */
+  questions?: InquiryQuestion[];
+}
+
+export default function BookingForm({ c, occasions = [], questions = [] }: Props) {
   const [submitted, setSubmitted] = useState(false);
+  const anlaesse = occasions.length ? occasions.map(o => o.title) : band.occasions.map(o => o.title);
+  // Vorlage im Nachrichtenfeld: jede Frage mit einer Antwortzeile darunter.
+  const checklist = questions;
+  const templateQuestions = questions.filter(q => q.in_template !== false);
+  const messageTemplate = templateQuestions.length
+    ? templateQuestions.map(q => `${q.text}\n: `).join("\n\n")
+    : QUESTION_TEMPLATE;
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -40,45 +58,34 @@ export default function BookingForm() {
     <div className="booking-layout">
       <div className="booking-info">
         <span className="eyebrow">Kontakt aufnehmen</span>
-        <h2>{band.name} anfragen</h2>
+        <h2>{c.booking_title}</h2>
         <p>
-          Schreibt uns für Verfügbarkeiten, Konditionen und individuelle
-          Wünsche. Wir melden uns in der Regel innerhalb von 24 Stunden.
+          {c.booking_text}
         </p>
         <div className="booking-contact">
           <div>
-            <span className="booking-contact-label">E-Mail</span>
+            <span className="booking-contact-label">{c.booking_email_label}</span>
             <a href={INQUIRY_MAIL_HREF} className="booking-contact-value">
               {band.email}
             </a>
           </div>
           <div>
-            <span className="booking-contact-label">Standort</span>
+            <span className="booking-contact-label">{c.booking_location_label}</span>
             <span className="booking-contact-value">{band.location}</span>
           </div>
         </div>
 
         <p className="booking-checklist-intro">
-          Schicken Sie uns einfach eine E-Mail. Am schnellsten geht das über das
-          Kontaktformular rechts – es enthält bereits alle wichtigen Fragen und
-          öffnet automatisch Ihr E-Mail-Programm mit einer fertigen Vorlage.
+          {c.booking_checklist_intro}
         </p>
 
         <div className="booking-checklist">
-          <p className="booking-checklist-title">Hilfreiche Angaben für Ihre Anfrage</p>
+          <p className="booking-checklist-title">{c.booking_checklist_title}</p>
           <ul className="booking-checklist-list">
-            <li>Bitte geben Sie im Betreff den Namen der Band an: <strong>{band.name}</strong>.</li>
-            <li>In welcher Stadt findet Ihre Veranstaltung statt?</li>
-            <li>In welcher Location feiern Sie?</li>
-            <li>Wie viele Gäste werden in etwa erwartet?</li>
-            <li>Gibt es dort Technik oder soll die Band diese mitbringen?</li>
-            <li>Gibt es eine Bühne?</li>
-            <li>Haben Sie einen Budgetrahmen oder welche Besetzung wünschen Sie?</li>
-            <li>Wie lange soll die Band in etwa spielen?</li>
-            <li>Treten noch andere Künstler an dem Abend auf?</li>
-            <li>Wünschen Sie Pausenmusik oder einen DJ-Service der Band?</li>
-            <li>Bitte nutzen Sie die vorausgefüllte E-Mail-Vorlage und löschen Sie nichts heraus.</li>
-            <li>Für eventuelle Rückfragen: bitte Telefonnummer angeben.</li>
+            <li><Rich text={c.booking_checklist_first} /></li>
+            {checklist.map(q => (
+              <li key={q.id}><Rich text={q.text} /></li>
+            ))}
           </ul>
         </div>
       </div>
@@ -151,9 +158,9 @@ export default function BookingForm() {
             </label>
             <select id="occasion" name="occasion" className="form-select">
               <option value="">Bitte auswählen ...</option>
-              {band.occasions.map((o, i) => (
-                <option key={i} value={o.title}>
-                  {o.title}
+              {anlaesse.map((title, i) => (
+                <option key={i} value={title}>
+                  {title}
                 </option>
               ))}
               <option value="other">Sonstiges</option>
@@ -168,7 +175,7 @@ export default function BookingForm() {
               name="message"
               className="form-textarea"
               rows={18}
-              defaultValue={QUESTION_TEMPLATE}
+              defaultValue={messageTemplate}
             />
           </div>
           <div>

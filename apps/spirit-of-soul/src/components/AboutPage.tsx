@@ -1,26 +1,29 @@
 import Link from "next/link";
 import ConcentricRings from "@/components/ConcentricRings";
 import SingerCarousel from "@/components/SingerCarousel";
+import Lines from "@/components/Lines";
+import type { Content } from "@/lib/content";
+import type { BandMember } from "@/lib/data";
 
-type PC = Record<string, string>;
+interface Props {
+  /** Seitentexte: Datenbankwert mit Rueckfall auf den Schema-Standard. */
+  c: Content;
+  /** Saenger fuer das Karussell; leer = Rueckfall auf die Liste im Code. */
+  members?: BandMember[];
+}
 
-interface Props { content?: PC; }
-
-export default function AboutPage({ content = {} }: Props) {
-  const heroText  = content.text_top   || "25 Jahre Soul, R&B und Funk auf internationalen Bühnen.\nEntertainment der Extraklasse.";
-  const mainImage = content.image_main || "/images/uber-uns.webp";
-  const mainText  = content.text_bottom;
-  const mainParas = mainText ? mainText.split("\n").filter(Boolean) : null;
+export default function AboutPage({ c, members = [] }: Props) {
+  const mainParas = c.text_bottom ? c.text_bottom.split("\n").filter(Boolean) : [];
 
   return (
     <>
       <section className="page-hero">
-        <img src="/images/uber-uns.webp" className="page-hero-bg-img" alt="" aria-hidden="true" />
+        <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" />
         <div className="container">
           <div className="page-hero-text-narrow">
             <span className="eyebrow">Über die Band</span>
-            <h1>Über uns</h1>
-            <p>{heroText}</p>
+            <h1>{c.page_hero_title}</h1>
+            <p>{c.text_top}</p>
           </div>
         </div>
       </section>
@@ -30,28 +33,12 @@ export default function AboutPage({ content = {} }: Props) {
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="about-simple-layout">
             <div className="about-simple-img" data-animate="fade-right">
-              <img src={mainImage} alt="Spirit of Soul — Live" />
+              <img src={c.image_main} alt="Spirit of Soul — Live" />
             </div>
             <div className="about-simple-text" data-animate="fade-left">
               <span className="eyebrow">The Finest Of Black Music</span>
-              <h2>25 Jahre Bühne.<br />Eine Leidenschaft.</h2>
-              {mainParas ? (
-                mainParas.map((p, i) => <p key={i}>{p}</p>)
-              ) : (
-                <>
-                  <p>
-                    Spirit of Soul steht seit 25 Jahren für erstklassiges Live-Entertainment.
-                    Mit internationalen Sängern, erfahrenen Musikern und einer unverwechselbaren
-                    Energie begeistert die Band Gäste bei Hochzeiten, Firmenevents, Stadtfesten
-                    und exklusiven Galas europaweit.
-                  </p>
-                  <p>
-                    Die Stärke liegt in der Musikalität und Spontanität aller Bandmitglieder —
-                    das Programm wird kurzfristig auf der Bühne maßgeschneidert, damit der
-                    erste Song das Publikum sofort bewegt.
-                  </p>
-                </>
-              )}
+              <h2><Lines text={c.about_title} /></h2>
+              {mainParas.map((p, i) => <p key={i}>{p}</p>)}
               <div style={{ display: "flex", gap: "12px", marginTop: "8px" }}>
                 <Link href="/booking" className="btn btn-primary">Jetzt anfragen</Link>
                 <Link href="/services" className="btn btn-outline">Unsere Services</Link>
@@ -61,7 +48,7 @@ export default function AboutPage({ content = {} }: Props) {
         </div>
       </section>
 
-      <SingerCarousel />
+      <SingerCarousel title={c.members_title} members={members} />
     </>
   );
 }
