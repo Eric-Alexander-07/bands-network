@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { band } from "@/config/band";
 import LightboxImage from "@/components/LightboxImage";
 import type { Content } from "@/lib/content";
 
@@ -25,14 +24,6 @@ export default function AboutSection({ c }: { c: Content }) {
               <Link href="/about" className="btn btn-outline">
                 Mehr erfahren
               </Link>
-            </div>
-            <div className="facts-grid facts-grid--compact" data-animate="stagger">
-              {band.facts.map((fact, i) => (
-                <div key={i} className="fact-item">
-                  <span className="fact-value">{fact.value}</span>
-                  <span className="fact-label">{fact.label}</span>
-                </div>
-              ))}
             </div>
           </div>
         </div>
