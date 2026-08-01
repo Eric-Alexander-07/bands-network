@@ -7,6 +7,24 @@ interface Photo { src: string; alt: string; }
 
 interface Props { images: Photo[]; }
 
+/* Editorial masonry spans (VMP layout). Only col 1–2 / row 1–2 so the
+   pattern tiles cleanly on both the 4-col desktop and 2-col mobile grid.
+   `grid-auto-flow: dense` (see globals.css) backfills the gaps. */
+const SPAN_PATTERN: { col: number; row: number }[] = [
+  { col: 2, row: 2 },
+  { col: 1, row: 1 },
+  { col: 1, row: 1 },
+  { col: 1, row: 2 },
+  { col: 1, row: 1 },
+  { col: 2, row: 1 },
+  { col: 1, row: 1 },
+  { col: 1, row: 1 },
+  { col: 2, row: 1 },
+  { col: 1, row: 2 },
+  { col: 1, row: 1 },
+  { col: 2, row: 1 },
+];
+
 export default function GalleryGrid({ images }: Props) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const touchStartX = useRef<number | null>(null);
@@ -34,16 +52,20 @@ export default function GalleryGrid({ images }: Props) {
     <>
       {/* Grid */}
       <div className="gallery-editorial">
-        {images.map((photo, i) => (
-          <div
-            key={i}
-            className={`gallery-editorial-item gallery-editorial-item--${i + 1}`}
-            onClick={() => setOpenIdx(i)}
-          >
-            <img src={photo.src} alt={photo.alt} />
-            <div className="lb-hover-overlay">⊕</div>
-          </div>
-        ))}
+        {images.map((photo, i) => {
+          const span = SPAN_PATTERN[i % SPAN_PATTERN.length];
+          return (
+            <div
+              key={i}
+              className="gallery-editorial-item"
+              style={{ gridColumn: `span ${span.col}`, gridRow: `span ${span.row}` }}
+              onClick={() => setOpenIdx(i)}
+            >
+              <img src={photo.src} alt={photo.alt} />
+              <div className="lb-hover-overlay">⊕</div>
+            </div>
+          );
+        })}
       </div>
 
       {/* Lightbox — portal to document.body so z-index:500 beats nav z-index:100 */}
