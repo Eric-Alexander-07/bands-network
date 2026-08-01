@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Platzhalter">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#182130"/>
+      <stop offset="100%" stop-color="#0E1420"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <g fill="#4A5A78" opacity="0.5">
+    <circle cx="560" cy="392" r="3"/><circle cx="600" cy="392" r="3"/><circle cx="640" cy="392" r="3"/>
+  </g>
+  <text x="600" y="450" text-anchor="middle" fill="#7d8494"
+        font-family="system-ui, sans-serif" font-size="22" letter-spacing="3">BILD FOLGT</text>
+</svg>
