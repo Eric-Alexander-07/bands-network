@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
+import DotGrid from "@/components/DotGrid";
 import type { Event } from "@/lib/data";
 import type { Content } from "@/lib/content";
 
@@ -55,6 +56,7 @@ export default function HeroSection({ dbEvents = [], c }: Props) {
     <section className="hero">
       <div className="hero-split">
         <div className="hero-left">
+          <DotGrid variant="cluster" origin={{ x: 1, y: 0.5 }} spread={0.85} seed={3} intensity={0.22} />
           <div className="hero-content">
             <p className="hero-eyebrow">{c.hero_eyebrow}</p>
             {/* Zwei-Zeiler: neutrale Zeile, darunter das kursive Gold-Wort. */}
