@@ -229,7 +229,7 @@ export const contentSchema: SiteContentSchema = {
           key: "events",
           title: "Öffentliche Termine",
           description:
-            "Erscheinen im Hero (maximal drei) und vollstaendig auf der Seite „Media & News“.",
+            "Erscheinen im Hero (maximal drei) und vollstaendig auf der Seite „Media, News & Termine“.",
           table: "events",
           hasVisible: true,
           fields: [
@@ -474,11 +474,11 @@ export const contentSchema: SiteContentSchema = {
     },
 
     // ─────────────────────────────────────────────────────────────
-    // 5. Media & News
+    // 5. Media, News & Termine
     // ─────────────────────────────────────────────────────────────
     {
       slug: "media",
-      title: "Media & News",
+      title: "Media, News & Termine",
       path: "/media",
       groups: [
         {
@@ -494,7 +494,7 @@ export const contentSchema: SiteContentSchema = {
               key: "page_hero_title",
               label: "Ueberschrift",
               type: "text",
-              default: "Media & News",
+              default: "Media, News & Termine",
             },
             {
               key: "text_top",

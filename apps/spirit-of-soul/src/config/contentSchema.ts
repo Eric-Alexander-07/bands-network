@@ -117,7 +117,7 @@ export const contentSchema: SiteContentSchema = {
         {
           key: "events",
           title: "Öffentliche Termine",
-          description: "Im Hero erscheinen die naechsten drei sichtbaren Termine, auf „Media & News“ alle.",
+          description: "Im Hero erscheinen die naechsten drei sichtbaren Termine, auf „Media, News & Termine“ alle.",
           table: "events",
           hasVisible: true,
           fields: [
@@ -272,18 +272,18 @@ export const contentSchema: SiteContentSchema = {
     },
 
     // ─────────────────────────────────────────────────────────────
-    // Media & News
+    // Media, News & Termine
     // ─────────────────────────────────────────────────────────────
     {
       slug: "media",
-      title: "Media & News",
+      title: "Media, News & Termine",
       path: "/media",
       groups: [
         {
           title: "Seitenkopf",
           fields: [
             { key: "page_hero_image", label: "Hintergrundbild", type: "image", default: "/images/gallery/live-guitarist.webp" },
-            { key: "page_hero_title", label: "Ueberschrift", type: "text", default: "Media & News" },
+            { key: "page_hero_title", label: "Ueberschrift", type: "text", default: "Media, News & Termine" },
             { key: "text_top", label: "Text im Seitenkopf", type: "textarea", rows: 2, default: "Aktuelle Spieltermine, Videos und Social Media von Spirit of Soul." },
           ],
         },

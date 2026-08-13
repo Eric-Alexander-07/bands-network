@@ -21,9 +21,12 @@ interface Props {
 export default function HeroSection({ dbEvents = [], c }: Props) {
   const parallaxRef = useRef<HTMLDivElement>(null);
 
-  // Only show dates that come from the DB (visible ones, max 3)
+  // Nur sichtbare Termine ab heute, chronologisch aufsteigend, max. 3 —
+  // vergangene Termine waeren im Hero-Teaser nur verwirrend.
+  const todayStr = new Date().toISOString().slice(0, 10);
   const nextDates = dbEvents
-    .filter(e => e.visible)
+    .filter(e => e.visible && e.date >= todayStr)
+    .sort((a, b) => a.date.localeCompare(b.date))
     .slice(0, 3);
 
   useEffect(() => {

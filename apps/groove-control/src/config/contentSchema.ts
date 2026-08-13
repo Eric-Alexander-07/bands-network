@@ -276,18 +276,18 @@ export const contentSchema: SiteContentSchema = {
     },
 
     // ─────────────────────────────────────────────────────────────
-    // 5. Media & News
+    // 5. Media, News & Termine
     // ─────────────────────────────────────────────────────────────
     {
       slug: "media",
-      title: "Media & News",
+      title: "Media, News & Termine",
       path: "/media",
       groups: [
         {
           title: "Seitenkopf",
           fields: [
             { key: "page_hero_image", label: "Hintergrundbild", type: "image", default: "/images/media-header.webp" },
-            { key: "page_hero_title", label: "Ueberschrift", type: "text", default: "Media & News" },
+            { key: "page_hero_title", label: "Ueberschrift", type: "text", default: "Media, News & Termine" },
             { key: "text_top", label: "Text im Seitenkopf", type: "textarea", rows: 3,
               default: "Aktuelle Videos, Spieltermine und Neuigkeiten von Groove Control." },
           ],

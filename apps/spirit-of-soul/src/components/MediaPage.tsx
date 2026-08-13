@@ -32,7 +32,10 @@ export default function MediaPage({ dbEvents = [], dbVideos, c, socialLinks = []
     ? rawVideos.map(v => ({ id: getYtId(v.youtube_url), title: v.title ?? "" }))
     : band.videos.map(v => ({ id: v.id, title: v.title ?? "" }));
   const [mainVideo, ...playlistVideos] = videos;
-  const showEvents = dbEvents.filter(e => e.visible);
+  // Hier alle Termine — auch vergangene, als Archiv — neueste zuerst.
+  const showEvents = dbEvents
+    .filter(e => e.visible)
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <>

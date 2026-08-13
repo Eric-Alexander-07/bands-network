@@ -11,7 +11,7 @@ export const band = {
     { label: "Home", href: "/" },
     { label: "Über uns", href: "/about" },
     { label: "Services", href: "/services" },
-    { label: "Media & News", href: "/media" },
+    { label: "Media, News & Termine", href: "/media" },
     { label: "Galerie", href: "/galerie" },
     { label: "Shop", href: "/shop" },
     { label: "Referenzen", href: "/referenzen" },

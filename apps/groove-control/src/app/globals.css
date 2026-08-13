@@ -249,8 +249,10 @@ h3, h4 {
   color: var(--text-light);
   white-space: nowrap;
   flex-shrink: 0;
+  margin-left: -12px;
   transition: color 0.3s ease;
 }
+.nav-logo img { display: block; margin-left: -6px; }
 .nav.scrolled .nav-logo { color: var(--text); }
 .nav-links {
   display: flex;
@@ -427,8 +429,10 @@ h3, h4 {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: calc(var(--nav-height) + 64px) 64px 64px;
+  /* Desktop-Split hat noch reichlich Platz neben dem Bild — Inhalt mittig
+     statt oben anordnen, statt mit grossem Top-Padding unter der Nav zu haengen. */
+  justify-content: center;
+  padding: 64px;
   overflow: hidden;
   box-sizing: border-box;
   /* Grid stretch handles height — no height:100% needed (breaks in Safari) */
@@ -502,13 +506,11 @@ h3, h4 {
   align-items: center;
   justify-content: center;
 }
-.hero-right-placeholder span {
-  font-family: var(--font-ui);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(226,217,200,0.12);
+.hero-right-placeholder img {
+  width: 200px;
+  max-width: 40%;
+  height: auto;
+  opacity: 0.12;
 }
 .hero-right-img {
   position: absolute;
@@ -546,16 +548,17 @@ h3, h4 {
   flex-shrink: 0;
 }
 .hero-logo {
-  height: 320px;
-  width: auto;
-  max-width: 100%;
-  aspect-ratio: 3508 / 3282;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  aspect-ratio: 1250 / 99;
   object-fit: contain;
+  object-position: left;
   display: block;
 }
 .hero-title {
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 5.6vw, 5rem);
+  font-size: clamp(2.25rem, 4.6vw, 4rem);
   font-weight: 300;
   line-height: 1.05;
   letter-spacing: -0.02em;
@@ -3381,30 +3384,25 @@ select::-ms-expand { display: none; }
   }
 }
 
-/* ─── iPad / tablets (641–1024px): split hero ─────────────────
-   Eyebrow + logo pinned to the top, everything from the claim down
-   (claim → sub → buttons → dates) pinned to the bottom — so the two
-   singers' faces stay clearly visible in the gap between. */
+/* ─── iPad / tablets (641–1024px): bottom-anchored hero ───────
+   Eyebrow, Logo, Claim, Sub, Buttons und Termine bilden eine Gruppe, die
+   gemeinsam am unteren Rand sitzt — kein Aufsplitten in oben/unten mehr. */
 @media (min-width: 641px) and (max-width: 1024px) {
   .hero-content {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
     flex: 1 1 auto;
     width: 100%;
   }
-  /* margin-top:auto absorbs the free space above the claim, pushing it and
-     all following siblings to the bottom of the hero. */
-  .hero-claim { margin-top: auto; }
-  /* Top + bottom scrim: keeps the logo (top) and text (bottom) legible while
-     the middle band — the faces — stays clear. */
+  /* Scrim nur noch am unteren Rand, wo jetzt der gesamte Textblock sitzt —
+     oben bleibt das Bild (Gesichter) klar sichtbar. */
   .hero-right::before {
     background: linear-gradient(to bottom,
-      rgba(18,16,14,0.72) 0%,
-      rgba(18,16,14,0.18) 20%,
-      transparent 42%,
-      transparent 56%,
-      rgba(18,16,14,0.50) 80%,
+      transparent 0%,
+      transparent 45%,
+      rgba(18,16,14,0.55) 75%,
       rgba(18,16,14,0.92) 100%);
   }
 }
@@ -3488,7 +3486,7 @@ select::-ms-expand { display: none; }
     background: linear-gradient(to top, rgba(18,16,14,0.90) 0%, rgba(18,16,14,0.45) 38%, rgba(18,16,14,0.05) 68%, transparent 100%);
   }
   .hero-title { font-size: clamp(2.5rem, 9vw, 3.75rem); }
-  .hero-logo { height: 210px; }
+  .hero-logo { max-width: 420px; }
   .hero-claim { font-size: clamp(1.125rem, 4.5vw, 1.5rem); }
   .hero-sub { font-size: 0.875rem; margin-bottom: 24px; max-width: 100%; }
   .hero-actions { flex-direction: column; gap: 10px; }
@@ -3639,7 +3637,7 @@ select::-ms-expand { display: none; }
   .container { padding: 0 16px; }
   .section { padding: 48px 0; }
   .hero-title { font-size: clamp(2.25rem, 8.5vw, 3.25rem); }
-  .hero-logo { height: 200px; }
+  .hero-logo { max-width: 300px; }
   .hero-claim { font-size: clamp(1rem, 4vw, 1.375rem); }
   .page-hero { min-height: 300px; padding-top: calc(var(--nav-height) + 32px); padding-bottom: 40px; }
   .page-hero h1 { font-size: clamp(1.35rem, 6.075vw, 2.3625rem); }

@@ -20,13 +20,14 @@ interface Props {
 }
 
 export default function HeroSection({ dbEvents = [], c }: Props) {
-  // Zeile 1 neutral, Zeile 2 kursiv in Gold — Zwei-Zeiler-Schema der Marke.
-  const [titleLine1 = "", titleLine2 = ""] = c.hero_title.split("\n");
   const parallaxRef = useRef<HTMLDivElement>(null);
 
-  // Only show dates that come from the DB (visible ones, max 3)
+  // Nur sichtbare Termine ab heute, chronologisch aufsteigend, max. 3 —
+  // vergangene Termine waeren im Hero-Teaser nur verwirrend.
+  const todayStr = new Date().toISOString().slice(0, 10);
   const nextDates = dbEvents
-    .filter(e => e.visible)
+    .filter(e => e.visible && e.date >= todayStr)
+    .sort((a, b) => a.date.localeCompare(b.date))
     .slice(0, 3);
 
   useEffect(() => {
@@ -59,10 +60,9 @@ export default function HeroSection({ dbEvents = [], c }: Props) {
           <DotGrid variant="cluster" origin={{ x: 1, y: 0.5 }} spread={0.85} seed={3} intensity={0.22} />
           <div className="hero-content">
             <p className="hero-eyebrow">{c.hero_eyebrow}</p>
-            {/* Zwei-Zeiler: neutrale Zeile, darunter das kursive Gold-Wort. */}
+            {/* Das Logo traegt die Headline, wie bei den anderen Bands — kein Textzeilen-Zweizeiler auf der Startseite. */}
             <h1 className="hero-title">
-              <span className="hero-title-line">{titleLine1}</span>
-              <span className="hero-title-line hero-title-italic">{titleLine2}</span>
+              <img src="/images/logo-light.png" alt={band.name} className="hero-logo" />
             </h1>
             <p className="hero-claim">{c.hero_claim}</p>
             <p className="hero-sub">{c.hero_sub}</p>
@@ -119,7 +119,7 @@ export default function HeroSection({ dbEvents = [], c }: Props) {
             ) : (
               // Platzhalter, solange kein Hero-Bild gepflegt ist.
               <div className="hero-right-placeholder">
-                <span>Groove Control</span>
+                <img src="/images/logo-light.png" alt="Groove Control" />
               </div>
             )}
           </div>

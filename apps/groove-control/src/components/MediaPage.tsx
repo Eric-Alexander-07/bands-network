@@ -46,7 +46,10 @@ export default function MediaPage({ dbEvents = [], dbVideos, c, socialLinks = []
   // `mainVideo` kann fehlen, solange keine Videos gepflegt sind.
   const mainVideo = videos[0];
   const playlistVideos = videos.slice(1);
-  const showEvents = dbEvents.filter(e => e.visible);
+  // Hier alle Termine — auch vergangene, als Archiv — neueste zuerst.
+  const showEvents = dbEvents
+    .filter(e => e.visible)
+    .sort((a, b) => b.date.localeCompare(a.date));
 
   return (
     <>
