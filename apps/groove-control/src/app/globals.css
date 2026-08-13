@@ -433,10 +433,35 @@ h3, h4 {
      statt oben anordnen, statt mit grossem Top-Padding unter der Nav zu haengen. */
   justify-content: center;
   padding: 64px;
-  overflow: hidden;
+  /* Kein overflow:hidden mehr — das Hero-Logo darf bewusst rechts in das
+     Bild hineinragen (siehe .hero-logo). Dekor-Layer (::before, DotGrid)
+     nutzen inset:0 und werden dadurch nicht groesser. */
   box-sizing: border-box;
+  /* Grid-Items mit z-index bilden per Spec einen eigenen Stacking-Kontext,
+     auch ohne dass es hier auf den verschachtelten Kindern (.hero-content)
+     gesetzt ist — das ist die massgebliche Vergleichsebene gegenueber
+     .hero-right. Ohne das gewinnt bei "auto" gegen "auto" das im DOM
+     spaetere Element (das Bild) und verdeckt das ueberragende Logo. */
+  z-index: 2;
   /* Grid stretch handles height — no height:100% needed (breaks in Safari) */
   min-height: 0;
+  /* Ohne das wuerde der Grid-Sizing-Algorithmus die Breite des ueberragenden
+     Logos in die Spaltenberechnung einbeziehen (impliziter min-width:auto
+     bezieht den Inhalt mit ein) und die 38fr-Spalte auf Kosten der Bild-
+     Spalte aufblaehen — sichtbares Ueberlaufen bleibt trotzdem erlaubt,
+     das betrifft nur das Box-Layout, nicht das Rendering. */
+  min-width: 0;
+}
+/* Zwischen dem Kollaps bei 1024px und grossen Monitoren wird die Spalte
+   spuerbar schmaler (v. a. Tablets im Querformat, kleine Laptops) — der
+   Claim-Text bricht dort in mehr Zeilen um, wodurch mittig angeordneter
+   Inhalt unruhig wirkt. Hier wieder von oben verankern, wie vor der
+   Zentrierung fuer grosse Screens. */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .hero-left {
+    justify-content: flex-start;
+    padding-top: calc(var(--nav-height) + 64px);
+  }
 }
 .hero-left::before {
   content: "";
@@ -525,7 +550,10 @@ h3, h4 {
 }
 .hero-content {
   position: relative;
-  z-index: 1;
+  /* Deutlich hoeher als hero-right::before (z-index:1) — bei Gleichstand
+     gewinnt sonst das im DOM spaeter stehende Element (das Bild) und
+     verdeckt das ueberragende Hero-Logo. */
+  z-index: 5;
 }
 .hero-eyebrow {
   font-family: var(--font-ui);
@@ -548,8 +576,13 @@ h3, h4 {
   flex-shrink: 0;
 }
 .hero-logo {
-  width: 100%;
-  max-width: 600px;
+  /* Bewusst breiter als die Textspalte — darf rechts sichtbar ueber den
+     Rand von hero-left hinaus bis in das Bild hineinragen (hero-left und
+     -split erlauben das per overflow:visible). max-width:none haltet den
+     globalen `img{max-width:100%}`-Reset ab, der die Breite sonst still
+     wieder auf die Spaltenbreite zurueckstutzt. */
+  width: clamp(460px, 44vw, 820px);
+  max-width: none;
   height: auto;
   aspect-ratio: 1250 / 99;
   object-fit: contain;
@@ -579,7 +612,7 @@ h3, h4 {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(1.375rem, 2.8vw, 2rem);
+  font-size: clamp(1.125rem, 2.2vw, 1.625rem);
   letter-spacing: 0.04em;
   color: var(--gold);
   margin-bottom: 14px;
@@ -3486,7 +3519,7 @@ select::-ms-expand { display: none; }
     background: linear-gradient(to top, rgba(18,16,14,0.90) 0%, rgba(18,16,14,0.45) 38%, rgba(18,16,14,0.05) 68%, transparent 100%);
   }
   .hero-title { font-size: clamp(2.5rem, 9vw, 3.75rem); }
-  .hero-logo { max-width: 420px; }
+  .hero-logo { width: min(100%, 420px); }
   .hero-claim { font-size: clamp(1.125rem, 4.5vw, 1.5rem); }
   .hero-sub { font-size: 0.875rem; margin-bottom: 24px; max-width: 100%; }
   .hero-actions { flex-direction: column; gap: 10px; }
@@ -3637,7 +3670,7 @@ select::-ms-expand { display: none; }
   .container { padding: 0 16px; }
   .section { padding: 48px 0; }
   .hero-title { font-size: clamp(2.25rem, 8.5vw, 3.25rem); }
-  .hero-logo { max-width: 300px; }
+  .hero-logo { width: min(100%, 300px); }
   .hero-claim { font-size: clamp(1rem, 4vw, 1.375rem); }
   .page-hero { min-height: 300px; padding-top: calc(var(--nav-height) + 32px); padding-bottom: 40px; }
   .page-hero h1 { font-size: clamp(1.35rem, 6.075vw, 2.3625rem); }

@@ -26,9 +26,9 @@ export default function AdminLogin() {
   return (
     <div className="admin-root" style={{
       display: "flex", alignItems: "center", justifyContent: "center",
-      minHeight: "100vh", background: "var(--a-bg)",
+      minHeight: "100vh", background: "var(--a-bg)", padding: "24px 20px", boxSizing: "border-box",
     }}>
-      <div style={{ width: 360 }}>
+      <div style={{ width: "100%", maxWidth: 360 }}>
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <span className="a-dot" />

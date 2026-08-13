@@ -22,7 +22,7 @@ export const band = {
     { label: "Home", href: "/" },
     { label: "Über uns", href: "/about" },
     { label: "Programm & Besetzung", href: "/services" },
-    { label: "Media, News & Termine", href: "/media" },
+    { label: "Media & News", href: "/media" },
     { label: "Galerie", href: "/galerie" },
     { label: "Referenzen", href: "/referenzen" },
     { label: "Kontakt", href: "/booking" },

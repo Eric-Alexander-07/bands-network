@@ -8,7 +8,7 @@ import type { User } from "@supabase/supabase-js";
 import "./admin.css";
 import { ToastProvider } from "@bands/admin-ui";
 import { contentSchema } from "@/config/contentSchema";
-import { MdDashboard, MdImage, MdArticle, MdLogout } from "react-icons/md";
+import { MdDashboard, MdImage, MdArticle, MdLogout, MdMenu, MdClose } from "react-icons/md";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "groove-control";
 
@@ -40,6 +40,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const [user, setUser]     = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
+  // Sidebar ist unter 768px eine Drawer-Navigation statt einer permanenten
+  // Spalte — per Default eingeklappt, damit sie auf dem Handy keinen Platz
+  // vom Inhalt wegnimmt.
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Bei Seitenwechsel automatisch schliessen (z. B. nach Browser-Zurueck).
+  useEffect(() => { setSidebarOpen(false); }, [pathname]);
 
   useEffect(() => {
     // Login page handles itself — no auth check needed
@@ -123,12 +130,17 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   const initials = user?.email?.slice(0, 2).toUpperCase() ?? "??";
 
+  // Titel fuer die mobile Kopfzeile — der Name des gerade aktiven Nav-Punkts.
+  const activeEntry = NAV.find((entry): entry is NavItem =>
+    !("section" in entry) && (entry.href === "/admin" ? pathname === "/admin" : pathname.startsWith(entry.href))
+  );
+
   return (
     <ToastProvider>
       <div className="admin-root">
         <div className="admin-shell">
           {/* Sidebar */}
-          <aside className="admin-sidebar">
+          <aside className={`admin-sidebar${sidebarOpen ? " open" : ""}`}>
             <div className="admin-sidebar-logo">
               <strong>
                 <span className="a-dot" />
@@ -150,6 +162,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                     key={href}
                     href={href}
                     className={`admin-nav-item${active ? " active" : ""}`}
+                    onClick={() => setSidebarOpen(false)}
                   >
                     <Icon size={16} />
                     <span>{label}</span>
@@ -168,8 +181,25 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </div>
           </aside>
 
+          {/* Abdunkelt den Inhalt, waehrend die Drawer-Sidebar offen ist;
+              Antippen schliesst sie wieder. Nur auf Mobilbreiten sichtbar. */}
+          <div
+            className={`admin-backdrop${sidebarOpen ? " open" : ""}`}
+            onClick={() => setSidebarOpen(false)}
+          />
+
           {/* Content */}
           <div className="admin-main">
+            <div className="admin-mobile-bar">
+              <button
+                className="admin-mobile-toggle"
+                onClick={() => setSidebarOpen(o => !o)}
+                aria-label={sidebarOpen ? "Menü schließen" : "Menü öffnen"}
+              >
+                {sidebarOpen ? <MdClose size={18} /> : <MdMenu size={18} />}
+              </button>
+              <span className="admin-mobile-bar-title">{activeEntry?.label ?? "Admin"}</span>
+            </div>
             <div className="admin-content">{children}</div>
           </div>
         </div>

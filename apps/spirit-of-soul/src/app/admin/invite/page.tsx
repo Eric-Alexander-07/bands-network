@@ -54,8 +54,8 @@ export default function AdminInvite() {
   );
 
   return (
-    <div className="admin-root" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "var(--a-bg)" }}>
-      <div style={{ width: 380 }}>
+    <div className="admin-root" style={{ display: "flex", alignItems: "center", justifyContent: "center", minHeight: "100vh", background: "var(--a-bg)", padding: "24px 20px", boxSizing: "border-box" }}>
+      <div style={{ width: "100%", maxWidth: 380 }}>
 
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 4 }}>

@@ -186,6 +186,9 @@ export default function ListEditor({ spec, siteId }: Props) {
   }
 
   // ── Reihenfolge (Drag & Drop, sofort gespeichert) ──────────────
+  // Natives HTML5-Drag&Drop feuert auf Touch-Geraeten (Smartphone/Tablet)
+  // keine Events — dafuer zusaetzlich Auf/Ab-Buttons als Fallback, die
+  // ueberall funktionieren (siehe moveRow/moveChild unten).
   async function dropOn(target: number) {
     if (dragIdx === null || dragIdx === target) return;
     const next = [...rows];
@@ -194,6 +197,29 @@ export default function ListEditor({ spec, siteId }: Props) {
     setRows(next);
     setDragIdx(null);
     await adminUpdateMany(spec.table, next.map((r, i) => ({ id: r.id, position: i })));
+  }
+
+  async function moveRow(idx: number, dir: -1 | 1) {
+    const target = idx + dir;
+    if (target < 0 || target >= rows.length) return;
+    const next = [...rows];
+    const moved = next[idx]!;
+    next[idx] = next[target]!;
+    next[target] = moved;
+    setRows(next);
+    await adminUpdateMany(spec.table, next.map((r, i) => ({ id: r.id, position: i })));
+  }
+
+  async function moveChild(parentId: string, idx: number, dir: -1 | 1) {
+    const list = children[parentId] ?? [];
+    const target = idx + dir;
+    if (target < 0 || target >= list.length || !spec.child) return;
+    const next = [...list];
+    const moved = next[idx]!;
+    next[idx] = next[target]!;
+    next[target] = moved;
+    setChildren(prev => ({ ...prev, [parentId]: next }));
+    await adminUpdateMany(spec.child.table, next.map((r, i) => ({ id: r.id, position: i })));
   }
 
   async function save() {
@@ -272,7 +298,17 @@ export default function ListEditor({ spec, siteId }: Props) {
           onDragOver={e => e.preventDefault()}
           onDrop={() => dropOn(idx)}
         >
-          <span className="a-drag-handle" title="Zum Sortieren ziehen">⠿</span>
+          <div className="a-list-order">
+            <span className="a-drag-handle" title="Zum Sortieren ziehen">⠿</span>
+            <button
+              type="button" className="a-order-btn" disabled={idx === 0}
+              onClick={() => moveRow(idx, -1)} aria-label="Nach oben verschieben"
+            >▲</button>
+            <button
+              type="button" className="a-order-btn" disabled={idx === rows.length - 1}
+              onClick={() => moveRow(idx, 1)} aria-label="Nach unten verschieben"
+            >▼</button>
+          </div>
 
           <div className="a-list-fields">
             {spec.fields.map(f => (
@@ -312,26 +348,39 @@ export default function ListEditor({ spec, siteId }: Props) {
                   + Eintrag
                 </button>
               </div>
-              {(children[row.id] ?? []).map(kid => (
-                <div key={kid.id} className="a-list-child">
-                  {spec.child!.fields.map(f => (
-                    <div key={f.key} className="a-list-field" style={{ flex: f.flex ?? 1 }}>
-                      <RowField
-                        field={f}
-                        value={kid[f.key]}
-                        onChange={v => editChild(row.id, kid.id, f.key, v)}
-                        uploadPath={`lists/${spec.child!.table}`}
-                      />
+              {(children[row.id] ?? []).map((kid, kidIdx) => {
+                const kids = children[row.id] ?? [];
+                return (
+                  <div key={kid.id} className="a-list-child">
+                    <div className="a-list-order">
+                      <button
+                        type="button" className="a-order-btn" disabled={kidIdx === 0}
+                        onClick={() => moveChild(row.id, kidIdx, -1)} aria-label="Nach oben verschieben"
+                      >▲</button>
+                      <button
+                        type="button" className="a-order-btn" disabled={kidIdx === kids.length - 1}
+                        onClick={() => moveChild(row.id, kidIdx, 1)} aria-label="Nach unten verschieben"
+                      >▼</button>
                     </div>
-                  ))}
-                  <button
-                    className="a-btn a-btn-danger a-btn-sm"
-                    onClick={() => removeChild(row.id, kid.id)}
-                  >
-                    ✕
-                  </button>
-                </div>
-              ))}
+                    {spec.child!.fields.map(f => (
+                      <div key={f.key} className="a-list-field" style={{ flex: f.flex ?? 1 }}>
+                        <RowField
+                          field={f}
+                          value={kid[f.key]}
+                          onChange={v => editChild(row.id, kid.id, f.key, v)}
+                          uploadPath={`lists/${spec.child!.table}`}
+                        />
+                      </div>
+                    ))}
+                    <button
+                      className="a-btn a-btn-danger a-btn-sm"
+                      onClick={() => removeChild(row.id, kid.id)}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

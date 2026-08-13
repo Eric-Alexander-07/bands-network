@@ -35,7 +35,7 @@ export default function Navigation() {
             {pathname === "/" ? (
               band.name
             ) : (
-              <img src="/images/logo-light.png" alt={band.name} style={{ height: "20px", width: "auto" }} />
+              <img src="/images/logo-light.png" alt={band.name} style={{ height: "16px", width: "auto" }} />
             )}
           </Link>
           <ul className="nav-links">

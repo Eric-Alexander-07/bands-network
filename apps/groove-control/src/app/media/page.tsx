@@ -6,19 +6,19 @@ const DESCRIPTION =
   "Groove Control live erleben: aktuelle Videos, Spieltermine und Neuigkeiten der Partyband Deluxe aus Frankfurt am Main.";
 
 export const metadata: Metadata = {
-  title: "Media, News & Termine – Groove Control | Videos und Termine",
+  title: "Media & News – Groove Control | Videos und Termine",
   description: DESCRIPTION,
   keywords: ["Groove Control Videos", "Livevideo Partyband", "Spieltermine", "Band News", "Liveband Video"],
   alternates: { canonical: "https://groovecontrol.de/media" },
   openGraph: {
-    title: "Media, News & Termine – Groove Control | Videos und Termine",
+    title: "Media & News – Groove Control | Videos und Termine",
     description: DESCRIPTION,
     url: "https://groovecontrol.de/media",
     images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Media, News & Termine – Groove Control | Videos und Termine",
+    title: "Media & News – Groove Control | Videos und Termine",
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true,
