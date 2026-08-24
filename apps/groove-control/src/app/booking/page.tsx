@@ -12,12 +12,12 @@ export const metadata: Metadata = {
   title: { absolute: "Kontakt & Buchung – Groove Control | Partyband anfragen" },
   description: DESCRIPTION,
   keywords: ["Partyband anfragen", "Liveband buchen", "Hochzeitsband buchen", "Firmenevent", "Live Musik", "Liveband Booking"],
-  alternates: { canonical: "https://groovecontrol.de/booking" },
+  alternates: { canonical: "https://groovecontrol.info/booking" },
   openGraph: {
     title: "Kontakt & Buchung – Groove Control | Partyband anfragen",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/booking",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/booking",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

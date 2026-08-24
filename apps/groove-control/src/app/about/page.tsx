@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: { absolute: "Über uns – Groove Control | Partyband aus Frankfurt" },
   description: DESCRIPTION,
   keywords: ["Groove Control Band", "Partyband", "Live Musiker", "Liveband Frankfurt", "Musikband", "Hochzeitsbands", "Geburtstagsband"],
-  alternates: { canonical: "https://groovecontrol.de/about" },
+  alternates: { canonical: "https://groovecontrol.info/about" },
   openGraph: {
     title: "Über uns – Groove Control | Partyband aus Frankfurt",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/about",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/about",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

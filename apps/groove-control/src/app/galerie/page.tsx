@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: { absolute: "Galerie – Groove Control | Foto Highlights vergangener Veranstaltungen" },
   description: DESCRIPTION,
   keywords: ["Groove Control Fotos", "Partyband Bilder", "Liveband Galerie", "Konzertfotos", "Eventbilder"],
-  alternates: { canonical: "https://groovecontrol.de/galerie" },
+  alternates: { canonical: "https://groovecontrol.info/galerie" },
   openGraph: {
     title: "Galerie – Groove Control | Foto Highlights vergangener Veranstaltungen",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/galerie",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/galerie",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

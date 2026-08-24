@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: { absolute: "Referenzen – Groove Control | Kunden und Events" },
   description: DESCRIPTION,
   keywords: ["Groove Control Referenzen", "Partyband Kunden", "Firmenevent", "Incentives", "Band Referenzen", "Kundenauswahl"],
-  alternates: { canonical: "https://groovecontrol.de/referenzen" },
+  alternates: { canonical: "https://groovecontrol.info/referenzen" },
   openGraph: {
     title: "Referenzen – Groove Control | Kunden und Events",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/referenzen",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/referenzen",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

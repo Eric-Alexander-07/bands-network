@@ -115,7 +115,7 @@ export function notificationEmailHtml(d: InquiryDetails): string {
     detailRow("Datum", d.date),
     detailRow("Anlass", d.occasion),
     detailRow("Betreff", d.subject),
-    detailRow("Formular", d.formType === "booking" ? "groovecontrol.de/booking" : "groovecontrol.de/kontakt"),
+    detailRow("Formular", d.formType === "booking" ? "groovecontrol.info/booking" : "groovecontrol.info/kontakt"),
   ].join("");
 
   const body = `

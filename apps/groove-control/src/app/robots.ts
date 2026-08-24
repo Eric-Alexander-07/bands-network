@@ -1,7 +1,7 @@
 ﻿import { MetadataRoute } from "next";
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_BASE_URL ?? "https://groovecontrol.de";
+  process.env.NEXT_PUBLIC_BASE_URL ?? "https://groovecontrol.info";
 
 export default function robots(): MetadataRoute.Robots {
   return {

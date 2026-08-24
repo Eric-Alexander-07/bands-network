@@ -18,12 +18,12 @@ export const metadata: Metadata = {
   title: "Groove Control – Die Partyband aus Frankfurt am Main",
   description: DESCRIPTION,
   keywords: ["Partyband Frankfurt", "Livemusik buchen", "Hochzeitsband Frankfurt", "Firmenevent Band", "Coverband Rhein-Main", "Galaband", "Funk Soul Band", "Groove Control", "Eventband", "Livemusik Frankfurt"],
-  alternates: { canonical: "https://groovecontrol.de" },
+  alternates: { canonical: "https://groovecontrol.info" },
   openGraph: {
     title: "Groove Control – Die Partyband aus Frankfurt am Main",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

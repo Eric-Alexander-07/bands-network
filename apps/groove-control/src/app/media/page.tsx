@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: { absolute: "Media & News – Groove Control | Videos und Termine" },
   description: DESCRIPTION,
   keywords: ["Groove Control Videos", "Livevideo Partyband", "Konzerttermine", "Band News", "Liveband Video", "Social Media", "Facebook", "Instagram", "Youtube Videos", "Promovideo"],
-  alternates: { canonical: "https://groovecontrol.de/media" },
+  alternates: { canonical: "https://groovecontrol.info/media" },
   openGraph: {
     title: "Media & News – Groove Control | Videos und Termine",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/media",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/media",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

@@ -6,12 +6,12 @@ const DESCRIPTION =
 export const metadata: Metadata = {
   title: { absolute: "Datenschutz – Groove Control" },
   description: DESCRIPTION,
-  alternates: { canonical: "https://groovecontrol.de/datenschutz" },
+  alternates: { canonical: "https://groovecontrol.info/datenschutz" },
   openGraph: {
     title: "Datenschutz – Groove Control",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/datenschutz",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/datenschutz",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

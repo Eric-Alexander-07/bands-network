@@ -8,12 +8,12 @@ export const metadata: Metadata = {
   title: { absolute: "Kontakt – Groove Control | Partyband Frankfurt" },
   description: DESCRIPTION,
   keywords: ["Groove Control Kontakt", "Partyband Frankfurt", "Vivid Music Productions"],
-  alternates: { canonical: "https://groovecontrol.de/kontakt" },
+  alternates: { canonical: "https://groovecontrol.info/kontakt" },
   openGraph: {
     title: "Kontakt – Groove Control | Partyband Frankfurt",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/kontakt",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/kontakt",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

@@ -4,7 +4,7 @@ Turborepo-Monorepo mit einer Next.js-App (App Router) pro Band. Inhalte kommen a
 
 - `apps/spirit-of-soul` — Soulband Frankfurt, Domain `https://spiritofsoul.com`
 - `apps/we-rock` — Classic Rock Tribute Show, Domain `https://werock-rockband.de`
-- `apps/groove-control` — Partyband Frankfurt, Domain **noch offen** (Platzhalter `https://groovecontrol.de` in `layout.tsx`, `robots.ts`, `sitemap.ts`). Bildmaterial fehlt noch; alle Bildfelder zeigen auf `/images/placeholder.svg`.
+- `apps/groove-control` — Partyband Frankfurt, Domain `https://groovecontrol.info`. Bildmaterial fehlt noch; alle Bildfelder zeigen auf `/images/placeholder.svg`.
 - `apps/docs`, `apps/web` — unbenutztes Turborepo-Boilerplate, ignorieren
 - `packages/band-data` — Supabase-Abfragen, `getSiteBundle()` (eine Abfrage für den kompletten Seiteninhalt)
 - `packages/db-types` — generierte Datenbanktypen

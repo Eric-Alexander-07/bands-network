@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   title: { absolute: "Programm & Besetzung – Groove Control | Partyband buchen" },
   description: DESCRIPTION,
   keywords: ["Bandbesetzung buchen", "Partyband Repertoire", "Sextett Band", "Liveband", "Dinnermusik", "Funk", "Soul", "Dance", "Disco", "Pop", "Rock", "Tanzstandards"],
-  alternates: { canonical: "https://groovecontrol.de/services" },
+  alternates: { canonical: "https://groovecontrol.info/services" },
   openGraph: {
     title: "Programm & Besetzung – Groove Control | Partyband buchen",
     description: DESCRIPTION,
-    url: "https://groovecontrol.de/services",
-    images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
+    url: "https://groovecontrol.info/services",
+    images: [{ url: "https://groovecontrol.info/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",

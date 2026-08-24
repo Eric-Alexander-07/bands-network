@@ -27,12 +27,11 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 /**
- * PLATZHALTER-DOMAIN. Die endgueltige Domain steht noch nicht fest.
- * Sie wird an dieser einen Stelle gesetzt und von `robots.ts`, `sitemap.ts`
+ * Domain wird an dieser einen Stelle gesetzt und von `robots.ts`, `sitemap.ts`
  * sowie allen `canonical`- und OpenGraph-URLs uebernommen — beim Wechsel
  * also hier und in den beiden genannten Dateien anpassen.
  */
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://groovecontrol.de";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://groovecontrol.info";
 
 const DESCRIPTION =
   "Groove Control – die Partyband Deluxe aus Frankfurt am Main. Livemusik für Firmenevents, Galas und Hochzeiten, seit über 15 Jahren bundesweit.";
