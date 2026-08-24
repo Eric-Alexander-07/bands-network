@@ -68,18 +68,37 @@ export default function DatenschutzPage() {
 
             <div className="legal-block">
               <h2>3. Datenerfassung auf dieser Website</h2>
-              <h3>Kontaktformular</h3>
+
+              <h3>Hosting</h3>
               <p>
-                Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus
-                dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks
-                Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.
-                Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+                Diese Website wird bei Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA
+                ("Vercel") gehostet. Beim Aufruf der Website erfasst Vercel automatisch technische
+                Daten wie IP-Adresse, Datum und Uhrzeit des Zugriffs, Browsertyp und aufgerufene
+                Seite (Server-Logfiles). Diese Verarbeitung ist zum technischen Betrieb der Website
+                erforderlich (Art. 6 Abs. 1 lit. f DSGVO). Da Vercel in den USA ansässig ist, kann
+                eine Datenübertragung in ein Drittland stattfinden; Vercel hat hierfür mit uns die
+                EU-Standardvertragsklauseln der Europäischen Kommission abgeschlossen
+                (vercel.com/legal/dpa).
+              </p>
+
+              <h3>Kontakt- und Buchungsformular</h3>
+              <p>
+                Wenn Sie uns per Kontakt- oder Buchungsformular eine Anfrage zukommen lassen,
+                verarbeiten wir die dort angegebenen Daten (Name, E-Mail-Adresse, optional
+                Telefonnummer, Veranstaltungsdatum und -angaben, Nachricht) ausschließlich zur
+                Bearbeitung Ihrer Anfrage und für den Fall von Anschlussfragen (Art. 6 Abs. 1
+                lit. b bzw. lit. f DSGVO). Der Versand der internen Benachrichtigung sowie der
+                automatischen Eingangsbestätigung erfolgt technisch über den in Ziffer 5 genannten
+                E-Mail-Dienstleister. Darüber hinaus geben wir diese Daten nicht ohne Ihre
+                Einwilligung weiter.
               </p>
               <p>
-                Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns
-                zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck
-                für die Datenspeicherung entfällt. Zwingende gesetzliche Bestimmungen —
-                insbesondere Aufbewahrungsfristen — bleiben unberührt.
+                Ihre Angaben verbleiben bei uns, bis Sie uns zur Löschung auffordern oder der Zweck
+                für die Speicherung entfällt — in der Regel, sobald Ihre Anfrage abschließend
+                bearbeitet ist. Kommt aus Ihrer Anfrage eine Buchung zustande, speichern wir die
+                daraus entstehenden Vertrags- und Rechnungsunterlagen für die Dauer der gesetzlichen
+                handels- und steuerrechtlichen Aufbewahrungsfristen (i. d. R. 6 bzw. 10 Jahre gemäß
+                § 257 HGB, § 147 AO). Zwingende gesetzliche Bestimmungen bleiben unberührt.
               </p>
 
               <h3>Anfrage per E-Mail oder Telefon</h3>
@@ -94,20 +113,109 @@ export default function DatenschutzPage() {
             <div className="legal-block">
               <h2>4. Zweck der Datenverarbeitung</h2>
               <p>
-                Wir verarbeiten Ihre personenbezogenen Daten, um Ihnen — aufgrund Ihrer Anfragen
-                zu unseren Bands und Künstlern — das von Ihnen angeforderte Material zustellen zu
-                können und Ihre Veranstaltungsanfragen zu bearbeiten.
+                Wir verarbeiten die im Kontakt- und Buchungsformular sowie per E-Mail oder Telefon
+                übermittelten personenbezogenen Daten ausschließlich, um Ihre Anfrage zu bearbeiten
+                und Ihnen — sofern gewünscht — ein Angebot für eine Buchung unserer Band zu
+                erstellen.
               </p>
               <p>
-                Persönliche Informationen werden nur mit Ihrer ausdrücklichen Zustimmung an Dritte
-                übermittelt. Daten werden gespeichert, solange dies für die Durchführung der
-                Veranstaltung erforderlich ist — danach mindestens zehn Jahre gemäß gesetzlicher
-                Anforderungen.
+                Persönliche Informationen werden nur mit Ihrer ausdrücklichen Zustimmung, zur
+                Erfüllung eines Vertrags oder gegenüber den in Ziffer 5 genannten Auftragsverarbeitern
+                an Dritte übermittelt.
               </p>
             </div>
 
             <div className="legal-block">
-              <h2>5. Ihre Rechte</h2>
+              <h2>5. Eingesetzte Auftragsverarbeiter</h2>
+              <p>
+                Für den Betrieb dieser Website und die Bearbeitung Ihrer Anfragen setzen wir
+                folgende Dienstleister als Auftragsverarbeiter ein. Mit allen genannten Anbietern
+                bestehen Verträge zur Auftragsverarbeitung gemäß Art. 28 DSGVO.
+              </p>
+              <ul>
+                <li>
+                  <strong>Vercel Inc.</strong> (Hosting) — 340 S Lemon Ave #4133, Walnut, CA 91789,
+                  USA. Zweck: technischer Betrieb und Auslieferung der Website. Übermittlung in die
+                  USA auf Grundlage der EU-Standardvertragsklauseln.
+                </li>
+                <li>
+                  <strong>Supabase, Inc.</strong> (Datenbank &amp; Redaktionssystem). Zweck:
+                  Speicherung der Website-Inhalte (Texte, Bilder, Termine) sowie Login-Verwaltung
+                  für unseren internen Redaktionsbereich. Serverstandort: Frankfurt am Main,
+                  Deutschland (EU-Region). Ihre Angaben aus dem Kontakt- oder Buchungsformular
+                  werden nicht in dieser Datenbank gespeichert, sondern ausschließlich per E-Mail
+                  verarbeitet.
+                </li>
+                <li>
+                  <strong>Resend, Inc.</strong> (Transaktions-E-Mail-Versand), USA. Zweck: Versand
+                  der internen Benachrichtigung sowie der automatischen Bestätigungsmail nach einer
+                  Kontakt- oder Buchungsanfrage. Resend ist nach dem EU-US Data Privacy Framework
+                  (DPF) zertifiziert und hat zusätzlich EU-Standardvertragsklauseln vereinbart
+                  (resend.com/legal/dpa).
+                </li>
+              </ul>
+            </div>
+
+            <div className="legal-block">
+              <h2>6. Cookies</h2>
+              <p>
+                Auf den öffentlichen Seiten dieser Website werden keine Cookies gesetzt. Lediglich
+                im internen, passwortgeschützten Redaktionsbereich (<code>/admin</code>) verwendet
+                unser Content-Management-System (Supabase Auth) ein technisch notwendiges
+                Session-Cookie, um die Anmeldung der Redaktion aufrechtzuerhalten. Dieses Cookie
+                betrifft ausschließlich Mitglieder unseres Redaktionsteams, nicht Websitebesucher,
+                und ist gemäß § 25 Abs. 2 TTDSG bzw. Art. 6 Abs. 1 lit. f DSGVO ohne gesonderte
+                Einwilligung zulässig.
+              </p>
+            </div>
+
+            <div className="legal-block">
+              <h2>7. SSL-/TLS-Verschlüsselung und Web-Fonts</h2>
+              <p>
+                Diese Website nutzt aus Sicherheitsgründen und zum Schutz der Übertragung
+                vertraulicher Inhalte eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung
+                erkennen Sie daran, dass die Adresszeile Ihres Browsers von "http://" auf
+                "https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+              </p>
+              <p>
+                Zur einheitlichen Darstellung von Schriftarten nutzen wir Web-Fonts, die beim
+                Seitenaufbau von unserem eigenen Server ausgeliefert werden. Es findet dabei keine
+                Verbindung zu Servern des Schriftenanbieters statt, es werden keine Daten an
+                Dritte übermittelt.
+              </p>
+            </div>
+
+            <div className="legal-block">
+              <h2>8. Eingebundene YouTube-Videos</h2>
+              <p>
+                Wir binden auf dieser Website Videos des Anbieters YouTube ein, betrieben von
+                Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google").
+                Wir nutzen dafür den erweiterten Datenschutzmodus (youtube-nocookie.com), bei dem
+                laut Google erst dann Cookies gesetzt werden, wenn Sie ein Video tatsächlich
+                abspielen. Unabhängig davon kann bereits beim Laden der Seite eine Verbindung zum
+                Google-Netzwerk hergestellt und Ihre IP-Adresse an Google übermittelt werden,
+                wodurch eine Datenübertragung in die USA nicht ausgeschlossen werden kann.
+                Rechtsgrundlage ist unser berechtigtes Interesse an einer ansprechenden Darstellung
+                unserer Live-Auftritte (Art. 6 Abs. 1 lit. f DSGVO). Weitere Informationen zum
+                Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google:{" "}
+                <a href="https://policies.google.com/privacy?hl=de" target="_blank" rel="noopener noreferrer">
+                  policies.google.com/privacy
+                </a>.
+              </p>
+            </div>
+
+            <div className="legal-block">
+              <h2>9. Externe Links (Social Media)</h2>
+              <p>
+                Diese Website enthält Links zu den externen Profilen von Groove Control bei
+                Instagram und Facebook. Durch das Anklicken dieser Links verlassen Sie unsere
+                Website. Für die Datenschutzpraktiken dieser Dienste sind deren eigene
+                Datenschutzrichtlinien maßgeblich.
+              </p>
+            </div>
+
+            <div className="legal-block">
+              <h2>10. Ihre Rechte</h2>
               <p>Sie haben jederzeit das Recht:</p>
               <ul>
                 <li>unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten</li>
@@ -120,27 +228,6 @@ export default function DatenschutzPage() {
               <p>
                 Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit
                 an uns wenden: <a href="mailto:info@v-m-p.com">info@v-m-p.com</a>
-              </p>
-            </div>
-
-            <div className="legal-block">
-              <h2>6. Hosting</h2>
-              <p>
-                Diese Website wird extern gehostet. Die personenbezogenen Daten, die auf dieser
-                Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei
-                kann es sich v. a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten,
-                Vertragsdaten, Kontaktdaten, Namen, Websitezugriffe und sonstige Daten handeln,
-                die über eine Website generiert werden.
-              </p>
-            </div>
-
-            <div className="legal-block">
-              <h2>7. Externe Links (Social Media)</h2>
-              <p>
-                Diese Website enthält Links zu externen Diensten wie Instagram, Facebook und
-                YouTube. Durch das Anklicken dieser Links verlassen Sie unsere Website. Für die
-                Datenschutzpraktiken dieser Dienste sind deren eigene Datenschutzrichtlinien
-                maßgeblich.
               </p>
             </div>
 

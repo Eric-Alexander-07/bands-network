@@ -17,6 +17,8 @@ interface Props {
 
 export default function BookingForm({ c, occasions = [], questions = [] }: Props) {
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const anlaesse = occasions.length ? occasions.map(o => o.title) : band.occasions.map(o => o.title);
   // Vorlage im Nachrichtenfeld: jede Frage mit einer Antwortzeile darunter.
   const checklist = questions;
@@ -25,7 +27,7 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
     ? templateQuestions.map(q => `${q.text}\n: `).join("\n\n")
     : QUESTION_TEMPLATE;
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const name = (form.elements.namedItem("name") as HTMLInputElement).value;
@@ -34,24 +36,29 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
     const date = (form.elements.namedItem("date") as HTMLInputElement).value;
     const occasion = (form.elements.namedItem("occasion") as HTMLSelectElement).value;
     const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+    const website = (form.elements.namedItem("website") as HTMLInputElement).value;
 
-    const mailSubject = `Buchungsanfrage für ${band.name}${occasion ? ` – ${occasion}` : ""}`;
-    const mailBody = [
-      `Name: ${name}`,
-      `E-Mail: ${email}`,
-      phone ? `Telefon: ${phone}` : "",
-      date ? `Veranstaltungsdatum: ${date}` : "",
-      occasion ? `Anlass: ${occasion}` : "",
-      "",
-      `Angaben zur Veranstaltung:`,
-      message,
-      "",
-      "--",
-      `Diese Anfrage wurde über die ${band.name} Website gesendet.`,
-    ].filter(line => line !== undefined).join("\n");
+    setSending(true);
+    setError(null);
 
-    window.location.href = `mailto:${band.email}?subject=${encodeURIComponent(mailSubject)}&body=${encodeURIComponent(mailBody)}`;
-    setSubmitted(true);
+    try {
+      const res = await fetch("/api/kontakt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ formType: "booking", name, email, phone, date, occasion, message, website }),
+      });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.error);
+      setSubmitted(true);
+    } catch (err) {
+      setError(
+        err instanceof Error && err.message
+          ? err.message
+          : `Die Anfrage konnte nicht gesendet werden. Bitte versucht es erneut oder schreibt uns direkt an ${band.email}.`
+      );
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -166,6 +173,9 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               <option value="other">Sonstiges</option>
             </select>
           </div>
+          <p className="form-hint">
+            Bitte beachtet die Fragen links, damit wir euch ein möglichst gutes Angebot erstellen können.
+          </p>
           <div className="form-group">
             <label className="form-label" htmlFor="message">
               Nachricht
@@ -178,9 +188,28 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               defaultValue={messageTemplate}
             />
           </div>
+          <input
+            type="text"
+            name="website"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+          />
+          {error && <p className="form-error">{error}</p>}
+          <p className="form-hint">
+            Mit dem Absenden dieses Formulars werden eure Angaben zur Bearbeitung eurer Anfrage
+            gespeichert und per E-Mail verarbeitet. Weitere Infos dazu findet ihr in unserer{" "}
+            <a href="/datenschutz">Datenschutzerklärung</a>.
+          </p>
           <div>
-            <button type="submit" className="btn btn-gold" style={{ padding: "14px 40px", fontSize: "12px" }}>
-              Anfrage senden
+            <button
+              type="submit"
+              className="btn btn-gold"
+              style={{ padding: "14px 40px", fontSize: "12px" }}
+              disabled={sending}
+            >
+              {sending ? "Wird gesendet …" : "Anfrage senden"}
             </button>
           </div>
         </form>

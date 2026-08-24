@@ -173,6 +173,9 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               <option value="other">Sonstiges</option>
             </select>
           </div>
+          <p className="form-hint">
+            Bitte beachten Sie die Fragen links, damit wir Ihnen ein möglichst gutes Angebot erstellen können.
+          </p>
           <div className="form-group">
             <label className="form-label" htmlFor="message">
               Nachricht
@@ -194,6 +197,11 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
             style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
           />
           {error && <p className="form-error">{error}</p>}
+          <p className="form-hint">
+            Mit dem Absenden dieses Formulars werden Ihre Angaben zur Bearbeitung Ihrer Anfrage
+            gespeichert und per E-Mail verarbeitet. Weitere Informationen dazu finden Sie in
+            unserer <a href="/datenschutz">Datenschutzerklärung</a>.
+          </p>
           <div>
             <button
               type="submit"

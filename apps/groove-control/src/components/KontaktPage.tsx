@@ -119,6 +119,11 @@ export default function KontaktPage() {
                   style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
                 />
                 {error && <p className="form-error">{error}</p>}
+                <p className="form-hint">
+                  Mit dem Absenden dieses Formulars werden Ihre Angaben zur Bearbeitung Ihrer
+                  Anfrage gespeichert und per E-Mail verarbeitet. Weitere Informationen dazu
+                  finden Sie in unserer <a href="/datenschutz">Datenschutzerklärung</a>.
+                </p>
                 <button type="submit" className="btn btn-primary" disabled={sending}>
                   {sending ? "Wird gesendet …" : "Nachricht senden"}
                 </button>
