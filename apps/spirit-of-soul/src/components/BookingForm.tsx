@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { band } from "@/config/band";
-import { QUESTION_TEMPLATE, INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
+import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
 import Rich from "@/components/Rich";
 import type { Content } from "@/lib/content";
 import type { Occasion, InquiryQuestion } from "@/lib/data";
@@ -20,12 +20,7 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
   const [sending, setSending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const anlaesse = occasions.length ? occasions.map(o => o.title) : band.occasions.map(o => o.title);
-  // Vorlage im Nachrichtenfeld: jede Frage mit einer Antwortzeile darunter.
   const checklist = questions;
-  const templateQuestions = questions.filter(q => q.in_template !== false);
-  const messageTemplate = templateQuestions.length
-    ? templateQuestions.map(q => `${q.text}\n: `).join("\n\n")
-    : QUESTION_TEMPLATE;
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -185,7 +180,7 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               name="message"
               className="form-textarea"
               rows={18}
-              defaultValue={messageTemplate}
+              placeholder="Ihre Nachricht ..."
             />
           </div>
           <input
