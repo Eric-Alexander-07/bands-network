@@ -12,22 +12,22 @@ import { resolve } from "@/lib/content";
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control ist die Partyband Deluxe aus Frankfurt am Main. Livemusik für Firmenevents, Galas und Hochzeiten, seit über 15 Jahren bundesweit.";
+  "Die Partyband aus Frankfurt am Main bietet ein breites Pop & Rock Repertoire für Firmenevents, Galas, Stadtfeste und Hochzeiten.";
 
 export const metadata: Metadata = {
-  title: "Groove Control – Die Partyband Deluxe aus Frankfurt am Main",
+  title: "Groove Control – Die Partyband aus Frankfurt am Main",
   description: DESCRIPTION,
-  keywords: ["Partyband Frankfurt", "Liveband buchen", "Hochzeitsband Frankfurt", "Firmenevent Band", "Coverband Rhein-Main", "Galaband", "Funk Soul Band", "Groove Control", "Eventband", "Livemusik Frankfurt"],
+  keywords: ["Partyband Frankfurt", "Livemusik buchen", "Hochzeitsband Frankfurt", "Firmenevent Band", "Coverband Rhein-Main", "Galaband", "Funk Soul Band", "Groove Control", "Eventband", "Livemusik Frankfurt"],
   alternates: { canonical: "https://groovecontrol.de" },
   openGraph: {
-    title: "Groove Control – Die Partyband Deluxe aus Frankfurt am Main",
+    title: "Groove Control – Die Partyband aus Frankfurt am Main",
     description: DESCRIPTION,
     url: "https://groovecontrol.de",
     images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Groove Control – Die Partyband Deluxe aus Frankfurt am Main",
+    title: "Groove Control – Die Partyband aus Frankfurt am Main",
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true,

@@ -3,12 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control spielt seit über 15 Jahren für Konzerne, Agenturen und Privatkunden. Eine Auswahl der bisherigen Kunden und Events.";
+  "Groove Control spielt seit über 15 Jahren für die größten Firmen, Agenturen und High Class Events. Hier eine Auswahl der bisherigen Kunden.";
 
 export const metadata: Metadata = {
-  title: "Referenzen – Groove Control | Kunden und Events",
+  // `absolute` umgeht das title.template im Root-Layout ("%s | Groove Control") —
+  // ohne das wuerde der Bandname am Ende doppelt erscheinen.
+  title: { absolute: "Referenzen – Groove Control | Kunden und Events" },
   description: DESCRIPTION,
-  keywords: ["Groove Control Referenzen", "Partyband Kunden", "Firmenevent Band", "Eventband Referenzen"],
+  keywords: ["Groove Control Referenzen", "Partyband Kunden", "Firmenevent", "Incentives", "Band Referenzen", "Kundenauswahl"],
   alternates: { canonical: "https://groovecontrol.de/referenzen" },
   openGraph: {
     title: "Referenzen – Groove Control | Kunden und Events",

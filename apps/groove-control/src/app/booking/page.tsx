@@ -4,12 +4,14 @@ import DotGrid from "@/components/DotGrid";
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control für Ihr Event anfragen: Firmenfeier, Gala oder Hochzeit. Wir melden uns in der Regel innerhalb von 24 Stunden.";
+  "Groove Control für Ihr Event anfragen: Wir melden uns in der Regel innerhalb von 24 Stunden.";
 
 export const metadata: Metadata = {
-  title: "Kontakt & Buchung – Groove Control | Partyband anfragen",
+  // `absolute` umgeht das title.template im Root-Layout ("%s | Groove Control") —
+  // ohne das wuerde der Bandname am Ende doppelt erscheinen.
+  title: { absolute: "Kontakt & Buchung – Groove Control | Partyband anfragen" },
   description: DESCRIPTION,
-  keywords: ["Partyband anfragen", "Liveband buchen", "Hochzeitsband buchen", "Firmenevent Musik", "Groove Control Kontakt"],
+  keywords: ["Partyband anfragen", "Liveband buchen", "Hochzeitsband buchen", "Firmenevent", "Live Musik", "Liveband Booking"],
   alternates: { canonical: "https://groovecontrol.de/booking" },
   openGraph: {
     title: "Kontakt & Buchung – Groove Control | Partyband anfragen",

@@ -3,12 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control spielt vom Sextett bis zur neunköpfigen XL-Besetzung. Dinner, Funk, Soul, Dance und Pop, passend zu jedem Teil des Abends.";
+  "Groove Control spielt vom Sextett bis zur neunköpfigen Besetzung. Dinner, Funk, Soul, Dance, Disco, Pop & Rock, Tanzstandards, passend zu jedem Anlass.";
 
 export const metadata: Metadata = {
-  title: "Programm & Besetzung – Groove Control | Partyband buchen",
+  // `absolute` umgeht das title.template im Root-Layout ("%s | Groove Control") —
+  // ohne das wuerde der Bandname am Ende doppelt erscheinen.
+  title: { absolute: "Programm & Besetzung – Groove Control | Partyband buchen" },
   description: DESCRIPTION,
-  keywords: ["Bandbesetzung buchen", "Partyband Repertoire", "Sextett Band", "XL Besetzung Liveband", "Dinnermusik", "Funk Soul Dance Pop"],
+  keywords: ["Bandbesetzung buchen", "Partyband Repertoire", "Sextett Band", "Liveband", "Dinnermusik", "Funk", "Soul", "Dance", "Disco", "Pop", "Rock", "Tanzstandards"],
   alternates: { canonical: "https://groovecontrol.de/services" },
   openGraph: {
     title: "Programm & Besetzung – Groove Control | Partyband buchen",

@@ -4,7 +4,7 @@ const DESCRIPTION =
   "Datenschutzerklärung von Groove Control. Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.";
 
 export const metadata: Metadata = {
-  title: "Datenschutz – Groove Control",
+  title: { absolute: "Datenschutz – Groove Control" },
   description: DESCRIPTION,
   alternates: { canonical: "https://groovecontrol.de/datenschutz" },
   openGraph: {

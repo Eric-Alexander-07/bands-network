@@ -3,22 +3,24 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control in Bildern: Eindrücke von Firmenevents, Galas und Hochzeiten der Partyband Deluxe aus Frankfurt am Main.";
+  "Groove Control in Bildern: Eindrücke von Firmenevents, Galas, Stadtfesten, Messen und Hochzeiten der Partyband aus Frankfurt am Main.";
 
 export const metadata: Metadata = {
-  title: "Galerie – Groove Control | Fotos der Partyband",
+  // `absolute` umgeht das title.template im Root-Layout ("%s | Groove Control") —
+  // ohne das wuerde der Bandname am Ende doppelt erscheinen.
+  title: { absolute: "Galerie – Groove Control | Foto Highlights vergangener Veranstaltungen" },
   description: DESCRIPTION,
-  keywords: ["Groove Control Fotos", "Partyband Bilder", "Liveband Galerie", "Eventfotos Band"],
+  keywords: ["Groove Control Fotos", "Partyband Bilder", "Liveband Galerie", "Konzertfotos", "Eventbilder"],
   alternates: { canonical: "https://groovecontrol.de/galerie" },
   openGraph: {
-    title: "Galerie – Groove Control | Fotos der Partyband",
+    title: "Galerie – Groove Control | Foto Highlights vergangener Veranstaltungen",
     description: DESCRIPTION,
     url: "https://groovecontrol.de/galerie",
     images: [{ url: "https://groovecontrol.de/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Galerie – Groove Control | Fotos der Partyband",
+    title: "Galerie – Groove Control | Foto Highlights vergangener Veranstaltungen",
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true,

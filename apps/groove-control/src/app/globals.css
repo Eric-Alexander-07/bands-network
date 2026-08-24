@@ -452,17 +452,9 @@ h3, h4 {
      das betrifft nur das Box-Layout, nicht das Rendering. */
   min-width: 0;
 }
-/* Zwischen dem Kollaps bei 1024px und grossen Monitoren wird die Spalte
-   spuerbar schmaler (v. a. Tablets im Querformat, kleine Laptops) — der
-   Claim-Text bricht dort in mehr Zeilen um, wodurch mittig angeordneter
-   Inhalt unruhig wirkt. Hier wieder von oben verankern, wie vor der
-   Zentrierung fuer grosse Screens. */
-@media (min-width: 1025px) and (max-width: 1440px) {
-  .hero-left {
-    justify-content: flex-start;
-    padding-top: calc(var(--nav-height) + 64px);
-  }
-}
+/* Tablets im Querformat / kleine Laptops (1025–1440px) nutzen dieselbe
+   mittige Anordnung wie grosse Screens (siehe .hero-left oben) — kein
+   eigener Breakpoint mehr noetig. */
 .hero-left::before {
   content: "";
   position: absolute;
@@ -543,9 +535,9 @@ h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* New home hero: singers sit in the lower-center, with lots of headroom.
-     Anchor toward the lower portion so both singers stay in frame. */
-  object-position: center 60%;
+  /* Saengerin steht oben im Bild — zur oberen Haelfte hin anchoren, damit
+     der Kopf nicht abgeschnitten wird. */
+  object-position: center 15%;
   filter: grayscale(8%) contrast(1.05);
 }
 .hero-content {
@@ -2433,6 +2425,7 @@ h3, h4 {
 .form-success { padding: 40px; background: var(--bg-dark-2); border: 1px solid var(--border-dark); text-align: center; }
 .form-success-title { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--text-light); margin-bottom: 12px; }
 .form-success-sub { color: var(--text-light-muted); font-size: 1rem; }
+.form-error { padding: 14px 16px; margin-bottom: 4px; background: rgba(196, 90, 60, 0.1); border: 1px solid rgba(196, 90, 60, 0.35); border-radius: var(--radius); color: #e8b4a0; font-family: var(--font-ui); font-size: 0.9rem; line-height: 1.5; }
 
 /* ─── Gallery Page — Editorial Masonry (VMP layout) ────────────
    4-column dense grid on desktop, 2-column on mobile. Per-item

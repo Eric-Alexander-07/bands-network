@@ -3,12 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control live erleben: aktuelle Videos, Spieltermine und Neuigkeiten der Partyband Deluxe aus Frankfurt am Main.";
+  "Groove Control live erleben: aktuelle Videos, Konzerttermine und Neuigkeiten der Partyband aus Frankfurt am Main.";
 
 export const metadata: Metadata = {
-  title: "Media & News – Groove Control | Videos und Termine",
+  // `absolute` umgeht das title.template im Root-Layout ("%s | Groove Control") —
+  // ohne das wuerde der Bandname am Ende doppelt erscheinen.
+  title: { absolute: "Media & News – Groove Control | Videos und Termine" },
   description: DESCRIPTION,
-  keywords: ["Groove Control Videos", "Livevideo Partyband", "Spieltermine", "Band News", "Liveband Video"],
+  keywords: ["Groove Control Videos", "Livevideo Partyband", "Konzerttermine", "Band News", "Liveband Video", "Social Media", "Facebook", "Instagram", "Youtube Videos", "Promovideo"],
   alternates: { canonical: "https://groovecontrol.de/media" },
   openGraph: {
     title: "Media & News – Groove Control | Videos und Termine",

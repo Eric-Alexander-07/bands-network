@@ -4,7 +4,7 @@ const DESCRIPTION =
   "Impressum von Groove Control. Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.";
 
 export const metadata: Metadata = {
-  title: "Impressum – Groove Control",
+  title: { absolute: "Impressum – Groove Control" },
   description: DESCRIPTION,
   alternates: { canonical: "https://groovecontrol.de/impressum" },
   openGraph: {

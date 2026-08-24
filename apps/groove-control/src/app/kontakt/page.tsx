@@ -5,7 +5,7 @@ const DESCRIPTION =
   "Groove Control kontaktieren. Die Partyband Deluxe aus Frankfurt am Main für Firmenevents, Galas und Hochzeiten.";
 
 export const metadata: Metadata = {
-  title: "Kontakt – Groove Control | Partyband Frankfurt",
+  title: { absolute: "Kontakt – Groove Control | Partyband Frankfurt" },
   description: DESCRIPTION,
   keywords: ["Groove Control Kontakt", "Partyband Frankfurt", "Vivid Music Productions"],
   alternates: { canonical: "https://groovecontrol.de/kontakt" },

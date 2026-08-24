@@ -3,12 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "Groove Control vereint erfahrene Session-Musiker und charismatische Leadsänger. Hundert Prozent live, ohne Playback, auf jeder Bühne.";
+  "Groove Control vereint erfahrene Profimusiker und charismatische Sänger zu einer unvergesslichen Party mit purer Energie und Spielfreude.";
 
 export const metadata: Metadata = {
-  title: "Über uns – Groove Control | Partyband aus Frankfurt",
+  // `absolute` umgeht das title.template im Root-Layout ("%s | Groove Control") —
+  // ohne das wuerde der Bandname am Ende doppelt erscheinen.
+  title: { absolute: "Über uns – Groove Control | Partyband aus Frankfurt" },
   description: DESCRIPTION,
-  keywords: ["Groove Control Band", "Partyband Musiker", "Liveband Frankfurt", "Session Musiker", "Leadsänger", "Bandgeschichte"],
+  keywords: ["Groove Control Band", "Partyband", "Live Musiker", "Liveband Frankfurt", "Musikband", "Hochzeitsbands", "Geburtstagsband"],
   alternates: { canonical: "https://groovecontrol.de/about" },
   openGraph: {
     title: "Über uns – Groove Control | Partyband aus Frankfurt",
