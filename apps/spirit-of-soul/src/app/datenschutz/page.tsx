@@ -70,7 +70,7 @@ export default function DatenschutzPage() {
               <h3>Hosting</h3>
               <p>
                 Diese Website wird bei Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA
-                ("Vercel") gehostet. Beim Aufruf der Website erfasst Vercel automatisch technische
+                („Vercel“) gehostet. Beim Aufruf der Website erfasst Vercel automatisch technische
                 Daten wie IP-Adresse, Datum und Uhrzeit des Zugriffs, Browsertyp und aufgerufene
                 Seite (Server-Logfiles). Diese Verarbeitung ist zum technischen Betrieb der Website
                 erforderlich (Art. 6 Abs. 1 lit. f DSGVO). Da Vercel in den USA ansässig ist, kann
@@ -172,8 +172,8 @@ export default function DatenschutzPage() {
               <p>
                 Diese Website nutzt aus Sicherheitsgründen und zum Schutz der Übertragung
                 vertraulicher Inhalte eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung
-                erkennen Sie daran, dass die Adresszeile Ihres Browsers von "http://" auf
-                "https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
+                erkennen Sie daran, dass die Adresszeile Ihres Browsers von „http://“ auf
+                „https://“ wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.
               </p>
               <p>
                 Zur einheitlichen Darstellung von Schriftarten nutzen wir Web-Fonts, die beim
@@ -187,7 +187,7 @@ export default function DatenschutzPage() {
               <h2>8. Eingebundene YouTube-Videos</h2>
               <p>
                 Wir binden auf dieser Website Videos des Anbieters YouTube ein, betrieben von
-                Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland ("Google").
+                Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland („Google“).
                 Wir nutzen dafür den erweiterten Datenschutzmodus (youtube-nocookie.com), bei dem
                 laut Google erst dann Cookies gesetzt werden, wenn Sie ein Video tatsächlich
                 abspielen. Unabhängig davon kann bereits beim Laden der Seite eine Verbindung zum

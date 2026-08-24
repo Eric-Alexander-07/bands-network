@@ -8,7 +8,9 @@
       "outputs": [".next/**", "!.next/cache/**"],
       "env": [
         "SUPABASE_SERVICE_ROLE_KEY",
-        "REVALIDATION_SECRET"
+        "REVALIDATION_SECRET",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL"
       ]
     },
     "lint": {
