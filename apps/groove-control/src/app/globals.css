@@ -325,15 +325,19 @@ h3, h4 {
   overflow-y: auto;
 }
 .nav-mobile.open { display: flex; }
+/* Unterseiten im Mobilmenue in der normalen UI-Schrift (nicht kursiv),
+   damit sie zur Desktop-Navigation passen. */
 .nav-mobile a {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-family: var(--font-ui);
+  font-size: clamp(1.375rem, 4.5vw, 1.875rem);
   font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--text-light);
   padding: 14px 0;
   border-bottom: 1px solid var(--border-dark);
   transition: color 0.15s;
-  font-style: italic;
+  font-style: normal;
 }
 .nav-mobile a:hover, .nav-mobile a.active { color: var(--gold); }
 .nav-mobile .nav-mobile-cta {
@@ -3541,7 +3545,7 @@ select::-ms-expand { display: none; }
 
   /* Mobile menu */
   .nav-mobile { padding: 32px 24px; }
-  .nav-mobile a { font-size: clamp(1.5rem, 7vw, 2.25rem); padding: 12px 0; }
+  .nav-mobile a { font-size: clamp(1.25rem, 5.5vw, 1.625rem); padding: 12px 0; }
 
   /* Footer */
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }

@@ -1,28 +1,36 @@
 /* ═══════════════════════════════════════════════════════
-   GROOVE CONTROL — Admin UI  ·  Blue Hour Deluxe
+   THE ADAMS FAMILY — Admin UI  ·  Beton
+   Gleiche Palette und Schriften wie die oeffentliche Seite:
+   Grau ist Flaeche, Stahlblau der einzige Akzent, keine
+   Rundungen. Die Schrift-Variablen kommen aus dem Root-Layout
+   (`src/app/layout.tsx`), der Admin liegt darunter.
    ═══════════════════════════════════════════════════════ */
 :root {
-  --a-bg:        #0E1420;
-  --a-surface:   #182130;
-  --a-surface2:  #1e2839;
-  --a-surface3:  #24304a;
-  --a-border:    #262f42;
-  --a-border2:   #3a4864;
-  --a-accent:    #D4AF6A;
-  --a-accent2:   #b8934f;
-  --a-accent-t:  rgba(212,175,106,0.14);
-  --a-text:      #F5F3EE;
-  --a-muted:     #7d8494;
-  --a-muted2:    #b7bcc6;
+  --a-bg:        #0B0B0C;
+  --a-surface:   #17181A;
+  --a-surface2:  #202225;
+  --a-surface3:  #2C2E32;
+  --a-border:    #2C2E32;
+  --a-border2:   #3A3D42;
+  --a-accent:    #8FA3B8;
+  --a-accent2:   #6E8095;
+  --a-accent-t:  rgba(143,163,184,0.14);
+  --a-text:      #E8E9EB;
+  --a-muted:     #7C838C;
+  --a-muted2:    #A8AEB6;
   --a-success:   #22c55e;
   --a-error:     #ef4444;
   --a-warning:   #f59e0b;
   --a-sidebar-w: 220px;
+
+  --a-font-display: var(--font-archivo, Impact, 'Arial Black', sans-serif);
+  --a-font-body:    var(--font-inter, system-ui, -apple-system, sans-serif);
+  --a-font-mono:    var(--font-plex-mono, ui-monospace, 'Courier New', monospace);
 }
 
 .admin-root * { box-sizing: border-box; }
 .admin-root {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--a-font-body);
   font-size: 14px;
   line-height: 1.5;
   color: var(--a-text);
@@ -41,7 +49,7 @@
 /* ── Sidebar ── */
 .admin-sidebar {
   width: var(--a-sidebar-w);
-  background: #0A0F18;
+  background: #08080A;
   border-right: 1px solid var(--a-border);
   display: flex;
   flex-direction: column;
@@ -83,7 +91,7 @@
   align-items: center;
   gap: 9px;
   padding: 8px 10px;
-  border-radius: 4px;
+  border-radius: 0;
   color: var(--a-muted);
   text-decoration: none;
   font-size: 13px;
@@ -93,7 +101,7 @@
   margin-bottom: 1px;
 }
 .admin-nav-item:hover { background: rgba(245,243,238,.06); color: var(--a-text); }
-.admin-nav-item.active { background: rgba(212,175,106,.14); color: var(--a-accent); }
+.admin-nav-item.active { background: rgba(143,163,184,.14); color: var(--a-accent); }
 .admin-nav-section {
   display: block;
   padding: 14px 10px 4px;
@@ -118,8 +126,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(212,175,106,.15);
-  border: 1px solid rgba(212,175,106,.45);
+  background: rgba(143,163,184,.15);
+  border: 1px solid rgba(143,163,184,.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -140,7 +148,7 @@
   padding: 7px 10px;
   background: transparent;
   border: 1px solid var(--a-border);
-  border-radius: 4px;
+  border-radius: 0;
   color: var(--a-muted);
   font-size: 12px;
   cursor: pointer;
@@ -181,7 +189,7 @@
 .a-card {
   background: var(--a-surface);
   border: 1px solid var(--a-border);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 20px;
   margin-bottom: 16px;
   box-shadow: 0 1px 3px rgba(4,7,13,.04);
@@ -200,7 +208,7 @@
   width: 100%;
   background: var(--a-bg);
   border: 1px solid var(--a-border);
-  border-radius: 6px;
+  border-radius: 0;
   padding: 7px 11px;
   color: var(--a-text);
   font-size: 13px;
@@ -231,7 +239,7 @@
   align-items: center;
   gap: 5px;
   padding: 7px 14px;
-  border-radius: 6px;
+  border-radius: 0;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -301,7 +309,7 @@
   height: 16px;
   padding: 0;
   border: 1px solid var(--a-border);
-  border-radius: 3px;
+  border-radius: 0;
   background: transparent;
   color: var(--a-muted);
   font-size: 8px;
@@ -319,7 +327,7 @@
   width: 34px;
   height: 19px;
   background: var(--a-border2);
-  border-radius: 999px;
+  border-radius: 0;
   transition: background .2s;
   position: relative;
 }
@@ -355,7 +363,7 @@
   padding: 11px 16px;
   background: var(--a-surface);
   border: 1px solid var(--a-border);
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 13px;
   min-width: 240px;
   max-width: 360px;
@@ -399,14 +407,14 @@
   width: 64px;
   height: 44px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 0;
   border: 1px solid var(--a-border);
 }
 
 /* ── Accordion ── */
 .a-accordion {
   border: 1px solid var(--a-border);
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   background: var(--a-surface);
 }
@@ -438,7 +446,7 @@
 .a-stat-card {
   background: var(--a-surface);
   border: 1px solid var(--a-border);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 18px 20px;
   box-shadow: 0 1px 3px rgba(4,7,13,.04);
 }
@@ -462,7 +470,7 @@
 .a-dash-card {
   background: var(--a-surface);
   border: 1px solid var(--a-border);
-  border-radius: 10px;
+  border-radius: 0;
   padding: 18px;
   text-decoration: none;
   color: inherit;
@@ -475,7 +483,7 @@
 }
 .a-dash-card:hover {
   border-color: var(--a-accent);
-  box-shadow: 0 2px 8px rgba(212,175,106,.18);
+  box-shadow: 0 2px 8px rgba(143,163,184,.18);
 }
 .a-dash-card-icon { color: var(--a-accent); }
 .a-dash-card-label { font-size: 12px; color: var(--a-muted); }
@@ -510,7 +518,7 @@
   width: 100px;
   height: 56px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 0;
   border: 1px solid var(--a-border);
   flex-shrink: 0;
 }
@@ -518,7 +526,7 @@
 /* ── Dropzone ── */
 .a-dropzone {
   border: 2px dashed var(--a-border2);
-  border-radius: 10px;
+  border-radius: 0;
   background: var(--a-surface2);
   padding: 40px 24px;
   display: flex;
@@ -567,7 +575,7 @@
   gap: 10px;
   background: var(--a-surface2);
   border: 1px solid var(--a-border);
-  border-radius: 7px;
+  border-radius: 0;
   padding: 7px 12px;
   font-size: 0.8125rem;
 }
@@ -577,7 +585,7 @@
   width: 38px;
   height: 28px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 0;
   flex-shrink: 0;
 }
 .a-upload-name {
@@ -625,7 +633,7 @@
   position: relative;
   width: 112px;
   height: 76px;
-  border-radius: 6px;
+  border-radius: 0;
   overflow: hidden;
   cursor: grab;
   border: 1px solid var(--a-border);
@@ -651,7 +659,7 @@
   font-size: 10px;
   font-weight: 700;
   padding: 1px 5px;
-  border-radius: 3px;
+  border-radius: 0;
   line-height: 1.4;
 }
 .a-gallery-del {
@@ -661,7 +669,7 @@
   background: rgba(0,0,0,.55);
   border: none;
   color: #fff;
-  border-radius: 3px;
+  border-radius: 0;
   padding: 3px 4px;
   cursor: pointer;
   display: flex;
@@ -678,7 +686,7 @@
   align-items: center;
   justify-content: center;
   border: 2px dashed var(--a-border2);
-  border-radius: 8px;
+  border-radius: 0;
   background: var(--a-surface2);
   height: 120px;
   cursor: pointer;
@@ -702,7 +710,7 @@
   max-width: 280px;
   max-height: 180px;
   object-fit: cover;
-  border-radius: 6px;
+  border-radius: 0;
   border: 1px solid var(--a-border);
 }
 .a-img-field-change { align-self: flex-start; }
@@ -735,7 +743,7 @@
     justify-content: center;
     background: transparent;
     border: 1px solid var(--a-border);
-    border-radius: 6px;
+    border-radius: 0;
     color: var(--a-text);
     cursor: pointer;
   }
@@ -803,7 +811,7 @@
   padding: 14px;
   border: 1px solid var(--a-border);
   background: var(--a-surface2);
-  border-radius: 6px;
+  border-radius: 0;
   margin-bottom: 10px;
 }
 .a-list-row:last-child { margin-bottom: 0; }
@@ -860,7 +868,7 @@
   display: block;
   width: 36px;
   height: 20px;
-  border-radius: 10px;
+  border-radius: 0;
   background: var(--a-border2);
   position: relative;
   transition: background 0.15s;
@@ -881,4 +889,71 @@
 @media (max-width: 768px) {
   .a-list-row { grid-template-columns: 24px 1fr; }
   .a-list-actions { grid-column: 1 / -1; justify-content: flex-end; }
+}
+
+/* ─── Typografie wie auf der oeffentlichen Seite ──────────────
+   Ueberschriften blockig in Archivo, technische Beschriftungen in
+   Monospace. Steht am Dateiende, damit es die Einzelregeln oben
+   ueberschreibt, ohne sie einzeln anfassen zu muessen. */
+.a-section-title,
+.a-stat-num {
+  font-family: var(--a-font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.a-card-title,
+.admin-sidebar-logo strong {
+  font-family: var(--a-font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.admin-nav-section,
+.a-stat-label,
+.admin-mobile-bar-title {
+  font-family: var(--a-font-mono);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Nutzerkuerzel eckig statt rund — wie alles andere auch. */
+.admin-user-avatar {
+  border-radius: 0;
+  font-family: var(--a-font-mono);
+}
+
+/* Die Sidebar traegt dieselbe Betontextur wie die Seite, nur sehr
+   zurueckhaltend: sie liegt hinter der Navigation und darf die
+   Lesbarkeit der Eintraege nicht beeintraechtigen. */
+.admin-sidebar {
+  position: relative;
+  isolation: isolate;
+}
+.admin-sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 0 0, rgba(0,0,0,0.55) 0 2.2px, rgba(255,255,255,0.14) 2.2px 3.4px, transparent 3.8px),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.5) 0 1px, rgba(255,255,255,0.07) 1px 2px, transparent 2px 200px),
+    repeating-linear-gradient(0deg, rgba(0,0,0,0.45) 0 1px, rgba(255,255,255,0.07) 1px 2px, transparent 2px 150px);
+  background-size: 200px 150px;
+  -webkit-mask-image: radial-gradient(60% 44% at 50% 78%, #000 0%, rgba(0,0,0,0.5) 42%, transparent 86%);
+  mask-image: radial-gradient(60% 44% at 50% 78%, #000 0%, rgba(0,0,0,0.5) 42%, transparent 86%);
+}
+
+/* Kennzahlen: Zahl ueber Beschriftung. Beides sind <span>, also inline —
+   ohne Blocksatz stehen sie nebeneinander und das `margin-bottom` der Zahl
+   laeuft ins Leere. Der Fehler stammt aus der Vorlage und fiel dort nur
+   nicht auf, weil die Beschriftungen kuerzer waren. */
+.a-stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.a-stat-num,
+.a-stat-label {
+  display: block;
 }

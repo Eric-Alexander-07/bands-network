@@ -5,6 +5,7 @@ import Link from "next/link";
 import { createClient } from "@bands/supabase/client";
 import { contentSchema } from "@/config/contentSchema";
 import { SITE_SLUG } from "@/lib/site";
+import { useSiteId } from "./AdminSite";
 import { MdArticle, MdImage } from "react-icons/md";
 
 /** Tabellen, deren Umfang auf dem Dashboard angezeigt wird. */
@@ -16,31 +17,40 @@ const COUNTED = [
   { table: "band_members", label: "Bandmitglieder" },
 ] as const;
 
+/** Eingebettete Zaehlung: `events(count)` liefert `[{ count: n }]`. */
+type CountRow = { count: number }[];
+
 export default function AdminDashboard() {
+  const siteId = useSiteId();
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [missing, setMissing] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Das Layout loest die Site-ID auf und rendert die Kinder erst danach.
+    if (!siteId) return;
+    let cancelled = false;
     (async () => {
       const supabase = createClient();
-      const { data: site } = await supabase
-        .from("sites").select("id").eq("slug", SITE_SLUG).maybeSingle();
-      if (!site) { setMissing(true); setLoading(false); return; }
+      // EINE Abfrage fuer alle Kennzahlen. Vorher war das je Tabelle ein
+      // eigener HEAD-Request mit `count: exact` — also fuenf Roundtrips fuer
+      // fuenf Zahlen, plus einer fuer die Site-Zeile.
+      const select = COUNTED.map(c => `${c.table}(count)`).join(", ");
+      const { data } = await supabase
+        .from("sites")
+        .select(select)
+        .eq("id", siteId)
+        .maybeSingle<Record<string, CountRow>>();
 
-      const entries = await Promise.all(
-        COUNTED.map(async c => {
-          const { count } = await supabase
-            .from(c.table)
-            .select("*", { count: "exact", head: true })
-            .eq("site_id", site.id);
-          return [c.table, count ?? 0] as const;
-        })
-      );
+      if (cancelled) return;
+      if (!data) { setMissing(true); setLoading(false); return; }
+
+      const entries = COUNTED.map(c => [c.table, data[c.table]?.[0]?.count ?? 0] as const);
       setCounts(Object.fromEntries(entries));
       setLoading(false);
     })();
-  }, []);
+    return () => { cancelled = true; };
+  }, [siteId]);
 
   if (loading) return <div className="admin-loading"><div className="admin-spinner" /></div>;
 

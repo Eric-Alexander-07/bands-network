@@ -3,6 +3,7 @@
 import { useState, useEffect, type FormEvent } from "react";
 import { createClient } from "@bands/supabase/client";
 import "../admin.css";
+import { band } from "@/config/band";
 
 export default function AdminInvite() {
   const [password, setPassword] = useState("");
@@ -60,7 +61,7 @@ export default function AdminInvite() {
         <div style={{ textAlign: "center", marginBottom: 28 }}>
           <div style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
             <span className="a-dot" />
-            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--a-text)" }}>GROOVE CONTROL</span>
+            <span style={{ fontSize: 15, fontWeight: 700, color: "var(--a-text)" }}>{band.name.toUpperCase()}</span>
           </div>
           <p style={{ color: "var(--a-muted)", fontSize: 13, margin: 0 }}>Admin-Zugang aktivieren</p>
         </div>

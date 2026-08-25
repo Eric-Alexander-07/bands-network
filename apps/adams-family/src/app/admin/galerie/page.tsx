@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef, useCallback, type DragEvent, type ChangeEvent } from "react";
 import { DragDropContext, Droppable, Draggable, type DropResult } from "@hello-pangea/dnd";
 import { createClient } from "@bands/supabase/client";
+import { useSiteId } from "../AdminSite";
 import { MdDelete, MdClose } from "react-icons/md";
 import { useToast } from "@/components/admin/Toast";
 import { adminInsert, adminDelete, adminUpdateMany } from "@/lib/adminDb";
@@ -47,7 +48,8 @@ export default function GalerieAdmin() {
   const supabase    = createClient();
   const fileRef     = useRef<HTMLInputElement>(null);
   const [images, setImages]         = useState<Img[]>([]);
-  const [siteId, setSiteId]         = useState("");
+  // Site-ID kommt aus dem Admin-Layout — eine Abfrage weniger pro Aufruf.
+  const siteId                      = useSiteId() ?? "";
   const [loading, setLoading]       = useState(true);
   const [queue, setQueue]           = useState<UploadItem[]>([]);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -56,15 +58,19 @@ export default function GalerieAdmin() {
   useEffect(() => { imagesRef.current = images; }, [images]);
 
   useEffect(() => {
+    if (!siteId) { setLoading(false); return; }
+    let cancelled = false;
     (async () => {
-      const { data: site } = await supabase.from("sites").select("id").eq("slug", SLUG).single();
-      if (!site) { setLoading(false); return; }
-      setSiteId(site.id);
-      const { data } = await supabase.from("media_images").select("*").eq("site_id", site.id).order("position");
+      const { data } = await supabase
+        .from("media_images").select("*").eq("site_id", siteId).order("position");
+      if (cancelled) return;
       setImages(data ?? []);
       setLoading(false);
     })();
-  }, []);
+    return () => { cancelled = true; };
+    // `supabase` ist ein Singleton aus createClient() und aendert sich nicht.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [siteId]);
 
   // Auto-upload pending items one by one
   useEffect(() => {

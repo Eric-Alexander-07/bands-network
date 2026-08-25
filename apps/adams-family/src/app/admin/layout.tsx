@@ -8,6 +8,8 @@ import type { User } from "@supabase/supabase-js";
 import "./admin.css";
 import { ToastProvider } from "@bands/admin-ui";
 import { contentSchema } from "@/config/contentSchema";
+import { AdminSiteContext } from "./AdminSite";
+import { band } from "@/config/band";
 import { MdDashboard, MdImage, MdArticle, MdLogout, MdMenu, MdClose } from "react-icons/md";
 
 const SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "adams-family";
@@ -40,6 +42,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   const [user, setUser]     = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [authError, setAuthError] = useState<string | null>(null);
+  // Einmal aufgeloest und per Context an alle Unterseiten weitergereicht,
+  // statt dass jede Seite die Zeile aus `sites` erneut abfragt.
+  const [siteId, setSiteId] = useState<string | null>(null);
   // Sidebar ist unter 768px eine Drawer-Navigation statt einer permanenten
   // Spalte — per Default eingeklappt, damit sie auf dem Handy keinen Platz
   // vom Inhalt wegnimmt.
@@ -58,23 +63,27 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       const { data: { user: u } } = await supabase.auth.getUser();
       if (!u) { router.replace("/admin/login"); return; }
 
-      // site_admins check — only blocks if site row AND admin table exist and user is missing.
-      // During initial setup (empty DB), we let any authenticated user through.
+      // Berechtigungspruefung in EINER Abfrage: `site_admins` ist per RLS auf
+      // `user_id = auth.uid()` beschraenkt, das eingebettete Select liefert
+      // also genau dann eine Zeile, wenn der angemeldete Nutzer fuer diese
+      // Band freigeschaltet ist. Vorher waren das zwei Abfragen.
+      //
+      // Blockiert nur, wenn die Site-Zeile existiert und der Nutzer fehlt —
+      // bei noch leerer Datenbank kommt jeder angemeldete Nutzer durch.
       try {
         const { data: site } = await supabase
-          .from("sites").select("id").eq("slug", SLUG).single<{ id: string }>();
+          .from("sites")
+          .select("id, site_admins(user_id)")
+          .eq("slug", SLUG)
+          .maybeSingle<{ id: string; site_admins: { user_id: string }[] }>();
         if (site) {
-          const { data: admin } = await supabase
-            .from("site_admins")
-            .select("user_id")
-            .eq("user_id", u.id)
-            .eq("site_id", site.id)
-            .single<{ user_id: string }>();
-          if (!admin) {
+          const darf = (site.site_admins ?? []).some(a => a.user_id === u.id);
+          if (!darf) {
             await supabase.auth.signOut();
             router.replace("/admin/login");
             return;
           }
+          setSiteId(site.id);
         }
       } catch {
         // Tables not yet populated — allow authenticated user through
@@ -137,6 +146,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <ToastProvider>
+      <AdminSiteContext.Provider value={siteId}>
       <div className="admin-root">
         <div className="admin-shell">
           {/* Sidebar */}
@@ -144,7 +154,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             <div className="admin-sidebar-logo">
               <strong>
                 <span className="a-dot" />
-                GROOVE CONTROL
+                {band.name.toUpperCase()}
               </strong>
               <p>Admin</p>
             </div>
@@ -204,6 +214,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </div>
+      </AdminSiteContext.Provider>
     </ToastProvider>
   );
 }
