@@ -51,7 +51,7 @@ export const ARTIST_POOL: {
     description: "Energiegeladene Live-Bands für jede Tanzfläche.",
     bands: [
       { name: "Spirit of Soul", url: "https://spiritofsoul.com" },
-      { name: "Groove Control", url: "https://v-m-p.com/groove-control" },
+      { name: "Groove Control", url: "https://groovecontrol.info" },
       { name: "BOBbastic", url: "https://v-m-p.com/bobbastic" },
     ],
   },

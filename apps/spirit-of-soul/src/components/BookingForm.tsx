@@ -168,9 +168,6 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               <option value="other">Sonstiges</option>
             </select>
           </div>
-          <p className="form-hint">
-            Bitte beachten Sie die Fragen links, damit wir Ihnen ein möglichst gutes Angebot erstellen können.
-          </p>
           <div className="form-group">
             <label className="form-label" htmlFor="message">
               Nachricht
@@ -180,7 +177,7 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               name="message"
               className="form-textarea"
               rows={18}
-              placeholder="Ihre Nachricht ..."
+              placeholder="Bitte beachten Sie die Fragen links, damit wir Ihnen ein möglichst gutes Angebot erstellen können."
             />
           </div>
           <input

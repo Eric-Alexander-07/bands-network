@@ -5,6 +5,11 @@ Turborepo-Monorepo mit einer Next.js-App (App Router) pro Band. Inhalte kommen a
 - `apps/spirit-of-soul` — Soulband Frankfurt, Domain `https://spiritofsoul.com`
 - `apps/we-rock` — Classic Rock Tribute Show, Domain `https://werock-rockband.de`
 - `apps/groove-control` — Partyband Frankfurt, Domain `https://groovecontrol.info`. Bildmaterial fehlt noch; alle Bildfelder zeigen auf `/images/placeholder.svg`.
+- `apps/adams-family` — The Adams Family, Bryan-Adams-Tributeband, Domain `https://theadamsfamily.de`
+  (bereits auf die Band registriert, leitet aktuell noch auf die alte Wix-Seite weiter).
+  Eigenes Design („Beton": Grautoene, Stahlblau als einziger Akzent, `--radius: 0`).
+  Ohne Shop. Referenzen und Bandmitglieder sind bewusst leer — dafuer liegen keine
+  belegten Angaben vor, die zugehoerigen Abschnitte blenden sich selbst aus.
 - `apps/docs`, `apps/web` — unbenutztes Turborepo-Boilerplate, ignorieren
 - `packages/band-data` — Supabase-Abfragen, `getSiteBundle()` (eine Abfrage für den kompletten Seiteninhalt)
 - `packages/db-types` — generierte Datenbanktypen
