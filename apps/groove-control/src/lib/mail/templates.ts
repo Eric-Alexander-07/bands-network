@@ -21,7 +21,10 @@ const COLORS = {
   hairline: "rgba(255,255,255,0.06)",
 };
 
-const FONT_DISPLAY = "Georgia, 'Times New Roman', serif";
+// Mailprogramme laden keine Webfonts, Michroma ist hier also nicht
+// verfuegbar. Naechste Entsprechung zur neuen Ueberschriftenschrift:
+// eine breit gesperrte Sans statt der frueheren Serif-Kursive.
+const FONT_DISPLAY = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 const FONT_BODY =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
@@ -80,7 +83,7 @@ function emailShell(opts: { preheader: string; heading: string; bodyHtml: string
             </tr>
             <tr>
               <td style="padding:0 40px;">
-                <h1 style="font-family:${FONT_DISPLAY}; font-style:italic; font-weight:400; font-size:24px; line-height:1.35; color:${COLORS.text}; margin:0 0 20px;">${opts.heading}</h1>
+                <h1 style="font-family:${FONT_DISPLAY}; font-weight:600; font-size:22px; letter-spacing:0.02em; line-height:1.35; color:${COLORS.text}; margin:0 0 20px;">${opts.heading}</h1>
               </td>
             </tr>
             <tr>

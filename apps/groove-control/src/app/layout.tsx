@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Fraunces, Space_Grotesk } from "next/font/google";
+import { Michroma, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -9,12 +9,13 @@ import JsonLd from "@/components/JsonLd";
 import SiteWrapper from "@/components/SiteWrapper";
 import InviteHashHandler from "@/components/InviteHashHandler";
 
-// Fraunces traegt die Eleganz der Marke — ausschliesslich fuer Ueberschriften.
-const fraunces = Fraunces({
+// Michroma greift die breite, geometrische Wortmarke auf — ausschliesslich
+// fuer Ueberschriften. Die Schrift hat genau einen Schnitt (400) und keine
+// Kursive: Hierarchie entsteht ueber Groesse und Farbe, nie ueber das Gewicht.
+const michroma = Michroma({
   subsets: ["latin"],
-  weight: ["300", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-fraunces",
+  weight: "400",
+  variable: "--font-michroma",
   display: "swap",
 });
 
@@ -123,7 +124,7 @@ const musicGroupSchema = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="de" className={`${fraunces.variable} ${spaceGrotesk.variable}`}>
+    <html lang="de" className={`${michroma.variable} ${spaceGrotesk.variable}`}>
       <body>
         <InviteHashHandler />
         <JsonLd data={musicGroupSchema} />
