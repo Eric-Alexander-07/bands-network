@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Platzhalter">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1B1B1F"/>
+      <stop offset="100%" stop-color="#0B0B0D"/>
+    </linearGradient>
+    <!-- Schuppenraster, dasselbe Motiv wie der Seitenhintergrund -->
+    <pattern id="scale" width="34" height="20" patternUnits="userSpaceOnUse">
+      <path d="M-17 20 A 17 17 0 0 1 17 20 M17 20 A 17 17 0 0 1 51 20"
+            fill="none" stroke="#8E9299" stroke-width="1" stroke-opacity="0.16"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="800" fill="url(#g)"/>
+  <rect width="1200" height="800" fill="url(#scale)"/>
+  <text x="600" y="418" text-anchor="middle" fill="#8E9299"
+        font-family="ui-monospace, 'IBM Plex Mono', monospace" font-size="22" letter-spacing="4">BILD FOLGT</text>
+</svg>

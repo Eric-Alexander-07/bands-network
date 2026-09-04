@@ -55,6 +55,14 @@
   flex-direction: column;
   flex-shrink: 0;
   overflow-y: auto;
+  /* Bezugsrahmen fuer die Betontextur in `::before`. Muss HIER stehen und
+     nicht weiter unten: die Mobil-Regel setzt `position: fixed`, und eine
+     gleich spezifische Regel nach der Media Query wuerde das ueberschreiben
+     (Media Queries erhoehen die Spezifitaet nicht). Genau das war der Fall —
+     die Drawer-Sidebar blieb im Flex-Fluss stehen, belegte 82vw und schob
+     den Inhalt auf einen schmalen Streifen am rechten Rand. */
+  position: relative;
+  isolation: isolate;
 }
 .admin-sidebar-logo {
   padding: 20px 16px 12px;
@@ -701,13 +709,18 @@
 }
 .a-img-field-preview {
   position: relative;
+  max-width: 100%;
   display: inline-flex;
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
 }
 .a-img-field-preview img {
-  max-width: 280px;
+  /* `100%` zuerst, damit die Vorschau auf schmalen Telefonen nicht aus der
+     Karte laeuft: 280px sind bei 320px Geraetebreite abzueglich Inhalts-
+     und Kartenpolsterung rund 35px zu breit und erzeugten horizontales
+     Scrollen der ganzen Seite. */
+  max-width: min(280px, 100%);
   max-height: 180px;
   object-fit: cover;
   border-radius: 0;
@@ -887,8 +900,33 @@
 .a-toggle--on .a-toggle-thumb { transform: translateX(16px); }
 
 @media (max-width: 768px) {
-  .a-list-row { grid-template-columns: 24px 1fr; }
+  .a-list-row { grid-template-columns: 34px 1fr; }
   .a-list-actions { grid-column: 1 / -1; justify-content: flex-end; }
+  /* Untergeordnete Eintraege (Gruppe -> Eintrag) umbrechen lassen. Ohne das
+     stehen Sortierspalte, zwei Felder mit je 140px Mindestbreite und der
+     Loeschknopf in einer nicht umbrechenden Flex-Zeile — zusammen rund
+     360px, waehrend auf einem 320px-Telefon nur etwa 220px zur Verfuegung
+     stehen. Ergebnis war horizontaler Ueberlauf. */
+  .a-list-child { flex-wrap: wrap; }
+  .a-list-child .a-list-field { flex: 1 1 100%; min-width: 0; }
+  /* Auf Touch sind die Auf/Ab-Knoepfe die EINZIGE Moeglichkeit umzusortieren
+     (natives Drag & Drop greift dort nicht). 20x16px sind als Tippziel zu
+     klein. */
+  .a-order-btn { width: 30px; height: 26px; font-size: 10px; }
+  /* Der Schalter ist sein eigenes Tippziel und mit 36x20px zu flach. */
+  .a-toggle { padding: 8px 6px; }
+}
+
+/* ── Touch: alles, was nur bei :hover erscheint, dauerhaft zeigen ──
+   Auf Telefonen und Tablets gibt es keinen Hover-Zustand. Der Loeschknopf
+   ueber einem Galeriebild lag auf `opacity: 0` und war dort schlicht nicht
+   erreichbar. */
+@media (hover: none) {
+  .a-gallery-del {
+    opacity: 1;
+    padding: 7px 8px;
+    background: rgba(0,0,0,.62);
+  }
 }
 
 /* ─── Typografie wie auf der oeffentlichen Seite ──────────────
@@ -924,10 +962,6 @@
 /* Die Sidebar traegt dieselbe Betontextur wie die Seite, nur sehr
    zurueckhaltend: sie liegt hinter der Navigation und darf die
    Lesbarkeit der Eintraege nicht beeintraechtigen. */
-.admin-sidebar {
-  position: relative;
-  isolation: isolate;
-}
 .admin-sidebar::before {
   content: "";
   position: absolute;
