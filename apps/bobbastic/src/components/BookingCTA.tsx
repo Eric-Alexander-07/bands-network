@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { band } from "@/config/band";
 import { INQUIRY_MAIL_HREF } from "@/lib/inquiryMail";
+import SoundBars from "@/components/SoundBars";
 import type { Content } from "@/lib/content";
 
 export default function BookingCTA({ c }: { c: Content }) {
   return (
     <section className="booking-cta">
+      <SoundBars className="bars-far-right" />
       <div className="container booking-cta-inner">
         <span className="eyebrow" data-animate="fade-up">Jetzt anfragen</span>
         <h2 data-animate="fade-up" data-delay="100">

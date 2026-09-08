@@ -7,9 +7,9 @@
   --bb-faint:    #2a2a2a;
   --bb-muted:    #a0a0a0;
   --bb-bone:     #f0ece4;
-  --bb-red:      #C8151A;
-  --bb-red-dim:  #8b0f13;
-  --bb-ember:    #E84118;
+  --bb-red:      #ff5a36;
+  --bb-red-dim:  #c7431f;
+  --bb-ember:    #ffb238;
 
   /* Token aliases — all existing class rules continue to work */
   --bg:               var(--bb-black);
@@ -23,8 +23,8 @@
   --text-light:       var(--bb-bone);
   --text-light-muted: rgba(226,217,200,0.5);
   --gold:             var(--bb-red);
-  --gold-light:       rgba(200,21,26,0.12);
-  --gold-border:      rgba(200,21,26,0.28);
+  --gold-light:       rgba(255,90,54,0.12);
+  --gold-border:      rgba(255,90,54,0.28);
   --border:           var(--bb-faint);
   --border-dark:      var(--bb-surface2);
 
@@ -43,7 +43,7 @@
   clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
 }
 .glow-red {
-  text-shadow: 0 0 60px rgba(200,21,26,0.4);
+  text-shadow: 0 0 60px rgba(255,90,54,0.4);
 }
 .grain-overlay::before {
   content: '';
@@ -418,8 +418,11 @@ h3, h4 {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding: calc(var(--nav-height) + 64px) 64px 64px;
+  /* Desktop-Split hat noch reichlich Platz neben dem Bild — Inhalt mittig
+     statt oben anordnen, statt mit grossem Top-Padding unter der Nav zu
+     haengen (wie bei Bobby & Friends Unplugged). */
+  justify-content: center;
+  padding: 64px;
   overflow: hidden;
   box-sizing: border-box;
   /* Grid stretch handles height — no height:100% needed (breaks in Safari) */
@@ -430,8 +433,8 @@ h3, h4 {
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(45deg,  rgba(200,21,26,0.045) 0px, rgba(200,21,26,0.045) 1px, transparent 1px, transparent 4px),
-    repeating-linear-gradient(-45deg, rgba(200,21,26,0.045) 0px, rgba(200,21,26,0.045) 1px, transparent 1px, transparent 4px);
+    repeating-linear-gradient(45deg,  rgba(255,90,54,0.045) 0px, rgba(255,90,54,0.045) 1px, transparent 1px, transparent 4px),
+    repeating-linear-gradient(-45deg, rgba(255,90,54,0.045) 0px, rgba(255,90,54,0.045) 1px, transparent 1px, transparent 4px);
   pointer-events: none;
   z-index: 0;
 }
@@ -457,17 +460,6 @@ h3, h4 {
   .nav-cta { padding: 5px 13px; font-size: 12px; letter-spacing: 0.09em; }
 }
 
-/* SVG spotlights injected in HeroSection.tsx */
-.hero-spotlights {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  overflow: hidden;
-}
 .hero-right {
   position: relative;
   overflow: hidden;
@@ -584,7 +576,7 @@ h3, h4 {
   margin-bottom: 14px;
   line-height: 1.2;
   animation: heroFadeIn 0.8s ease 0.95s both;
-  text-shadow: 0 0 40px rgba(200,21,26,0.35);
+  text-shadow: 0 0 40px rgba(255,90,54,0.35);
 }
 .hero-sub {
   font-size: 0.9375rem;
@@ -970,6 +962,18 @@ h3, h4 {
   opacity: 0.55;
 }
 
+/* Hero-Textpanel — dezent hinter Eyebrow/Titel, damit das Balkenmotiv nicht
+   nur rechts ueber dem Foto sitzt, sondern den ganzen Hero traegt. Niedrige
+   Opacity, damit der grosse Titel lesbar bleibt. */
+.bars-hero-left {
+  top: 42%;
+  left: 62%;
+  transform: translate(-50%, -50%);
+  width: 620px;
+  height: auto;
+  opacity: 0.25;
+}
+
 /* Hero placement — above photo, screen-blend so bars glow on dark bg */
 .bars-hero {
   top: 50%;
@@ -1077,12 +1081,22 @@ h3, h4 {
 /* ─── Shared carbon fiber pattern ──────────────────────────── */
 .video-section,
 .gallery-section,
-.booking-cta,
-.page-hero,
-.footer {
+.page-hero {
   background-image:
     repeating-linear-gradient(45deg,  rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px),
     repeating-linear-gradient(-45deg, rgba(255,255,255,0.035) 0px, rgba(255,255,255,0.035) 1px, transparent 1px, transparent 4px);
+}
+
+/* Booking-CTA bekommt statt des Karbon-Musters die Equalizer-Balken als
+   Deko-Layer — dasselbe Signaturmotiv wie im Rest der Seite. Der Footer
+   bleibt bewusst schlicht ohne Musterung. */
+.booking-cta {
+  position: relative;
+  overflow: hidden;
+}
+.booking-cta-inner {
+  position: relative;
+  z-index: 1;
 }
 
 /* ─── Video Section ─────────────────────────────────────────── */
@@ -2412,7 +2426,7 @@ h3, h4 {
 
 /* Booking checklist */
 .booking-checklist-intro { margin-top: 36px; font-size: 0.9375rem; color: var(--text-light); line-height: 1.7; }
-.booking-checklist { margin-top: 24px; padding-top: 28px; border-top: 1px solid rgba(200,21,26,0.2); }
+.booking-checklist { margin-top: 24px; padding-top: 28px; border-top: 1px solid rgba(255,90,54,0.2); }
 .booking-checklist-title { font-family: var(--font-ui); font-size: 9.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff !important; margin-bottom: 14px; }
 .booking-checklist-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
 .booking-checklist-list li { font-size: 0.875rem; color: var(--text-light); line-height: 1.55; padding-left: 18px; position: relative; }
@@ -3380,10 +3394,10 @@ select::-ms-expand { display: none; }
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
 
-  /* Spotlights are sized for the desktop dark panel only — once the hero
-     collapses to a single full-bleed photo background, they show as a
-     reddish light overlay across the whole image. */
-  .hero-spotlights { display: none; }
+  /* Bars are sized for the desktop split layout only — once the hero
+     collapses to a single full-bleed photo background, they'd show
+     stretched/off-center across the whole image. */
+  .bars-hero, .bars-hero-left { display: none; }
 
   /* On the collapsed full-bleed hero the square photo is scaled hard by
      `cover`. Drop the parallax overscan here (parallax is disabled on

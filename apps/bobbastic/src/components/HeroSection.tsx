@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { band } from "@/config/band";
+import SoundBars from "@/components/SoundBars";
 import type { Event } from "@/lib/data";
 import type { Content } from "@/lib/content";
 
@@ -56,54 +57,14 @@ export default function HeroSection({ dbEvents = [], c }: Props) {
     <section className="hero">
       <div className="hero-split">
         <div className="hero-left">
-          {/* SVG Scheinwerfer */}
-          <svg
-            className="hero-spotlights"
-            viewBox="0 0 860 1000"
-            preserveAspectRatio="xMidYMid slice"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-hidden="true"
-            opacity="0.4"
-          >
-            <defs>
-              <filter id="spBlur" x="-30%" y="-10%" width="160%" height="120%">
-                <feGaussianBlur stdDeviation="18" />
-              </filter>
-              <linearGradient id="sg1" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#C8151A" stopOpacity="0.7"/>
-                <stop offset="100%" stopColor="#C8151A" stopOpacity="0"/>
-              </linearGradient>
-              <linearGradient id="sg2" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#E84118" stopOpacity="0.5"/>
-                <stop offset="100%" stopColor="#E84118" stopOpacity="0"/>
-              </linearGradient>
-              <linearGradient id="sg3" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#8b0f13" stopOpacity="0.55"/>
-                <stop offset="100%" stopColor="#8b0f13" stopOpacity="0"/>
-              </linearGradient>
-              <linearGradient id="sg4" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#C8151A" stopOpacity="0.35"/>
-                <stop offset="100%" stopColor="#C8151A" stopOpacity="0"/>
-              </linearGradient>
-              <linearGradient id="sg5" gradientUnits="objectBoundingBox" x1="0.5" y1="0" x2="0.5" y2="1">
-                <stop offset="0%" stopColor="#E84118" stopOpacity="0.28"/>
-                <stop offset="100%" stopColor="#E84118" stopOpacity="0"/>
-              </linearGradient>
-            </defs>
-            <polygon points="60,0 100,0 780,1000 -200,1000" fill="url(#sg1)" filter="url(#spBlur)" />
-            <polygon points="310,0 345,0 620,1000 80,1000" fill="url(#sg2)" filter="url(#spBlur)" />
-            <polygon points="510,0 545,0 160,1000 -120,1000" fill="url(#sg3)" filter="url(#spBlur)" />
-            <polygon points="700,0 730,0 200,1000 -80,1000" fill="url(#sg4)" filter="url(#spBlur)" />
-            <polygon points="790,0 820,0 550,1000 400,1000" fill="url(#sg5)" filter="url(#spBlur)" />
-          </svg>
-
+          <SoundBars className="bars-hero-left" />
           <div className="hero-content">
-            <p className="hero-eyebrow">
-              Classic Rock / Melodic Rock / Hard &amp; Heavy Rock
-            </p>
+            <p className="hero-eyebrow">{band.genre}</p>
             {/* Noch kein eigenes Logo vorhanden — Bandname als Text statt
                 Logo-Bild, bis eines geliefert wird. */}
-            <h1 className="hero-title hero-title--text">{band.name}</h1>
+            <h1 className="hero-title hero-title--text">
+              <span className="hero-title-line">{band.name}</span>
+            </h1>
             <p className="hero-claim">{c.hero_claim}</p>
             <p className="hero-sub">{c.hero_sub}</p>
             <div className="hero-actions">
@@ -143,6 +104,7 @@ export default function HeroSection({ dbEvents = [], c }: Props) {
           </div>
         </div>
         <div className="hero-right">
+          <SoundBars className="bars-hero" />
           <div ref={parallaxRef} className="hero-right-inner">
             <picture>
               {/* Phones: taller portrait crop so the two singers stay large and
