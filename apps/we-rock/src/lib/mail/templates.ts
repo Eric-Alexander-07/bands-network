@@ -46,6 +46,13 @@ function escapeHtml(value: string): string {
     .replace(/'/g, "&#39;");
 }
 
+/** ISO-Datum aus <input type="date"> für deutsche Leser aufbereiten. */
+function formatDate(value?: string): string | undefined {
+  if (!value) return undefined;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : value;
+}
+
 function detailRow(label: string, value?: string): string {
   if (!value) return "";
   return `<tr>
@@ -115,7 +122,7 @@ export function notificationEmailHtml(d: InquiryDetails): string {
     detailRow("Name", d.name),
     detailRow("E-Mail", d.email),
     detailRow("Telefon", d.phone),
-    detailRow("Datum", d.date),
+    detailRow("Datum", formatDate(d.date)),
     detailRow("Anlass", d.occasion),
     detailRow("Betreff", d.subject),
     detailRow("Formular", d.formType === "booking" ? "werock-rockband.de/booking" : "werock-rockband.de/kontakt"),
@@ -144,7 +151,7 @@ export function confirmationEmailHtml(d: InquiryDetails): string {
     detailRow("Name", d.name),
     detailRow("E-Mail", d.email),
     detailRow("Telefon", d.phone),
-    detailRow("Datum", d.date),
+    detailRow("Datum", formatDate(d.date)),
     detailRow("Anlass", d.occasion),
     detailRow("Betreff", d.subject),
   ].join("");

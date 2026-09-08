@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VMP Suchvorschau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light dark;
+    --paper: #F4F1E9;
+    --surface: #FFFFFF;
+    --surface-alt: #EAE6D9;
+    --border: #DCD6C4;
+    --ink: #1C1A15;
+    --ink-muted: #6D6858;
+    --ink-faint: #9A947F;
+    --link: #1558D6;
+    --good: #2F6B4F;
+    --good-bg: #E4EEE7;
+    --warn: #A8480A;
+    --warn-bg: #F5E4D6;
+    --chip-bg: #EFEBDD;
+    --ring: #1558D6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #16150F;
+      --surface: #1F1D16;
+      --surface-alt: #29271E;
+      --border: #3A3728;
+      --ink: #EFEBDE;
+      --ink-muted: #A39C89;
+      --ink-faint: #746E5C;
+      --link: #86ADFF;
+      --good: #74C79A;
+      --good-bg: #1E2C22;
+      --warn: #E7A85B;
+      --warn-bg: #322418;
+      --chip-bg: #262418;
+      --ring: #86ADFF;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    line-height: 1.5;
+  }
+  ::selection { background: var(--link); color: var(--surface); }
+
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; padding: 0;
+  }
+
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 24px 96px;
+  }
+
+  header.doc-head {
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: '';
+    width: 20px; height: 1px;
+    background: var(--ink-faint);
+  }
+  h1 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0 0 14px;
+  }
+  .doc-intro {
+    color: var(--ink-muted);
+    font-size: 15px;
+    max-width: 62ch;
+    margin: 0 0 20px;
+  }
+  .doc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .doc-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .swatch { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+  .swatch.good { background: var(--good); }
+  .swatch.warn { background: var(--warn); }
+  .swatch.noix { background: var(--ink-faint); }
+
+  /* ---- Band tabs (radio-driven, no JS) ---- */
+  fieldset.tabs {
+    border: 0; margin: 0; padding: 0;
+  }
+  .tab-input {
+    position: absolute;
+    width: 1px; height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .tab-label {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 9px 14px;
+    margin: 0 8px 8px 0;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .tab-label:hover { border-color: var(--ink-faint); color: var(--ink); }
+  .tab-input:focus-visible + .tab-label {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  .tab-input:checked + .tab-label {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .panels { margin-top: 28px; }
+  .panel { display: none; }
+  #t-adams:checked ~ .panels #p-adams,
+  #t-snake:checked ~ .panels #p-snake,
+  #t-bastic:checked ~ .panels #p-bastic,
+  #t-unplugged:checked ~ .panels #p-unplugged,
+  #t-stoker:checked ~ .panels #p-stoker {
+    display: block;
+  }
+
+  .band-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .band-meta h2 {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin: 0;
+  }
+  .band-domain {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 13px;
+    color: var(--good);
+  }
+
+  /* ---- Card ---- */
+  .cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .route {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .route b { color: var(--ink); font-weight: 500; }
+  .badges { display: flex; gap: 6px; }
+  .badge {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    padding: 3px 7px;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+  .badge.noindex { background: var(--chip-bg); color: var(--ink-faint); border: 1px solid var(--border); }
+
+  /* SERP mock */
+  .serp { margin-bottom: 14px; }
+  .serp-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .favicon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 500;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+  }
+  .breadcrumb-text {
+    font-size: 13.5px;
+    color: var(--ink);
+  }
+  .breadcrumb-path { color: var(--good); }
+  .serp-title {
+    color: var(--link);
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 3px;
+    text-wrap: balance;
+  }
+  .serp-desc {
+    color: var(--ink-muted);
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+    max-width: 64ch;
+  }
+
+  .counts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .count {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 11.5px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: var(--chip-bg);
+    color: var(--ink-muted);
+  }
+  .count.good { background: var(--good-bg); color: var(--good); }
+  .count.warn { background: var(--warn-bg); color: var(--warn); }
+
+  .kw-block { border-top: 1px dashed var(--border); padding-top: 12px; }
+  .kw-label {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 8px;
+  }
+  .kw-list { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0; padding: 0; }
+  .kw-list li {
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    background: var(--chip-bg);
+    color: var(--ink);
+    padding: 4px 9px;
+    border-radius: 5px;
+  }
+  .kw-inherited li { color: var(--ink-faint); }
+  .kw-note {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    margin: 0 0 8px;
+    font-style: italic;
+  }
+
+  footer.doc-foot {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: 'IBM Plex Mono', ui-monospace, monospace;
+    font-size: 12px;
+    color: var(--ink-faint);
+  }
+
+  @media (max-width: 560px) {
+    .page { padding: 40px 16px 72px; }
+    .serp-title { font-size: 16px; }
+    .card-top { flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="doc-head">
+    <p class="eyebrow">Vivid Music Productions &middot; Google-Suchvorschau</p>
+    <h1>So erscheinen die fünf Bandseiten bei Google</h1>
+    <p class="doc-intro">Titel, Meta-Beschreibung und Keywords aus <code>metadata</code> jeder öffentlichen Seite &mdash; so wie sie aktuell im Code hinterlegt sind, als Suchergebnis-Vorschau. Zeichenzahlen prüfen automatisch gegen die 155-Zeichen-Regel aus der SEO-Anleitung.</p>
+    <div class="doc-legend">
+      <span><span class="swatch good"></span>Beschreibung im Limit (&le;155)</span>
+      <span><span class="swatch warn"></span>Beschreibung zu lang</span>
+      <span><span class="swatch noix"></span>Seite auf noindex</span>
+    </div>
+  </header>
+
+  <fieldset class="tabs">
+    <legend class="visually-hidden">Band auswählen</legend>
+
+    <input class="tab-input" type="radio" name="band" id="t-adams" checked>
+    <label class="tab-label" for="t-adams">The Adams Family</label>
+
+    <input class="tab-input" type="radio" name="band" id="t-snake">
+    <label class="tab-label" for="t-snake">CoverSnake</label>
+
+    <input class="tab-input" type="radio" name="band" id="t-bastic">
+    <label class="tab-label" for="t-bastic">BOBbastic</label>
+
+    <input class="tab-input" type="radio" name="band" id="t-unplugged">
+    <label class="tab-label" for="t-unplugged">Bobby &amp; Friends Unplugged</label>
+
+    <input class="tab-input" type="radio" name="band" id="t-stoker">
+    <label class="tab-label" for="t-stoker">Bobby Stoker Band</label>
+
+    <div class="panels">
+      <section class="panel" id="p-adams">
+        <div class="band-meta">
+          <h2>The Adams Family</h2>
+          <span class="band-domain">theadamsfamily.de</span>
+        </div>
+        <div class="cards" data-band="adams"></div>
+      </section>
+
+      <section class="panel" id="p-snake">
+        <div class="band-meta">
+          <h2>CoverSnake</h2>
+          <span class="band-domain">coversnake.com</span>
+        </div>
+        <div class="cards" data-band="snake"></div>
+      </section>
+
+      <section class="panel" id="p-bastic">
+        <div class="band-meta">
+          <h2>BOBbastic</h2>
+          <span class="band-domain">bobbastic.de</span>
+        </div>
+        <div class="cards" data-band="bastic"></div>
+      </section>
+
+      <section class="panel" id="p-unplugged">
+        <div class="band-meta">
+          <h2>Bobby &amp; Friends Unplugged</h2>
+          <span class="band-domain">bobbyandfriends-unplugged.de</span>
+        </div>
+        <div class="cards" data-band="unplugged"></div>
+      </section>
+
+      <section class="panel" id="p-stoker">
+        <div class="band-meta">
+          <h2>Bobby Stoker Band</h2>
+          <span class="band-domain">bobbystoker.com</span>
+        </div>
+        <div class="cards" data-band="stoker"></div>
+      </section>
+    </div>
+  </fieldset>
+
+  <footer class="doc-foot">
+    Quelle: <code>export const metadata</code> je <code>page.tsx</code>, Stand aktueller Codebase-Inhalt &middot; Domains teils vorläufig (Bobbastic, Bobby Stoker Band noch nicht final geklärt)
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var DESC_LIMIT = 155;
+
+  var DATA = {
+    adams: [
+      { route: "/", label: "Home", title: "The Adams Family – Bryan Adams Tributeband buchen",
+        desc: "The Adams Family bringt die größten Hits von Bryan Adams live auf die Bühne — handgemachter Rock für Festivals, Stadtfeste und Firmenevents.",
+        kw: ["Bryan Adams Tribute","Bryan Adams Tributeband","Tributeband buchen","The Adams Family","Rockband buchen","Coverband Stadtfest","Classic Rock Band","Livemusik Rhein-Main","Festivalband","Rockshow buchen"] },
+      { route: "/about", label: "Die Band", title: "Die Band – The Adams Family | Bryan Adams Tribute",
+        desc: "The Adams Family wurde 2002 gegründet und spielt in fester Fünfer-Besetzung — keine Lookalike-Show, sondern eine ehrliche handgemachte Rockband.",
+        kw: ["The Adams Family Band","Bryan Adams Tributeband","Bobby Stöcker","Rockband Musiker","Tribute Band Deutschland","Livemusiker","Bandportrait"] },
+      { route: "/services", label: "Show & Repertoire", title: "Show & Repertoire – The Adams Family | Setlist",
+        desc: "The Adams Family spielt rund zwei Stunden Show mit allen Bryan-Adams-Klassikern, dazu ein akustisches Unplugged-Set nach MTV-Vorbild.",
+        kw: ["Bryan Adams Songs live","Summer of 69 live","Unplugged Set","Tributeband Repertoire","Setlist Rockband","Bandbesetzung","Bühnentechnik Band"] },
+      { route: "/media", label: "Media & News", title: "Media & News – The Adams Family | Videos & Termine",
+        desc: "The Adams Family live erleben: aktuelle Videos, kommende Spieltermine und Neuigkeiten der Bryan Adams Tributeband aus dem Rhein-Main-Gebiet.",
+        kw: ["The Adams Family Videos","Bryan Adams Tribute Video","Konzerttermine","Tourdaten Band","Livevideo Rockband","Instagram Band","Band News"] },
+      { route: "/galerie", label: "Galerie", title: "Galerie – The Adams Family | Fotos von der Bühne",
+        desc: "The Adams Family in Bildern: Fotos von Clubkonzerten, Stadtfesten und Open-Air-Bühnen der Bryan Adams Tributeband.",
+        kw: ["The Adams Family Fotos","Bryan Adams Tribute Bilder","Konzertfotos","Livefotos Rockband","Bandgalerie"] },
+      { route: "/referenzen", label: "Referenzen", title: "Referenzen & Netzwerk – The Adams Family",
+        desc: "The Adams Family ist Teil des Künstlerpools von Vivid Music Productions — hier finden Sie Referenzen, Partner und das Netzwerk der Band.",
+        kw: ["The Adams Family Referenzen","Vivid Music Productions","Künstlerpool","Band Partner","Veranstalter Referenzen","Festival Booking"] },
+      { route: "/kontakt", label: "Kontakt", noindex: true, title: "Kontakt – The Adams Family | Bryan Adams Tribute",
+        desc: "The Adams Family kontaktieren — die Bryan Adams Tributeband aus dem Rhein-Main-Gebiet für Festivals, Clubs und Firmenevents.",
+        kw: ["The Adams Family Kontakt","Bryan Adams Tributeband","Vivid Music Productions"] },
+      { route: "/booking", label: "Booking", title: "Kontakt & Buchung – The Adams Family anfragen",
+        desc: "The Adams Family für Ihre Veranstaltung anfragen: Wir melden uns in der Regel innerhalb von 24 Stunden mit einem passenden Angebot.",
+        kw: ["Tributeband anfragen","Bryan Adams Tribute buchen","Rockband buchen","Stadtfest Band buchen","Firmenevent Band","Band Booking Anfrage"] },
+      { route: "/impressum", label: "Impressum", noindex: true, title: "Impressum – The Adams Family",
+        desc: "Impressum von The Adams Family. Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+        kw: null, inherited: ["Bryan Adams Tribute","Bryan Adams Tributeband","The Adams Family Band","Tributeband buchen","Rockband Stadtfest","Coverband Festival","Classic Rock Liveband","Livemusik Rhein-Main","Vivid Music Productions","Rockband für Firmenevent"] },
+      { route: "/datenschutz", label: "Datenschutz", noindex: true, title: "Datenschutz – The Adams Family",
+        desc: "Datenschutzerklärung von The Adams Family. Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.",
+        kw: null, inherited: ["Bryan Adams Tribute","Bryan Adams Tributeband","The Adams Family Band","Tributeband buchen","Rockband Stadtfest","Coverband Festival","Classic Rock Liveband","Livemusik Rhein-Main","Vivid Music Productions","Rockband für Firmenevent"] }
+    ],
+    snake: [
+      { route: "/", label: "Home", title: "CoverSnake – Whitesnake Tributeband buchen",
+        desc: "CoverSnake bringt die größten Hits von Whitesnake live auf die Bühne — Hard Rock für Festivals, Stadtfeste und Firmenevents im Rhein-Main-Gebiet.",
+        kw: ["Whitesnake Tribute","Whitesnake Tributeband","Tributeband buchen","CoverSnake","Rockband buchen","Coverband Stadtfest","Hard Rock Band","Livemusik Rhein-Main","Festivalband","Rockshow buchen"] },
+      { route: "/about", label: "Die Band", title: "Die Band – CoverSnake | Whitesnake Tribute",
+        desc: "CoverSnake wurde 2016 von Gitarrist Bobby Stöcker gegründet und zählt zu den authentischsten Whitesnake-Tributebands Deutschlands.",
+        kw: ["CoverSnake Band","Whitesnake Tributeband","Bobby Stöcker","Rockband Musiker","Tribute Band Deutschland","Livemusiker","Bandportrait"] },
+      { route: "/services", label: "Show & Repertoire", title: "Show & Repertoire – CoverSnake | Setlist",
+        desc: "CoverSnake spielt 90 bis 120 Minuten Whitesnake — von Here I Go Again bis Still of the Night, auf Wunsch mit LED-Walls und großer Lichtshow.",
+        kw: ["Whitesnake Songs live","Here I Go Again live","Still of the Night live","Tributeband Repertoire","Setlist Rockband","Bandbesetzung","Bühnentechnik Band"] },
+      { route: "/media", label: "Media & News", title: "Media & News – CoverSnake | Videos & Termine",
+        desc: "CoverSnake live erleben: aktuelle Videos, kommende Spieltermine und Neuigkeiten der Whitesnake-Tributeband aus dem Rhein-Main-Gebiet.",
+        kw: ["CoverSnake Videos","Whitesnake Tribute Video","Konzerttermine","Tourdaten Band","Livevideo Rockband","Instagram Band","Band News"] },
+      { route: "/galerie", label: "Galerie", title: "Galerie – CoverSnake | Fotos von der Bühne",
+        desc: "CoverSnake in Bildern: Fotos von Clubshows, Stadtfesten und Rockfestivals der sechsköpfigen Whitesnake-Tributeband.",
+        kw: ["CoverSnake Fotos","Whitesnake Tribute Bilder","Konzertfotos","Livefotos Rockband","Bandgalerie"] },
+      { route: "/referenzen", label: "Referenzen", title: "Referenzen & Netzwerk – CoverSnake",
+        desc: "CoverSnake ist Teil des Künstlerpools von Vivid Music Productions — hier finden Sie Referenzen, Partner und das Netzwerk der Band.",
+        kw: ["CoverSnake Referenzen","Vivid Music Productions","Künstlerpool","Band Partner","Veranstalter Referenzen","Festival Booking"] },
+      { route: "/kontakt", label: "Kontakt", noindex: true, title: "Kontakt – CoverSnake | Whitesnake Tribute",
+        desc: "CoverSnake kontaktieren — die Whitesnake-Tributeband aus dem Rhein-Main-Gebiet für Festivals, Clubshows und Firmenevents.",
+        kw: ["CoverSnake Kontakt","Whitesnake Tributeband","Vivid Music Productions"] },
+      { route: "/booking", label: "Booking", title: "Kontakt & Buchung – CoverSnake anfragen",
+        desc: "CoverSnake für Ihre Veranstaltung anfragen: Wir melden uns in der Regel innerhalb von 24 Stunden mit einem passenden Angebot.",
+        kw: ["Tributeband anfragen","Whitesnake Tribute buchen","Rockband buchen","Stadtfest Band buchen","Firmenevent Band","Band Booking Anfrage"] },
+      { route: "/impressum", label: "Impressum", noindex: true, title: "Impressum – CoverSnake",
+        desc: "Impressum von CoverSnake. Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+        kw: null, inherited: ["Whitesnake Tribute","Whitesnake Tributeband","CoverSnake Band","Tributeband buchen","Hard Rock Liveband","Rockband Stadtfest","Coverband Festival","Livemusik Rhein-Main","Vivid Music Productions","Rockband für Firmenevent"] },
+      { route: "/datenschutz", label: "Datenschutz", noindex: true, title: "Datenschutz – CoverSnake",
+        desc: "Datenschutzerklärung von CoverSnake. Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.",
+        kw: null, inherited: ["Whitesnake Tribute","Whitesnake Tributeband","CoverSnake Band","Tributeband buchen","Hard Rock Liveband","Rockband Stadtfest","Coverband Festival","Livemusik Rhein-Main","Vivid Music Productions","Rockband für Firmenevent"] }
+    ],
+    bastic: [
+      { route: "/", label: "Home", title: "BOBbastic – Das Party Rocktrio | Rockband Rhein-Main",
+        desc: "BOBbastic ist das Party Rocktrio aus Frankfurt, Darmstadt und Aschaffenburg für Firmenfeiern, Stadtfeste und Hochzeiten.",
+        kw: ["Party Rockband","Rockband buchen","Coverband Rock","BOBbastic Band","Liveband Firmenevent","Rockband Hochzeit","Partyband Rock","Rock Cover Band","Vivid Music Productions","Entertainment Firmenevent"] },
+      { route: "/about", label: "Die Band", title: "Über uns – BOBbastic | Das Party Rocktrio",
+        desc: "BOBbastic ist ein Rock-Trio aus Frankfurt, Darmstadt und Aschaffenburg mit einem rundum Rock-Coverprogramm von Klassikern bis Charts-Hits.",
+        kw: ["BOBbastic Band","Party Rocktrio","Rockband Rhein-Main","Profimusiker","Rock Cover Band","Liveband","Hochzeitsband","Frankfurt am Main","Darmstadt","Aschaffenburg"] },
+      { route: "/services", label: "Programm & Besetzung", title: "Programm & Besetzung – BOBbastic | Rock-Trio buchen",
+        desc: "BOBbastic tritt als kompaktes Rock-Trio auf und bringt die Energie einer großen Band auf jede Bühne – flexibel für Firmenfeiern und Stadtfeste.",
+        kw: ["Rock-Trio buchen","Rockband buchen","Bandbesetzung","Liveband Firmenevent","Party Rockband","BOBbastic Besetzung","Rock Cover Band engagieren"] },
+      { route: "/media", label: "Media & News", title: "Media & News – BOBbastic | Videos & Termine",
+        desc: "BOBbastic zeigt aktuelle Live-Videos, Fotos und Konzerttermine des Party Rocktrios aus der Rhein-Main-Region.",
+        kw: ["BOBbastic Live Video","Konzerttermine","Tourdaten","Rockband News","Party Rocktrio Video"] },
+      { route: "/galerie", label: "Galerie", title: "Galerie – BOBbastic | Live-Fotos",
+        desc: "Galerie von BOBbastic mit Eindrücken von Live-Auftritten, Bühnenmomenten und Partys des Rock-Trios.",
+        kw: ["BOBbastic Fotos","Rockband Galerie","Live-Fotos Rock","Bühnenfotos Party Rocktrio"] },
+      { route: "/referenzen", label: "Referenzen", title: "Referenzen – BOBbastic",
+        desc: "Referenzen von BOBbastic sowie das Partner-Netzwerk aus dem VMP-Künstlerpool für Events jeder Größe.",
+        kw: ["BOBbastic Referenzen","Künstlerpool","Partyband Rhein-Main","VMP Künstlerpool","Rockband Referenzen"] },
+      { route: "/kontakt", label: "Kontakt", noindex: true, title: "Kontakt – BOBbastic",
+        desc: "BOBbastic kontaktieren – das Party Rocktrio aus Frankfurt, Darmstadt und Aschaffenburg für Anfragen und allgemeine Fragen.",
+        kw: ["BOBbastic Kontakt","Rockband anfragen","Vivid Music Productions"] },
+      { route: "/booking", label: "Booking", title: "Booking – BOBbastic | Rock-Trio buchen",
+        desc: "BOBbastic für Euer Event buchen – das Party Rocktrio aus der Rhein-Main-Region für Firmenfeiern, Stadtfeste und Hochzeiten.",
+        kw: ["Rockband buchen","Party Rocktrio buchen","BOBbastic Booking","Liveband Hochzeit","Firmenevent Band","Rock Cover Band engagieren"] },
+      { route: "/impressum", label: "Impressum", noindex: true, title: "Impressum – BOBbastic",
+        desc: "Impressum von BOBbastic – Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+        kw: null, inherited: ["Party Rockband","Rockband buchen","Coverband Rock","BOBbastic Band","Liveband Firmenevent","Rockband Hochzeit","Partyband Rock","Rock Cover Band","Vivid Music Productions","Entertainment Firmenevent"] },
+      { route: "/datenschutz", label: "Datenschutz", noindex: true, title: "Datenschutz – BOBbastic",
+        desc: "Datenschutzerklärung von BOBbastic – Vivid Music Productions. Informationen zur Verarbeitung personenbezogener Daten.",
+        kw: null, inherited: ["Party Rockband","Rockband buchen","Coverband Rock","BOBbastic Band","Liveband Firmenevent","Rockband Hochzeit","Partyband Rock","Rock Cover Band","Vivid Music Productions","Entertainment Firmenevent"] }
+    ],
+    unplugged: [
+      { route: "/", label: "Home", title: "Bobby & Friends Unplugged – Live-Akustikmusik",
+        desc: "Bobby & Friends Unplugged: Gitarre und Gesang von Bobby Stöcker live für Ihr Wohnzimmerkonzert, Dinner, Ihre Hochzeit oder Feier.",
+        kw: ["Unplugged Band buchen","Wohnzimmerkonzert Frankfurt","Hauskonzert Musiker","Akustikduo Hochzeit","Dinnermusik Rhein-Main","Gitarre und Gesang buchen","Bobby Stöcker","Loungemusik Firmenevent","Livemusik Weinprobe","Bobby & Friends Unplugged"] },
+      { route: "/about", label: "Die Band", title: "Über uns – Bobby & Friends Unplugged",
+        desc: "Bobby Stöcker spielt seit vier Jahrzehnten Gitarre und Gesang – reduziert nach dem Motto „Weniger ist mehr“, unplugged pur.",
+        kw: ["Bobby Stöcker Musiker","Unplugged Gitarrist Sänger","Akustikmusiker Rhein-Main","Singer Songwriter buchen","Musiker Biografie"] },
+      { route: "/services", label: "Programm & Besetzung", title: "Programm & Besetzung – Bobby & Friends Unplugged",
+        desc: "Von der Soloakustik bis zum Sextett: Bobby & Friends Unplugged bringt Dinner-, Lounge- und Partymusik in jeder Besetzung zu Ihrem Event.",
+        kw: ["Besetzung Solo Duo Trio","Unplugged Besetzung buchen","Akustikband Programm","Dinnermusik Besetzung","Hochzeitsmusiker Besetzung"] },
+      { route: "/media", label: "Media & News", title: "Media & News – Bobby & Friends Unplugged",
+        desc: "Videos, Auftritte und Neuigkeiten von Bobby & Friends Unplugged – Unplugged-Klassiker aus vier Jahrzehnten, handgemacht live gespielt.",
+        kw: ["Bobby & Friends Videos","Unplugged Liveband Video","Konzerttermine Akustik","Social Media Musiker","Instagram Bobby Stöcker"] },
+      { route: "/galerie", label: "Galerie", title: "Galerie – Bobby & Friends Unplugged",
+        desc: "Impressionen von Wohnzimmerkonzerten, Dinnerabenden und Hochzeiten mit Bobby & Friends Unplugged im Rhein-Main-Gebiet und darüber hinaus.",
+        kw: ["Bobby & Friends Unplugged Fotos","Wohnzimmerkonzert Bilder","Akustikband Galerie","Hochzeitsmusiker Fotos","Dinnerband Impressionen"] },
+      { route: "/referenzen", label: "Referenzen", title: "Referenzen – Bobby & Friends Unplugged",
+        desc: "Bobby & Friends Unplugged spielt seit vielen Jahren für Firmenevents, Hochzeiten und private Feiern – eine Auswahl bisheriger Auftraggeber.",
+        kw: ["Bobby & Friends Unplugged Referenzen","Unplugged Band Kunden","Firmenevent Musiker Referenzen","Hochzeitsmusiker Referenzen"] },
+      { route: "/kontakt", label: "Kontakt", noindex: true, title: "Kontakt – Bobby & Friends Unplugged",
+        desc: "Bobby & Friends Unplugged kontaktieren – für Anfragen rund um Wohnzimmerkonzerte, Dinnermusik und Hochzeiten im Rhein-Main-Gebiet.",
+        kw: ["Bobby & Friends Unplugged Kontakt","Wohnzimmerkonzert Rhein-Main","Vivid Music Productions"] },
+      { route: "/booking", label: "Booking", title: "Kontakt & Buchung – Bobby & Friends Unplugged",
+        desc: "Bobby & Friends Unplugged für Ihr Wohnzimmerkonzert, Dinner oder Ihre Hochzeit anfragen – Antwort in der Regel innerhalb von 24 Stunden.",
+        kw: ["Unplugged Band buchen","Wohnzimmerkonzert anfragen","Hochzeitsmusiker buchen","Dinnermusik buchen","Vivid Music Productions"] },
+      { route: "/impressum", label: "Impressum", noindex: true, title: "Impressum – Bobby & Friends Unplugged",
+        desc: "Impressum von Bobby & Friends Unplugged. Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+        kw: null, inherited: ["Unplugged Band Frankfurt","Wohnzimmerkonzert buchen","Hauskonzert Musiker","Dinnermusik Rhein-Main","Akustikband Hochzeit","Bobby Stöcker","Gitarre und Gesang buchen","Loungemusik Firmenevent","Vivid Music Productions","Livemusik Weinprobe"] },
+      { route: "/datenschutz", label: "Datenschutz", noindex: true, title: "Datenschutz – Bobby & Friends Unplugged",
+        desc: "Datenschutzerklärung von Bobby & Friends Unplugged. Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.",
+        kw: null, inherited: ["Unplugged Band Frankfurt","Wohnzimmerkonzert buchen","Hauskonzert Musiker","Dinnermusik Rhein-Main","Akustikband Hochzeit","Bobby Stöcker","Gitarre und Gesang buchen","Loungemusik Firmenevent","Vivid Music Productions","Livemusik Weinprobe"] }
+    ],
+    stoker: [
+      { route: "/", label: "Home", title: "Bobby Stoker Band – Blues Rock & Classic Rock buchen",
+        desc: "Bobby Stoker Band live: Blues Rock und Classic Rock mit Eigenkompositionen aus dem Album „Everglow“ für Ihr Event im Rhein-Main-Gebiet.",
+        kw: ["Bobby Stoker Band","Bobby Stoker","Blues Rock Band buchen","Everglow Album","Rockband buchen","Livemusik Rhein-Main","Classic Rock Band","Festivalband","Rockshow buchen"] },
+      { route: "/about", label: "Die Band", title: "Über Bobby – Bobby Stoker Band | Blues Rock & Classic Rock",
+        desc: "Bobby Stoker komponiert seit den 90ern eigene Musik, spielte mit Bobby Kimball und Sydney Youngblood und veröffentlichte 2022 sein Album „Everglow“.",
+        kw: ["Bobby Stoker","Bobby Stoker Band","Everglow Album","Blues Rock Musiker","Rockband Musiker","Songwriter Rhein-Main","Bandportrait"] },
+      { route: "/services", label: "Programm", title: "Programm – Bobby Stoker Band | Besetzung & Repertoire",
+        desc: "Bobby Stoker Band: handgemachter Blues Rock und Classic Rock mit Eigenkompositionen aus dem Album „Everglow“ für Clubs, Firmenevents und Festivals.",
+        kw: ["Bobby Stoker Band Programm","Blues Rock Band buchen","Everglow Album","Rockband Repertoire","Livemusik Rhein-Main","Bandbesetzung","Bühnentechnik Band"] },
+      { route: "/media", label: "Media & Termine", title: "Media & Termine – Bobby Stoker Band | Videos & Termine",
+        desc: "Bobby Stoker Band live erleben: aktuelle Videos, kommende Termine und Neuigkeiten des Blues-Rock-Musikers aus dem Rhein-Main-Gebiet.",
+        kw: ["Bobby Stoker Videos","Everglow Songs","Konzerttermine","Tourdaten Band","Livevideo Blues Rock","Instagram Bobby Stoker","Band News"] },
+      { route: "/galerie", label: "Galerie", title: "Galerie – Bobby Stoker Band | Fotos von der Bühne",
+        desc: "Bobby Stoker Band in Bildern: Fotos von Clubkonzerten, Festivals und der „Everglow“-Albumveröffentlichung.",
+        kw: ["Bobby Stoker Fotos","Everglow Album Fotos","Konzertfotos Blues Rock","Livefotos Rockband","Bandgalerie"] },
+      { route: "/referenzen", label: "Referenzen", title: "Referenzen & Netzwerk – Bobby Stoker Band",
+        desc: "Die Bobby Stoker Band ist Teil des Künstlerpools von Vivid Music Productions — hier finden Sie Referenzen, Partner und das Netzwerk der Band.",
+        kw: ["Bobby Stoker Referenzen","Vivid Music Productions","Künstlerpool","Band Partner","Veranstalter Referenzen","Festival Booking"] },
+      { route: "/kontakt", label: "Kontakt", noindex: true, title: "Kontakt – Bobby Stoker Band | Blues Rock & Classic Rock",
+        desc: "Bobby Stoker Band kontaktieren — Blues Rock und Classic Rock aus dem Rhein-Main-Gebiet für Festivals, Clubs und Firmenevents.",
+        kw: ["Bobby Stoker Kontakt","Bobby Stoker Band","Vivid Music Productions"] },
+      { route: "/booking", label: "Booking", title: "Kontakt & Buchung – Bobby Stoker Band anfragen",
+        desc: "Bobby Stoker Band für Ihre Veranstaltung anfragen: Wir melden uns in der Regel innerhalb von 24 Stunden mit einem passenden Angebot.",
+        kw: ["Bobby Stoker Band buchen","Blues Rock Band buchen","Rockband buchen","Stadtfest Band buchen","Firmenevent Band","Band Booking Anfrage"] },
+      { route: "/impressum", label: "Impressum", noindex: true, title: "Impressum – Bobby Stoker Band",
+        desc: "Impressum der Bobby Stoker Band. Vivid Music Productions, Bernhard Stöcker, Westring 20, 64823 Groß-Umstadt.",
+        kw: null, inherited: ["Bobby Stoker Band","Bobby Stoker","Blues Rock Band","Classic Rock Band buchen","Everglow Album","Rockband buchen","Livemusik Rhein-Main","Bluesrock Livemusik","Vivid Music Productions","Entertainment Firmenevent"] },
+      { route: "/datenschutz", label: "Datenschutz", noindex: true, title: "Datenschutz – Bobby Stoker Band",
+        desc: "Datenschutzerklärung der Bobby Stoker Band. Informationen zur Verarbeitung personenbezogener Daten auf dieser Website.",
+        kw: null, inherited: ["Bobby Stoker Band","Bobby Stoker","Blues Rock Band","Classic Rock Band buchen","Everglow Album","Rockband buchen","Livemusik Rhein-Main","Bluesrock Livemusik","Vivid Music Productions","Entertainment Firmenevent"] }
+    ]
+  };
+
+  var DOMAINS = {
+    adams: "theadamsfamily.de",
+    snake: "coversnake.com",
+    bastic: "bobbastic.de",
+    unplugged: "bobbyandfriends-unplugged.de",
+    stoker: "bobbystoker.com"
+  };
+
+  function esc(s) {
+    return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+
+  Object.keys(DATA).forEach(function (bandKey) {
+    var container = document.querySelector('.cards[data-band="' + bandKey + '"]');
+    var domain = DOMAINS[bandKey];
+    var html = DATA[bandKey].map(function (p) {
+      var descLen = p.desc.length;
+      var titleLen = p.title.length;
+      var over = descLen > DESC_LIMIT;
+      var kwHtml;
+      if (p.kw) {
+        kwHtml = '<p class="kw-label">Keywords</p><ul class="kw-list">' +
+          p.kw.map(function (k) { return "<li>" + esc(k) + "</li>"; }).join("") + "</ul>";
+      } else {
+        kwHtml = '<p class="kw-note">Kein eigener Wert im Code &mdash; Root-Layout-Standard greift:</p>' +
+          '<ul class="kw-list kw-inherited">' +
+          p.inherited.map(function (k) { return "<li>" + esc(k) + "</li>"; }).join("") + "</ul>";
+      }
+      return (
+        '<article class="card">' +
+          '<div class="card-top">' +
+            '<span class="route"><b>' + esc(p.label) + '</b> &middot; ' + esc(p.route) + '</span>' +
+            (p.noindex ? '<span class="badges"><span class="badge noindex">noindex</span></span>' : '') +
+          '</div>' +
+          '<div class="serp">' +
+            '<div class="serp-breadcrumb">' +
+              '<span class="favicon">' + esc(domain.charAt(0).toUpperCase()) + '</span>' +
+              '<span class="breadcrumb-text">' + esc(domain) + ' <span class="breadcrumb-path">' + (p.route === "/" ? "" : "&rsaquo; " + esc(p.route.slice(1))) + '</span></span>' +
+            '</div>' +
+            '<p class="serp-title">' + esc(p.title) + '</p>' +
+            '<p class="serp-desc">' + esc(p.desc) + '</p>' +
+          '</div>' +
+          '<div class="counts">' +
+            '<span class="count">Titel: ' + titleLen + ' Zeichen</span>' +
+            '<span class="count ' + (over ? "warn" : "good") + '">Beschreibung: ' + descLen + ' / ' + DESC_LIMIT + ' Zeichen</span>' +
+          '</div>' +
+          '<div class="kw-block">' + kwHtml + '</div>' +
+        '</article>'
+      );
+    }).join("");
+    container.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,23 +1,23 @@
 /* ═══════════════════════════════════════════════════════
-   THE ADAMS FAMILY — Admin UI  ·  Beton
+   COVERSNAKE — Admin UI  ·  Schuppen
    Gleiche Palette und Schriften wie die oeffentliche Seite:
-   Grau ist Flaeche, Stahlblau der einzige Akzent, keine
+   Schwarz ist Flaeche, Glutrot der einzige Akzent, keine
    Rundungen. Die Schrift-Variablen kommen aus dem Root-Layout
    (`src/app/layout.tsx`), der Admin liegt darunter.
    ═══════════════════════════════════════════════════════ */
 :root {
-  --a-bg:        #0B0B0C;
-  --a-surface:   #17181A;
-  --a-surface2:  #202225;
-  --a-surface3:  #2C2E32;
-  --a-border:    #2C2E32;
-  --a-border2:   #3A3D42;
-  --a-accent:    #8FA3B8;
-  --a-accent2:   #6E8095;
-  --a-accent-t:  rgba(143,163,184,0.14);
-  --a-text:      #E8E9EB;
-  --a-muted:     #7C838C;
-  --a-muted2:    #A8AEB6;
+  --a-bg:        #08080A;
+  --a-surface:   #131316;
+  --a-surface2:  #1C1D21;
+  --a-surface3:  #2A2C31;
+  --a-border:    #2A2C31;
+  --a-border2:   #383B41;
+  --a-accent:    #E23A47;
+  --a-accent2:   #A31621;
+  --a-accent-t:  rgba(226,58,71,0.14);
+  --a-text:      #D6D8DD;
+  --a-muted:     #797E86;
+  --a-muted2:    #A9ADB4;
   --a-success:   #22c55e;
   --a-error:     #ef4444;
   --a-warning:   #f59e0b;
@@ -55,7 +55,7 @@
   flex-direction: column;
   flex-shrink: 0;
   overflow-y: auto;
-  /* Bezugsrahmen fuer die Betontextur in `::before`. Muss HIER stehen und
+  /* Bezugsrahmen fuer die Schuppentextur in `::before`. Muss HIER stehen und
      nicht weiter unten: die Mobil-Regel setzt `position: fixed`, und eine
      gleich spezifische Regel nach der Media Query wuerde das ueberschreiben
      (Media Queries erhoehen die Spezifitaet nicht). Genau das war der Fall —
@@ -109,7 +109,7 @@
   margin-bottom: 1px;
 }
 .admin-nav-item:hover { background: rgba(245,243,238,.06); color: var(--a-text); }
-.admin-nav-item.active { background: rgba(143,163,184,.14); color: var(--a-accent); }
+.admin-nav-item.active { background: rgba(226,58,71,.14); color: var(--a-accent); }
 .admin-nav-section {
   display: block;
   padding: 14px 10px 4px;
@@ -134,8 +134,8 @@
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(143,163,184,.15);
-  border: 1px solid rgba(143,163,184,.45);
+  background: rgba(226,58,71,.15);
+  border: 1px solid rgba(226,58,71,.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -491,7 +491,7 @@
 }
 .a-dash-card:hover {
   border-color: var(--a-accent);
-  box-shadow: 0 2px 8px rgba(143,163,184,.18);
+  box-shadow: 0 2px 8px rgba(226,58,71,.18);
 }
 .a-dash-card-icon { color: var(--a-accent); }
 .a-dash-card-label { font-size: 12px; color: var(--a-muted); }
@@ -959,23 +959,41 @@
   font-family: var(--a-font-mono);
 }
 
-/* Die Sidebar traegt dieselbe Betontextur wie die Seite, nur sehr
-   zurueckhaltend: sie liegt hinter der Navigation und darf die
-   Lesbarkeit der Eintraege nicht beeintraechtigen. */
+/* Die Sidebar traegt eine stark vereinfachte Fassung der Schuppenstruktur
+   der oeffentlichen Seite (`SnakeSkin`): drei Verlaeufe statt der SVG-Kachel
+   der Komponente. Sie liegt hinter der Navigation und darf die Lesbarkeit
+   der Eintraege nicht beeintraechtigen.
+
+   Der Bogen entsteht durch Beschneiden, nicht durch Zeichnen: der Kreis
+   sitzt auf der UNTERKANTE der Kachel (`at 50% 22px` bei 22px Kachelhoehe),
+   sein Radius ist groesser als die halbe Kachel. Sichtbar bleibt damit nur
+   die obere Haelfte des Rings — eine Schuppe. Steht der Mittelpunkt weiter
+   oben, liegt der ganze Kreis in der Kachel und das Muster kippt sofort von
+   Schuppen zu einem Wabengitter. Genau das war der erste Versuch.
+
+   Anders als in `SnakeSkin.tsx` stehen die Reihen hier NICHT versetzt:
+   ein Versatz braucht zwei Boegen je Kachel, und der zweite laege dann
+   mitten in der Kachel — also wieder als voller Kreis. Aneinander
+   ausgerichtete Reihen lesen sich als Schindeln und sind bei dieser
+   Deckkraft ohnehin kaum als Raster wahrnehmbar. */
 .admin-sidebar::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.42;
   background-image:
-    radial-gradient(circle at 0 0, rgba(0,0,0,0.55) 0 2.2px, rgba(255,255,255,0.14) 2.2px 3.4px, transparent 3.8px),
-    repeating-linear-gradient(90deg, rgba(0,0,0,0.5) 0 1px, rgba(255,255,255,0.07) 1px 2px, transparent 2px 200px),
-    repeating-linear-gradient(0deg, rgba(0,0,0,0.45) 0 1px, rgba(255,255,255,0.07) 1px 2px, transparent 2px 150px);
-  background-size: 200px 150px;
-  -webkit-mask-image: radial-gradient(60% 44% at 50% 78%, #000 0%, rgba(0,0,0,0.5) 42%, transparent 86%);
-  mask-image: radial-gradient(60% 44% at 50% 78%, #000 0%, rgba(0,0,0,0.5) 42%, transparent 86%);
+    /* Lichtkante — liegt UNTER der Naht, die Schuppe wird von oben beleuchtet */
+    radial-gradient(circle 14.3px at 50% 22px, transparent 0 13.2px, rgba(214,216,221,0.07) 13.2px 14.3px, transparent 14.3px),
+    /* Schuppennaht */
+    radial-gradient(circle 13.2px at 50% 22px, transparent 0 12px, rgba(0,0,0,0.6) 12px 13.2px, transparent 13.2px),
+    /* Glut aus der Tiefe */
+    radial-gradient(62% 46% at 50% 80%, rgba(226,58,71,0.13) 0%, rgba(226,58,71,0.035) 44%, transparent 86%);
+  background-size: 38px 22px, 38px 22px, 100% 100%;
+  background-repeat: repeat, repeat, no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 38%, #000 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 38%, #000 100%);
 }
 
 /* Kennzahlen: Zahl ueber Beschriftung. Beides sind <span>, also inline —

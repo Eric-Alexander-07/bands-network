@@ -54,7 +54,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   useEffect(() => { setSidebarOpen(false); }, [pathname]);
 
   useEffect(() => {
-    // Login page handles itself — no auth check needed
+    // Die Login-Seite prueft sich selbst; hier ist keine Anmeldepruefung noetig.
     if (isLogin) { setLoading(false); return; }
 
     const supabase = createClient();
@@ -86,7 +86,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           setSiteId(site.id);
         }
       } catch {
-        // Tables not yet populated — allow authenticated user through
+        // Tabellen noch nicht befuellt: angemeldeten Nutzer durchlassen.
       }
       setUser(u);
       setLoading(false);

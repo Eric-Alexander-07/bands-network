@@ -35,4 +35,5 @@ run() {
 
 run wr  http://localhost:3003 "" about services media galerie referenzen booking
 run sos http://localhost:3002 "" about services media galerie referenzen booking shop
+run bb  http://localhost:3007 "" about services media galerie referenzen booking
 exit $fail

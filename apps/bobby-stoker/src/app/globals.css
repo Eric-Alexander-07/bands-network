@@ -580,7 +580,6 @@ h3, h4 {
   /* Saengerin steht oben im Bild — zur oberen Haelfte hin anchoren, damit
      der Kopf nicht abgeschnitten wird. */
   object-position: center 15%;
-  filter: grayscale(8%) contrast(1.05);
 }
 .hero-content {
   position: relative;
@@ -3888,8 +3887,43 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
   border-bottom: 1px solid var(--border);
 }
 
-/* Sektionen mit den Lichtstrahlen (StageRays) brauchen einen Bezugsrahmen. */
+/* Sektionen mit dem Buehnennebel-Effekt (StageRays) brauchen einen Bezugsrahmen. */
 .section-has-rings { position: relative; overflow: hidden; }
+
+/* ─── StageRays: Buehnennebel + Equalizer ─────────────────────
+   .stagefx-bar braucht transform-box:fill-box, weil SVG-Elemente ohne
+   das per Default am Viewport-Ursprung skalieren statt an der eigenen
+   Boundingbox — sonst wandert der Balken beim Skalieren statt an der
+   Fusslinie zu wachsen. */
+.stagefx-haze-blob {
+  animation-name: stagefx-drift;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes stagefx-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(var(--dx, 12px), var(--dy, 12px)) scale(1.1); }
+}
+
+.stagefx-bar {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: scaleY(0.3);
+  animation-name: stagefx-eq;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+@keyframes stagefx-eq {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(var(--amp, 0.6)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stagefx-haze-blob,
+  .stagefx-bar {
+    animation: none;
+  }
+}
 
 
 /* ─── Repertoire (Programm) ───────────────────────────────────
@@ -3947,43 +3981,7 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
   .repertoire-item { padding: 15px 16px; }
 }
 
-/* ─── Bildsprache: entsättigt ─────────────────────────────────
-   Die Buehnenfotos sind farbintensiv (violettes Buehnenlicht).
-   Entsaettigt in Ruhe haelt den Blick auf Typografie und Layout, statt
-   mit der Bilderflut zu konkurrieren. Deshalb laufen alle Layoutbilder
-   entsaettigt; volle Farbe
-   gibt es beim Darueberfahren und in der Lightbox. Der Filter sitzt
-   bewusst im CSS und nicht in den Bilddateien — sonst verliert jedes
-   im Admin nachgeladene Bild den Look. */
-.hero-right-img,
-.page-hero-bg-img {
-  filter: grayscale(0.85) contrast(1.06) brightness(0.92);
-}
-.about-img,
-.about-simple-img img,
-.social-photo-item img,
-.media-social-img,
-.services-split-img img,
-.photo-carousel-img,
-.singer-card img,
-.gallery-editorial-item img {
-  filter: grayscale(0.8) contrast(1.05);
-  transition: filter 0.4s ease, transform 0.6s ease;
-}
-.about-img-wrap-inner:hover .about-img,
-.about-simple-img:hover img,
-.social-photo-item:hover img,
-.media-social-img-lb:hover .media-social-img,
-.services-split-img:hover img,
-.photo-carousel:hover .photo-carousel-img,
-.singer-card:hover img,
-.gallery-editorial-item:hover img {
-  filter: grayscale(0) contrast(1);
-}
-/* Lightbox und Vollbildansicht immer in voller Farbe. */
-.lb-content img,
-.glb-img,
-.glb-thumbs img { filter: none; }
+/* Alle Layoutbilder laufen ungefiltert in ihren echten Farben. */
 
 /* Media-Seite ohne gepflegte Termine: eine Spalte statt Video links und
    leerer Terminspalte rechts. */

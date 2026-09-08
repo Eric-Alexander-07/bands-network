@@ -14,8 +14,8 @@ export default function AdminInvite() {
   const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    // After the PKCE callback, session cookies are already set server-side.
-    // Just verify the session and load the user's email.
+    // Nach dem PKCE-Callback stehen die Session-Cookies bereits serverseitig.
+    // Hier wird nur die Sitzung bestaetigt und die E-Mail des Nutzers geladen.
     createClient().auth.getUser().then(({ data: { user } }) => {
       if (!user) {
         window.location.href = "/admin/login?error=invalid_token";

@@ -1,29 +1,31 @@
 import { band } from "@/config/band";
 
 /**
- * HTML-Mailvorlagen im Adams-Family-Theme („Beton").
+ * HTML-Mailvorlagen im CoverSnake-Theme („Silber & Blut").
  *
- * Dieselbe Palette wie die Website: Betongrau als Flaeche, Stahlblau als
- * einzige Akzentfarbe, keine Rundungen. Bewusst ohne Bilder — Bild-Blocker
- * in Mailprogrammen wuerden die Vorlage sonst kaputt aussehen lassen.
- * Tabellenlayout + Inline-Styles statt <style>-Block, weil Outlook Desktop
- * <style> unzuverlaessig rendert.
+ * Dieselbe Palette wie die Website: fast schwarze Flaeche, Silber traegt
+ * Schrift und Linien, Blutrot ist der einzige Farbreiz. Als Textfarbe steht
+ * dabei ausschliesslich das hellere --cs-ember (5,0:1 Kontrast), das dunklere
+ * --cs-blood bleibt reinen Flaechen vorbehalten — genau wie in
+ * apps/coversnake/src/app/globals.css begruendet. Bewusst ohne Bilder —
+ * Bild-Blocker in Mailprogrammen wuerden die Vorlage sonst kaputt aussehen
+ * lassen. Tabellenlayout + Inline-Styles statt <style>-Block, weil Outlook
+ * Desktop <style> unzuverlaessig rendert.
  */
 
 const COLORS = {
-  bg: "#0B0B0C",
-  surface: "#17181A",
-  accent: "#8FA3B8",
-  accentDim: "#6E8095",
-  text: "#E8E9EB",
-  textDim: "#A8AEB6",
-  textMuted: "#7C838C",
-  border: "#2C2E32",
+  bg: "#08080A",
+  surface: "#131316",
+  accent: "#E23A47",
+  accentDim: "#A31621",
+  text: "#D6D8DD",
+  textDim: "#A9ADB4",
+  textMuted: "#797E86",
+  border: "#2A2C31",
   hairline: "rgba(255,255,255,0.06)",
 };
 
-const FONT_DISPLAY =
-  "'Arial Black', 'Helvetica Neue', Helvetica, Arial, sans-serif";
+const FONT_DISPLAY = "'Arial Narrow', Arial, sans-serif";
 const FONT_BODY =
   "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 const FONT_MONO = "'Courier New', Courier, monospace";
@@ -46,6 +48,13 @@ function escapeHtml(value: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+/** ISO-Datum aus <input type="date"> für deutsche Leser aufbereiten. */
+function formatDate(value?: string): string | undefined {
+  if (!value) return undefined;
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : value;
 }
 
 function detailRow(label: string, value?: string): string {
@@ -113,7 +122,7 @@ export function notificationEmailHtml(d: InquiryDetails): string {
     detailRow("Name", d.name),
     detailRow("E-Mail", d.email),
     detailRow("Telefon", d.phone),
-    detailRow("Datum", d.date),
+    detailRow("Datum", formatDate(d.date)),
     detailRow("Anlass", d.occasion),
     detailRow("Betreff", d.subject),
     detailRow("Formular", d.formType === "booking" ? "/booking" : "/kontakt"),
@@ -142,7 +151,7 @@ export function confirmationEmailHtml(d: InquiryDetails): string {
     detailRow("Name", d.name),
     detailRow("E-Mail", d.email),
     detailRow("Telefon", d.phone),
-    detailRow("Datum", d.date),
+    detailRow("Datum", formatDate(d.date)),
     detailRow("Anlass", d.occasion),
     detailRow("Betreff", d.subject),
   ].join("");

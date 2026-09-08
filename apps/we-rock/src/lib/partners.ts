@@ -3,8 +3,8 @@
  * page (v-m-p.com/partner). Identical across the band sites.
  *
  * Band links point to each band's VMP sub-page (v-m-p.com/<slug>), EXCEPT the
- * bands that already run their own website — We Rock and Spirit of Soul —
- * which link to their real domains instead.
+ * bands that already run their own website — We Rock, Spirit of Soul and
+ * Bobby & Friends Unplugged — which link to their real domains instead.
  */
 
 export const VMP_URL = "https://v-m-p.com";
@@ -70,7 +70,7 @@ export const ARTIST_POOL: {
     description: "Elegante Loungemusik für Empfänge und besondere Anlässe.",
     bands: [
       { name: "Bobby Stöcker Solo", url: "https://v-m-p.com/bobby-stoecker" },
-      { name: "Bobby & Friends Unplugged", url: "https://v-m-p.com/bobby-and-friends" },
+      { name: "Bobby & Friends Unplugged", url: "https://bobbyandfriends-unplugged.de" },
     ],
   },
 ];
