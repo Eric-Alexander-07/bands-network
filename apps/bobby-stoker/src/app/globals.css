@@ -3890,11 +3890,7 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
 /* Sektionen mit dem Buehnennebel-Effekt (StageRays) brauchen einen Bezugsrahmen. */
 .section-has-rings { position: relative; overflow: hidden; }
 
-/* ─── StageRays: Buehnennebel + Equalizer ─────────────────────
-   .stagefx-bar braucht transform-box:fill-box, weil SVG-Elemente ohne
-   das per Default am Viewport-Ursprung skalieren statt an der eigenen
-   Boundingbox — sonst wandert der Balken beim Skalieren statt an der
-   Fusslinie zu wachsen. */
+/* ─── StageRays: Buehnennebel ──────────────────────────────────── */
 .stagefx-haze-blob {
   animation-name: stagefx-drift;
   animation-timing-function: ease-in-out;
@@ -3905,22 +3901,8 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
   50% { transform: translate(var(--dx, 12px), var(--dy, 12px)) scale(1.1); }
 }
 
-.stagefx-bar {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  transform: scaleY(0.3);
-  animation-name: stagefx-eq;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
-@keyframes stagefx-eq {
-  0%, 100% { transform: scaleY(0.3); }
-  50% { transform: scaleY(var(--amp, 0.6)); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .stagefx-haze-blob,
-  .stagefx-bar {
+  .stagefx-haze-blob {
     animation: none;
   }
 }
