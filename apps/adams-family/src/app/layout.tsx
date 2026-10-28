@@ -8,6 +8,9 @@ import ScrollAnimations from "@/components/ScrollAnimations";
 import JsonLd from "@/components/JsonLd";
 import SiteWrapper from "@/components/SiteWrapper";
 import InviteHashHandler from "@/components/InviteHashHandler";
+import { fetchBundle, members, socialLinks } from "@/lib/data";
+import { band } from "@/config/band";
+import { memberSchemas, websiteSchema } from "@/lib/structuredData";
 
 // Archivo traegt die Ueberschriften — schwer, schmal, blockhaft.
 const archivo = Archivo({
@@ -99,7 +102,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
-    googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
 };
 
@@ -128,16 +131,28 @@ const musicGroupSchema = {
     geoMidpoint: { "@type": "GeoCoordinates", latitude: 49.8697, longitude: 8.9256 },
     geoRadius: "1000000",
   },
-  // Nur belegte Profile eintragen — erfundene Links schaden der Auswertung.
-  sameAs: ["https://www.instagram.com/theadamsfamily_band/"],
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  // Mitglieder und Profile kommen aus dem gecachten Bundle (keine zusaetzliche Abfrage).
+  const bundle = await fetchBundle();
+  const member = memberSchemas(members(bundle));
+  // Nur belegte Profile eintragen — erfundene Links schaden der Auswertung.
+  const sameAs = Array.from(new Set([
+    ...Object.values(band.socials),
+    ...socialLinks(bundle).map((l) => l.url),
+  ].filter(Boolean)));
+  const groupSchema = {
+    ...musicGroupSchema,
+    ...(member.length > 0 ? { member } : {}),
+    ...(sameAs.length > 0 ? { sameAs } : {}),
+  };
   return (
     <html lang="de" className={`${archivo.variable} ${inter.variable} ${plexMono.variable}`}>
       <body>
         <InviteHashHandler />
-        <JsonLd data={musicGroupSchema} />
+        <JsonLd data={groupSchema} />
+        <JsonLd data={websiteSchema()} />
         <SiteWrapper
           nav={<Navigation />}
           footer={<Footer />}

@@ -12,24 +12,24 @@ import { resolve } from "@/lib/content";
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "The Adams Family bringt die größten Hits von Bryan Adams live auf die Bühne — handgemachter Rock für Festivals, Stadtfeste und Firmenevents.";
+  "The Adams Family bringt die größten Hits von Bryan Adams live auf die Bühne — handgemachter Rock für Festivals, Clubs, Stadtfeste und Firmenevents.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | The Adams Family") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
-  title: { absolute: "The Adams Family – Bryan Adams Tributeband buchen" },
+  title: { absolute: "The Adams Family – Die Bryan Adams Tributeband / Coverband aus Darmstadt" },
   description: DESCRIPTION,
-  keywords: ["Bryan Adams Tribute", "Bryan Adams Tributeband", "Tributeband buchen", "The Adams Family", "Rockband buchen", "Coverband Stadtfest", "Classic Rock Band", "Livemusik Rhein-Main", "Festivalband", "Rockshow buchen"],
+  keywords: ["Bryan Adams", "Bryan Adams Tribute", "Bryan Adams Cover", "Tributeband", "Coverband", "The Adams Family", "Rockband", "Stadtfest", "Classic Rock Band", "Livemusik Rhein-Main", "Darmstadt", "Frankfurt", "Aschaffenburg", "Festivalband", "Rockshow buchen"],
   alternates: { canonical: "https://theadamsfamily.de" },
   openGraph: {
-    title: "The Adams Family – Bryan Adams Tributeband buchen",
+    title: "The Adams Family – Die Bryan Adams Tributeband / Coverband aus Darmstadt",
     description: DESCRIPTION,
     url: "https://theadamsfamily.de",
     images: [{ url: "https://theadamsfamily.de/images/og-image.jpg", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Adams Family – Bryan Adams Tributeband buchen",
+    title: "The Adams Family – Die Bryan Adams Tributeband / Coverband aus Darmstadt",
     description: DESCRIPTION,
   },
   robots: { index: true, follow: true,

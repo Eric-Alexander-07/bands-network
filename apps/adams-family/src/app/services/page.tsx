@@ -1,16 +1,18 @@
 ﻿export const revalidate = 86400;
 
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/structuredData";
 
 const DESCRIPTION =
-  "The Adams Family spielt rund zwei Stunden Show mit allen Bryan-Adams-Klassikern, dazu ein akustisches Unplugged-Set nach MTV-Vorbild.";
+  "The Adams Family spielt eine rund zweistündige Show mit allen Bryan-Adams-Klassikern, dazu ein akustisches Unplugged-Set nach MTV-Vorbild.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | The Adams Family") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Show & Repertoire – The Adams Family | Setlist" },
   description: DESCRIPTION,
-  keywords: ["Bryan Adams Songs live", "Summer of 69 live", "Unplugged Set", "Tributeband Repertoire", "Setlist Rockband", "Bandbesetzung", "Bühnentechnik Band"],
+  keywords: ["Bryan Adams Songs live", "Summer of 69 live", "Unplugged Set", "Tributeband Repertoire", "Setlist", "Rockband", "Bandbesetzung", "Bühnentechnik Band"],
   alternates: { canonical: "https://theadamsfamily.de/services" },
   openGraph: {
     title: "Show & Repertoire – The Adams Family | Setlist",
@@ -33,5 +35,10 @@ import { resolve } from "@/lib/content";
 
 export default async function Services() {
   const bundle = await fetchBundle();
-  return <ServicesPage c={resolve(bundle, "services")} dbBesetzung={besetzung(bundle)} />;
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema("Show & Repertoire", "/services")} />
+      <ServicesPage c={resolve(bundle, "services")} dbBesetzung={besetzung(bundle)} />
+    </>
+  );
 }

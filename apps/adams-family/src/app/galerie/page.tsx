@@ -1,6 +1,8 @@
 ﻿export const revalidate = 3600;
 
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/structuredData";
 
 const DESCRIPTION =
   "The Adams Family in Bildern: Fotos von Clubkonzerten, Stadtfesten und Open-Air-Bühnen der Bryan Adams Tributeband.";
@@ -10,7 +12,7 @@ export const metadata: Metadata = {
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Galerie – The Adams Family | Fotos von der Bühne" },
   description: DESCRIPTION,
-  keywords: ["The Adams Family Fotos", "Bryan Adams Tribute Bilder", "Konzertfotos", "Livefotos Rockband", "Bandgalerie"],
+  keywords: ["The Adams Family Fotos", "Pics", "Bryan Adams Tribute Bilder", "Konzertfotos", "Livefotos Rockband", "Bandgalerie"],
   alternates: { canonical: "https://theadamsfamily.de/galerie" },
   openGraph: {
     title: "Galerie – The Adams Family | Fotos von der Bühne",
@@ -33,5 +35,10 @@ import { resolve } from "@/lib/content";
 
 export default async function Galerie() {
   const bundle = await fetchBundle();
-  return <GalleriePage dbImages={images(bundle)} c={resolve(bundle, "galerie")} />;
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema("Galerie", "/galerie")} />
+      <GalleriePage dbImages={images(bundle)} c={resolve(bundle, "galerie")} />
+    </>
+  );
 }

@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Impressum – The Adams Family" },
   description: DESCRIPTION,
+  keywords: ["Bryan Adams Tribute", "Bryan Adams Tributeband", "Bryan Adams Cover", "The Adams Family Band", "Tributeband buchen", "Rockband Stadtfest", "Coverband Festival", "Classic Rock Liveband", "Livemusik Rhein-Main", "Vivid Music Productions", "Rockband für Firmenevent"],
   alternates: { canonical: "https://theadamsfamily.de/impressum" },
   openGraph: {
     title: "Impressum – The Adams Family",

@@ -1,16 +1,18 @@
 ﻿export const revalidate = 3600;
 
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema, eventSchemas } from "@/lib/structuredData";
 
 const DESCRIPTION =
-  "The Adams Family live erleben: aktuelle Videos, kommende Spieltermine und Neuigkeiten der Bryan Adams Tributeband aus dem Rhein-Main-Gebiet.";
+  "The Adams Family live erleben: aktuelle Videos, kommende Konzerttermine und Neuigkeiten der Bryan Adams Tributeband aus dem Rhein-Main-Gebiet.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | The Adams Family") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Media & News – The Adams Family | Videos & Termine" },
   description: DESCRIPTION,
-  keywords: ["The Adams Family Videos", "Bryan Adams Tribute Video", "Konzerttermine", "Tourdaten Band", "Livevideo Rockband", "Instagram Band", "Band News"],
+  keywords: ["The Adams Family Videos", "Bryan Adams Tribute Video", "Konzerttermine", "Tourdaten Band", "Livevideo Rockband", "Facebook", "Instagram Band", "Band News"],
   alternates: { canonical: "https://theadamsfamily.de/media" },
   openGraph: {
     title: "Media & News – The Adams Family | Videos & Termine",
@@ -38,5 +40,11 @@ export default async function Media() {
   const socialLinks = pickSocial(bundle);
   // Einziger zusaetzlicher Aufruf: YouTube-Titel (externes oEmbed, 24 h gecached)
   const dbVideos = await videosWithTitles(bundle);
-  return <MediaPage dbEvents={dbEvents} dbVideos={dbVideos} c={c} socialLinks={socialLinks} />;
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema("Media & News", "/media")} />
+      {eventSchemas(dbEvents).map((e, i) => <JsonLd key={i} data={e} />)}
+      <MediaPage dbEvents={dbEvents} dbVideos={dbVideos} c={c} socialLinks={socialLinks} />
+    </>
+  );
 }

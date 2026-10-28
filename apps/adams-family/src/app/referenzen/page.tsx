@@ -1,6 +1,8 @@
 ﻿export const revalidate = 86400;
 
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/structuredData";
 
 const DESCRIPTION =
   "The Adams Family ist Teil des Künstlerpools von Vivid Music Productions — hier finden Sie Referenzen, Partner und das Netzwerk der Band.";
@@ -33,5 +35,10 @@ import { resolve } from "@/lib/content";
 
 export default async function Referenzen() {
   const bundle = await fetchBundle();
-  return <ReferencesPage refs={referenzen(bundle)} c={resolve(bundle, "referenzen")} partnerGruppen={partnerGruppen(bundle)} />;
+  return (
+    <>
+      <JsonLd data={breadcrumbSchema("Referenzen & Netzwerk", "/referenzen")} />
+      <ReferencesPage refs={referenzen(bundle)} c={resolve(bundle, "referenzen")} partnerGruppen={partnerGruppen(bundle)} />
+    </>
+  );
 }

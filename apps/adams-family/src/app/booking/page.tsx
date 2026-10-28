@@ -2,6 +2,8 @@
 import ConcreteWall from "@/components/ConcreteWall";
 
 import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/structuredData";
 
 const DESCRIPTION =
   "The Adams Family für Ihre Veranstaltung anfragen: Wir melden uns in der Regel innerhalb von 24 Stunden mit einem passenden Angebot.";
@@ -38,6 +40,7 @@ export default async function BookingPage() {
   const c = resolve(bundle, "booking");
   return (
     <>
+      <JsonLd data={breadcrumbSchema("Kontakt & Buchung", "/booking")} />
       <section className="page-hero">
         <img src={c.page_hero_image} className="page-hero-bg-img" alt="" aria-hidden="true" style={{ objectPosition: "center 35%" }} />
         <div className="container">
