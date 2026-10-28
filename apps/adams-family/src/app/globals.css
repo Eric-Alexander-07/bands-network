@@ -589,7 +589,6 @@ h3, h4 {
   /* Saengerin steht oben im Bild — zur oberen Haelfte hin anchoren, damit
      der Kopf nicht abgeschnitten wird. */
   object-position: center 15%;
-  filter: grayscale(8%) contrast(1.05);
 }
 .hero-content {
   position: relative;
@@ -3935,17 +3934,9 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
   .repertoire-item { padding: 15px 16px; }
 }
 
-/* ─── Bildsprache: entsättigt ─────────────────────────────────
-   Die Buehnenfotos sind farbintensiv (blaues und pinkes Licht).
-   Unentsaettigt kippt die ganze Seite ins Blaue statt ins Beton-
-   graue. Deshalb laufen alle Layoutbilder entsaettigt; volle Farbe
-   gibt es beim Darueberfahren und in der Lightbox. Der Filter sitzt
-   bewusst im CSS und nicht in den Bilddateien — sonst verliert jedes
-   im Admin nachgeladene Bild den Look. */
-.hero-right-img,
-.page-hero-bg-img {
-  filter: grayscale(0.85) contrast(1.06) brightness(0.92);
-}
+/* ─── Bildsprache ─────────────────────────────────────────────
+   Bilder laufen in voller Farbe, ohne Graufilter. Das Hover-Verhalten
+   beschraenkt sich auf die sanfte Zoom-Transition der Bilder. */
 .about-img,
 .about-simple-img img,
 .social-photo-item img,
@@ -3954,23 +3945,8 @@ a.partner-card:hover .partner-card-arrow { opacity: 1; transform: translate(2px,
 .photo-carousel-img,
 .singer-card img,
 .gallery-editorial-item img {
-  filter: grayscale(0.8) contrast(1.05);
-  transition: filter 0.4s ease, transform 0.6s ease;
+  transition: transform 0.6s ease;
 }
-.about-img-wrap-inner:hover .about-img,
-.about-simple-img:hover img,
-.social-photo-item:hover img,
-.media-social-img-lb:hover .media-social-img,
-.services-split-img:hover img,
-.photo-carousel:hover .photo-carousel-img,
-.singer-card:hover img,
-.gallery-editorial-item:hover img {
-  filter: grayscale(0) contrast(1);
-}
-/* Lightbox und Vollbildansicht immer in voller Farbe. */
-.lb-content img,
-.glb-img,
-.glb-thumbs img { filter: none; }
 
 /* Media-Seite ohne gepflegte Termine: eine Spalte statt Video links und
    leerer Terminspalte rechts. */
