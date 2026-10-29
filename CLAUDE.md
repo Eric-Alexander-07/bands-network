@@ -14,6 +14,7 @@ Turborepo-Monorepo mit einer Next.js-App (App Router) pro Band. Inhalte kommen a
 - `packages/band-data` — Supabase-Abfragen, `getSiteBundle()` (eine Abfrage für den kompletten Seiteninhalt)
 - `packages/db-types` — generierte Datenbanktypen
 - `packages/content` — Typen und Hilfsfunktionen für `contentSchema.ts` (`resolve()`, `defaultsOf()`, …)
+- `packages/form-guard` — Schutz der Route `/api/kontakt` (Herkunft, Rate-Limit, Größen); Details und Ausbaupfad: `docs/KONTAKTFORMULARE.md`
 - `packages/admin-ui` — generische Admin-Bausteine (`ContentForm`, `ListEditor`, `ImageField`, Toast)
 - `scripts/seed-content.ts` — befüllt `pages.content` aus dem Schema einer Band (idempotent)
 - `scripts/diff-pages.sh` + `scripts/page-text.js` — Vorher/Nachher-Vergleich des sichtbaren Textes aller Seiten

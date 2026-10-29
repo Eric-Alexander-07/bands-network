@@ -178,6 +178,7 @@ export default function BookingForm({ c, occasions = [], questions = [] }: Props
               className="form-textarea"
               rows={18}
               placeholder="Bitte beachtet die Fragen links, damit wir euch ein möglichst gutes Angebot erstellen können."
+            required
             />
           </div>
           <input

@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { band } from "@/config/band";
+import {
+  checkEmailRate,
+  checkFieldLengths,
+  checkOrigin,
+  checkRequestRate,
+  readJsonBody,
+  type GuardResult,
+} from "@bands/form-guard";
 import { getResend, CONTACT_FROM_EMAIL } from "@/lib/mail/resend";
 import { notificationEmailHtml, confirmationEmailHtml, type InquiryDetails } from "@/lib/mail/templates";
 
@@ -18,13 +26,25 @@ function field(payload: Record<string, unknown>, key: string): string | undefine
   return typeof value === "string" && value.trim() !== "" ? value.trim() : undefined;
 }
 
+/** Ablehnung des Schutzes als JSON-Antwort (bei 429 mit Retry-After). */
+function reject(r: Extract<GuardResult, { ok: false }>) {
+  return NextResponse.json(
+    { ok: false, error: r.error },
+    { status: r.status, headers: r.retryAfter ? { "Retry-After": String(r.retryAfter) } : undefined }
+  );
+}
+
 export async function POST(request: NextRequest) {
-  let payload: Record<string, unknown>;
-  try {
-    payload = await request.json();
-  } catch {
-    return NextResponse.json({ ok: false, error: "Ungültige Anfrage." }, { status: 400 });
-  }
+  // Schutz (Herkunft, Rate-Limit, Groessen): siehe @bands/form-guard und docs/KONTAKTFORMULARE.md
+  const origin = checkOrigin(request);
+  if (!origin.ok) return reject(origin);
+  const rate = checkRequestRate(request);
+  if (!rate.ok) return reject(rate);
+  const body = await readJsonBody(request);
+  if (!body.ok) return reject(body);
+  const payload = body.payload;
+  const lengths = checkFieldLengths(payload);
+  if (!lengths.ok) return reject(lengths);
 
   // Honeypot: Bots fuellen verstecktes Feld aus, echte Nutzer nie.
   if (field(payload, "website")) {
@@ -42,6 +62,9 @@ export async function POST(request: NextRequest) {
       { status: 400 }
     );
   }
+
+  const emailRate = checkEmailRate(email);
+  if (!emailRate.ok) return reject(emailRate);
 
   const details: InquiryDetails = {
     formType,
