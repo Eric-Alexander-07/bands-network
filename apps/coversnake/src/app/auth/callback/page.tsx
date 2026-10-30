@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@bands/supabase/client";
 
-const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "coversnake";
 
 function CallbackHandler() {
   const searchParams = useSearchParams();

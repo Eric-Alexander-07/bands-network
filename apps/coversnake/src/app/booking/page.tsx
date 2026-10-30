@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Kontakt & Buchung – CoverSnake anfragen" },
   description: DESCRIPTION,
-  keywords: ["Tributeband anfragen", "Whitesnake Tribute buchen", "Rockband buchen", "Stadtfest Band buchen", "Firmenevent Band", "Band Booking Anfrage"],
+  keywords: ["Tributeband anfragen", "Whitesnake Tribute buchen", "Coverband buchen", "Stadtfest Band buchen", "Band Booking Anfrage"],
   alternates: { canonical: "https://coversnake.com/booking" },
   openGraph: {
     title: "Kontakt & Buchung – CoverSnake anfragen",

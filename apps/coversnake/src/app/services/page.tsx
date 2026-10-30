@@ -3,14 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "CoverSnake spielt 90 bis 120 Minuten Whitesnake — von Here I Go Again bis Still of the Night, auf Wunsch mit LED-Walls und großer Lichtshow.";
+  "CoverSnake spielt 90 bis 120 Minuten Whitesnake — von Here I Go Again bis Still of the Night, je nach Größe der Location mit LED-Walls und Lichtshow.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | CoverSnake") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Show & Repertoire – CoverSnake | Setlist" },
   description: DESCRIPTION,
-  keywords: ["Whitesnake Songs live", "Here I Go Again live", "Still of the Night live", "Tributeband Repertoire", "Setlist Rockband", "Bandbesetzung", "Bühnentechnik Band"],
+  keywords: ["Whitesnake Songs live", "Here I Go Again", "Still of the Night live", "Is This Love", "Tributeband", "Repertoire", "Setlist Rockband", "Bandbesetzung", "Bühnentechnik Band"],
   alternates: { canonical: "https://coversnake.com/services" },
   openGraph: {
     title: "Show & Repertoire – CoverSnake | Setlist",

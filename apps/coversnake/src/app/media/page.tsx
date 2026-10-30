@@ -3,14 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "CoverSnake live erleben: aktuelle Videos, kommende Spieltermine und Neuigkeiten der Whitesnake-Tributeband aus dem Rhein-Main-Gebiet.";
+  "CoverSnake live erleben: aktuelle Videos, kommende Konzerttermine und Neuigkeiten der Whitesnake-Tributeband aus dem Rhein-Main-Gebiet.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | CoverSnake") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
-  title: { absolute: "Media & News – CoverSnake | Videos & Termine" },
+  title: { absolute: "Media & News – CoverSnake | Videos & News" },
   description: DESCRIPTION,
-  keywords: ["CoverSnake Videos", "Whitesnake Tribute Video", "Konzerttermine", "Tourdaten Band", "Livevideo Rockband", "Instagram Band", "Band News"],
+  keywords: ["CoverSnake Videos", "Whitesnake Tribute Video", "Konzerttermine", "Tourdaten Band", "Livevideo Rockband", "Facebook", "Instagram Band", "Band News"],
   alternates: { canonical: "https://coversnake.com/media" },
   openGraph: {
     title: "Media & News – CoverSnake | Videos & Termine",

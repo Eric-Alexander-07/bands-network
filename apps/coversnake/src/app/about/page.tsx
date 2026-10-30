@@ -3,14 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "CoverSnake wurde 2016 von Gitarrist Bobby Stöcker gegründet und zählt zu den authentischsten Whitesnake-Tributebands Deutschlands.";
+  "CoverSnake spielt in Sextett-Besetzung große Clubs im gesamten Bundesgebiet und gilt als eine der erfolgreichsten Whitesnake Tribute-Bands.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | CoverSnake") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Die Band – CoverSnake | Whitesnake Tribute" },
   description: DESCRIPTION,
-  keywords: ["CoverSnake Band", "Whitesnake Tributeband", "Bobby Stöcker", "Rockband Musiker", "Tribute Band Deutschland", "Livemusiker", "Bandportrait"],
+  keywords: ["CoverSnake Band", "Whitesnake Tributeband", "Coverband", "David Coverdale", "Bobby Stöcker", "David Readman", "Emmo Acar", "Rockband", "Stadtfest", "Classic Rock", "Darmstadt", "Frankfurt", "Aschaffenburg"],
   alternates: { canonical: "https://coversnake.com/about" },
   openGraph: {
     title: "Die Band – CoverSnake | Whitesnake Tribute",

@@ -3,7 +3,7 @@ import { createClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "spirit-of-soul";
+const SITE_SLUG = process.env.NEXT_PUBLIC_SITE_SLUG ?? "coversnake";
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies();

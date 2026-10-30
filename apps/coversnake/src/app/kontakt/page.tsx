@@ -2,14 +2,14 @@ import type { Metadata } from "next";
 import KontaktPage from "@/components/KontaktPage";
 
 const DESCRIPTION =
-  "CoverSnake kontaktieren — die Whitesnake-Tributeband aus dem Rhein-Main-Gebiet für Festivals, Clubshows und Firmenevents.";
+  "CoverSnake kontaktieren — die Whitesnake-Tributeband aus dem Rhein-Main-Gebiet für Clubs, Festivals und Tribute Events anfragen.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | CoverSnake") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Kontakt – CoverSnake | Whitesnake Tribute" },
   description: DESCRIPTION,
-  keywords: ["CoverSnake Kontakt", "Whitesnake Tributeband", "Vivid Music Productions"],
+  keywords: ["CoverSnake Kontakt", "Whitesnake Tributeband", "Vivid Music Productions", "VMP Künstlerpool"],
   alternates: { canonical: "https://coversnake.com/kontakt" },
   openGraph: {
     title: "Kontakt – CoverSnake | Whitesnake Tribute",

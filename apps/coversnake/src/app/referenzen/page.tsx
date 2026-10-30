@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
   title: { absolute: "Referenzen & Netzwerk – CoverSnake" },
   description: DESCRIPTION,
-  keywords: ["CoverSnake Referenzen", "Vivid Music Productions", "Künstlerpool", "Band Partner", "Veranstalter Referenzen", "Festival Booking"],
+  keywords: ["CoverSnake Referenzen", "Vivid Music Productions", "VMP Künstlerpool", "Band Partner", "Veranstalter Referenzen", "Festival Booking"],
   alternates: { canonical: "https://coversnake.com/referenzen" },
   openGraph: {
     title: "Referenzen & Netzwerk – CoverSnake",

@@ -3,14 +3,14 @@
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "CoverSnake in Bildern: Fotos von Clubshows, Stadtfesten und Rockfestivals der sechsköpfigen Whitesnake-Tributeband.";
+  "CoverSnake in Bildern: Fotos von Clubshows, Stadtfesten und Rockfestivals der Whitesnake-Tributeband.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | CoverSnake") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
-  title: { absolute: "Galerie – CoverSnake | Fotos von der Bühne" },
+  title: { absolute: "Galerie – CoverSnake | Live Bilder & Impressionen" },
   description: DESCRIPTION,
-  keywords: ["CoverSnake Fotos", "Whitesnake Tribute Bilder", "Konzertfotos", "Livefotos Rockband", "Bandgalerie"],
+  keywords: ["CoverSnake Fotos", "Whitesnake Tribute Bilder", "Konzertfotos", "Live Pics", "Rockband", "Bandgalerie"],
   alternates: { canonical: "https://coversnake.com/galerie" },
   openGraph: {
     title: "Galerie – CoverSnake | Fotos von der Bühne",

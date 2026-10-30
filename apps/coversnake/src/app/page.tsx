@@ -12,14 +12,14 @@ import { resolve } from "@/lib/content";
 import type { Metadata } from "next";
 
 const DESCRIPTION =
-  "CoverSnake bringt die größten Hits von Whitesnake live auf die Bühne — Hard Rock für Festivals, Stadtfeste und Firmenevents im Rhein-Main-Gebiet.";
+  "CoverSnake gilt als No.1 Whitesnake Tributeband und bringt die größten Hits von Whitesnake & David Coverdale live und authentisch europaweit auf die Bühne.";
 
 export const metadata: Metadata = {
   // `absolute` umgeht das title.template im Root-Layout ("%s | CoverSnake") —
   // ohne das wuerde der Bandname am Ende doppelt erscheinen.
-  title: { absolute: "CoverSnake – Whitesnake Tributeband buchen" },
+  title: { absolute: "CoverSnake – A Tribute to Whitesnake & David Coverdale" },
   description: DESCRIPTION,
-  keywords: ["Whitesnake Tribute", "Whitesnake Tributeband", "Tributeband buchen", "CoverSnake", "Rockband buchen", "Coverband Stadtfest", "Hard Rock Band", "Livemusik Rhein-Main", "Festivalband", "Rockshow buchen"],
+  keywords: ["Whitesnake Tribute", "Whitesnake Tributeband", "Whitesnake Coverband", "CoverSnake", "Classic Rock", "Blues Rock", "Coverband", "Hard Rock Band", "Livemusik", "Tribute Festival", "Rockshow buchen"],
   alternates: { canonical: "https://coversnake.com" },
   openGraph: {
     title: "CoverSnake – Whitesnake Tributeband buchen",

@@ -1,5 +1,5 @@
 /**
- * Datenschicht fuer THE ADAMS FAMILY.
+ * Datenschicht fuer COVERSNAKE.
  *
  * Alle Inhalte stammen aus GENAU EINER Datenbankabfrage: `getSiteBundle()`
  * laedt Texte, Bilder und Listen gebuendelt und legt sie unter dem Cache-Tag
