@@ -60,8 +60,8 @@ export const ARTIST_POOL: {
     description: "Originalgetreue Shows der größten Acts aller Zeiten.",
     bands: [
       { name: "We Rock", url: "https://werock-rockband.de" },
-      { name: "CoverSnake", url: "https://v-m-p.com/coversnake" },
-      { name: "Bryan Adams Tribute", url: "https://v-m-p.com/adams-family" },
+      { name: "CoverSnake", url: "https://coversnake.com" },
+      { name: "Bryan Adams Tribute", url: "https://theadamsfamily.de" },
       { name: "Bobby Stoker Band", url: "https://v-m-p.com/bobby-stoker" },
     ],
   },

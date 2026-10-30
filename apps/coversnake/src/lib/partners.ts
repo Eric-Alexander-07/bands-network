@@ -61,7 +61,7 @@ export const ARTIST_POOL: {
     bands: [
       { name: "We Rock", url: "https://werock-rockband.de" },
       { name: "CoverSnake", url: "https://coversnake.com" },
-      { name: "The Adams Family", url: "https://v-m-p.com/adams-family" },
+      { name: "The Adams Family", url: "https://theadamsfamily.de" },
       { name: "Bobby Stoker Band", url: "https://v-m-p.com/bobby-stoker" },
     ],
   },
